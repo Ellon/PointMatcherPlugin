@@ -1,0 +1,13 @@
+<!-- This file is not needed for ParaView 4.3 and higher -->
+
+<ParaViewFilters>
+  <Category name="PointMatcher" menu_label="&amp;Point Matcher Library">
+    <!-- <Filter name="PCLEuclideanClusterExtraction" /> -->
+    <!-- <Filter name="PCLNormalEstimation" /> -->
+    <Filter name="PointMatcherFixStepSamplingFilter" />
+    <!-- <Filter name="PCLSACSegmentationCylinder" /> -->
+    <!-- <Filter name="PCLSACSegmentationPlane" /> -->
+    <!-- <Filter name="PCLVoxelGrid" /> -->
+    <!-- <Filter name="PCLNDTRegistration" /> -->
+  </Category>
+</ParaViewFilters>

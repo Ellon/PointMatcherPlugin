@@ -1,0 +1,55 @@
+<ServerManagerConfiguration>
+  <ProxyGroup name="filters">
+    <SourceProxy name="PMFixStepSamplingFilter" class="vtkPMFixStepSamplingFilter" label="PM Fix Step Sampling Filter">
+      <Documentation
+         short_help="Keeps one point over step ones."
+         long_help="Subsampling. This filter reduces the size of the point cloud by only keeping one point over step ones; with step varying in time from startStep to endStep, each iteration getting multiplied by stepMult. If use as prefilter (i.e. before the iterations), only startStep is used.">
+      </Documentation>
+
+      <InputProperty
+         name="Input"
+         port_index="0"
+         command="SetInputConnection">
+        <ProxyGroupDomain name="groups">
+          <Group name="sources"/>
+          <Group name="filters"/>
+        </ProxyGroupDomain>
+        <DataTypeDomain name="input_type">
+          <DataType value="vtkPolyData"/>
+        </DataTypeDomain>
+        <Documentation>
+          Set the input poly data
+        </Documentation>
+      </InputProperty>
+
+    <IntVectorProperty
+    name="StartStep"
+    command="SetStartStep"
+    number_of_elements="1"
+    default_values="10">
+    <IntRangeDomain name="range" min="0"/>
+    </IntVectorProperty>
+
+    <IntVectorProperty
+    name="EndStep"
+    command="SetEndStep"
+    number_of_elements="1"
+    default_values="10">
+    <IntRangeDomain name="range" min="0"/>
+    </IntVectorProperty>
+
+    <DoubleVectorProperty
+    name="StepMult"
+    command="SetStepMult"
+    number_of_elements="1"
+    default_values="1.0">
+    <DoubleRangeDomain name="range" min="0.0000001"/>
+    </DoubleVectorProperty>
+
+    <Hints> 
+      <ShowInMenu category="Point Matcher" />
+    </Hints>
+
+   </SourceProxy>
+  </ProxyGroup>
+</ServerManagerConfiguration>
