@@ -1,18 +1,17 @@
 /*=========================================================================
 
-  Program:   Visualization Toolkit
-  Module:    vtkAnnotateOBBs.cxx
+  Program:   Lib Point Matcher Plugin for ParaView
+  Module:    vtkPMConversions.h
 
-  Copyright (c) Ken Martin, Will Schroeder, Bill Lorensen
+  Copyright (c) Ellon Paiva Mendes
   All rights reserved.
   See Copyright.txt or http://www.kitware.com/Copyright.htm for details.
-
+  
      This software is distributed WITHOUT ANY WARRANTY; without even
      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
      PURPOSE.  See the above copyright notice for more information.
 
 =========================================================================*/
-
 #include "vtkPMConversions.h"
 
 #include <vtkObjectFactory.h>
