@@ -6,7 +6,7 @@ if(NOT ParaView_SOURCE_DIR)
   find_package(PythonLibs REQUIRED)
 endif()
 
-find_package(libpointmatcher 1.1.0 REQUIRED)
+find_package(libpointmatcher 1.2.3 REQUIRED)
 include_directories("${libpointmatcher_INCLUDE_DIRS}")
 message(STATUS "Using libpointmatcher version ${libpointmatcher_VERSION}")
 
