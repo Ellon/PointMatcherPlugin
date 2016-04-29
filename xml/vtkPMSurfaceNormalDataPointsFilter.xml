@@ -1,0 +1,80 @@
+<ServerManagerConfiguration>
+  <ProxyGroup name="filters">
+    <SourceProxy name="PMSurfaceNormalFilter" class="vtkPMSurfaceNormalDataPointsFilter" label="PM Surface Normal Filter">
+      <Documentation
+         short_help="Extract normals for each point using its nearest neighbors"
+         long_help="Normals. This filter extracts the normal to each point by taking the eigenvector corresponding to the smallest eigenvalue of its nearest neighbors.">
+      </Documentation>
+
+      <InputProperty
+         name="Input"
+         port_index="0"
+         command="SetInputConnection">
+        <ProxyGroupDomain name="groups">
+          <Group name="sources"/>
+          <Group name="filters"/>
+        </ProxyGroupDomain>
+        <DataTypeDomain name="input_type">
+          <DataType value="vtkPolyData"/>
+        </DataTypeDomain>
+        <Documentation>
+          Set the input poly data
+        </Documentation>
+      </InputProperty>
+
+    <IntVectorProperty name="Knn"
+                       command="SetKnn"
+                       number_of_elements="1"
+                       default_values="3">
+      <IntRangeDomain name="range" min="3"/>
+    </IntVectorProperty>
+
+    <DoubleVectorProperty name="Epsilon"
+                          command="SetEpsilon"
+                          number_of_elements="1"
+                          default_values="0.0">
+      <DoubleRangeDomain name="range" min="0"/>
+    </DoubleVectorProperty>
+
+    <IntVectorProperty name="KeepNormals"
+                       command="SetKeepNormals"
+                       number_of_elements="1"
+                       default_values="0">
+      <BooleanDomain name="bool"/>
+    </IntVectorProperty>
+
+    <IntVectorProperty name="KeepDensities"
+                       command="SetKeepDensities"
+                       number_of_elements="1"
+                       default_values="0">
+      <BooleanDomain name="bool"/>
+    </IntVectorProperty>
+
+    <IntVectorProperty name="KeepEigenValues"
+                       command="SetKeepEigenValues"
+                       number_of_elements="1"
+                       default_values="0">
+      <BooleanDomain name="bool"/>
+    </IntVectorProperty>
+
+    <IntVectorProperty name="KeepEigenVectors"
+                       command="SetKeepEigenVectors"
+                       number_of_elements="1"
+                       default_values="0">
+      <BooleanDomain name="bool"/>
+    </IntVectorProperty>
+
+    <IntVectorProperty name="KeepMatchedIds"
+                       command="SetKeepMatchedIds"
+                       number_of_elements="1"
+                       default_values="0">
+      <BooleanDomain name="bool"/>
+    </IntVectorProperty>
+
+    <Hints> 
+      <ShowInMenu category="Point Matcher" />
+    </Hints>
+
+   </SourceProxy>
+  </ProxyGroup>
+</ServerManagerConfiguration>
