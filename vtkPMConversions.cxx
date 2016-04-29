@@ -28,6 +28,8 @@
 
 #include <cassert>
 
+using namespace std;
+
 typedef vtkPMConversions::PM PM;
 
 //----------------------------------------------------------------------------
@@ -48,17 +50,22 @@ vtkSmartPointer<vtkPolyData> vtkPMConversions::PolyDataFromDataPoints(const type
 {
   vtkIdType nr_points = cloud.getNbPoints();
 
+  // First we deal with the features
+  // ###############################
+
+  // Initialize vtkPoints structure
   vtkNew<vtkPoints> points;
   points->SetDataTypeToFloat();
   points->SetNumberOfPoints(nr_points);
-
+  // Add points
   vtkIdType j = 0;    // true point index
   for (vtkIdType i = 0; i < nr_points; ++i)
   {
-    const BOOST_AUTO(colArray, cloud.features.col(i).array());
-    const BOOST_AUTO(hasNaN, !(colArray == colArray).all());
-    if (hasNaN)
-      continue;
+    // FIXME If we check for NaN's here, we should check for it in the point data below
+    // const BOOST_AUTO(colArray, cloud.features.col(i).array());
+    // const BOOST_AUTO(hasNaN, !(colArray == colArray).all());
+    // if (hasNaN)
+    //   continue;
 
     T point[3] = {cloud.features.col(i)[0], cloud.features.col(i)[1], cloud.features.col(i)[2]}; 
     points->SetPoint(j, point);
@@ -67,9 +74,63 @@ vtkSmartPointer<vtkPolyData> vtkPMConversions::PolyDataFromDataPoints(const type
   nr_points = j;
   points->SetNumberOfPoints(nr_points);
 
+  // Add points to vtkPolyData
   vtkSmartPointer<vtkPolyData> polyData = vtkSmartPointer<vtkPolyData>::New();
   polyData->SetPoints(points.GetPointer());
   polyData->SetVerts(NewVertexCells(nr_points));
+
+  // And now we deal with the descriptors (if any)
+  // #############################################
+
+  for(BOOST_AUTO(it, cloud.descriptorLabels.begin()); it != cloud.descriptorLabels.end(); it++)
+  {
+    // handle specific cases
+    if(it->text == "normals")
+    {
+      const PM::Matrix normals = cloud.getDescriptorViewByName("normals");
+      vtkIdType nr_normals = normals.cols();
+      vtkSmartPointer<vtkFloatArray> pointNormalsArray = 
+        vtkSmartPointer<vtkFloatArray>::New();
+      pointNormalsArray->SetNumberOfComponents(3); //3d normals (ie x,y,z)
+      pointNormalsArray->SetNumberOfTuples(nr_normals);
+      // We must set the name to be able to select this data on paraview.
+      pointNormalsArray->SetName("normals");
+      for(vtkIdType i = 0; i < nr_normals; ++i)
+      {
+        float pN[3];
+        pN[0] = normals.col(i).x();
+        pN[1] = normals.col(i).y();
+        pN[2] = normals.col(i).z(); 
+        pointNormalsArray->SetTuple(i, pN) ;
+      }
+      polyData->GetPointData()->SetNormals(pointNormalsArray);
+    }
+    // else if(it->text == "eigVectors")
+    // {
+    //   buildTensorStream(stream, "eigVectors", data);
+    // }
+    // else if(it->text == "color")
+    // {
+    //   buildColorStream(stream, "color", data);
+    // }
+    // // handle generic cases
+    // else if(it->span == 1)
+    // {
+    //   buildScalarStream(stream, it->text, data);
+    // }
+    // else if(it->span == 3 || it->span == 2)
+    // {
+    //   buildVectorStream(stream, it->text, data);
+    // }
+    // else
+    // {
+    //   LOG_WARNING_STREAM("Could not save label named " << it->text << " (dim=" << it->span << ").");
+    // }
+  }
+
+  // polyData->GetPointData()->Print(cout);
+  // cout << "polyData has normals? " << polyData->GetPointData()->HasArray("normals") << endl;
+
   return polyData;
 }
 
@@ -116,6 +177,40 @@ boost::shared_ptr<PM::DataPoints> vtkPMConversions::DataPointsFromPolyData(vtkPo
   cloud->addFeature("y", features.row(1));
   cloud->addFeature("z", features.row(2));
   cloud->addFeature("pad", features.row(3));
+
+  // check for normals
+  // FIXME make it generic on the type of Point Matcher
+  vtkFloatArray* floatPointNormals = vtkFloatArray::SafeDownCast(polyData->GetPointData()->GetNormals());
+  vtkDoubleArray* doublePointNormals = vtkDoubleArray::SafeDownCast(polyData->GetPointData()->GetNormals());
+  if(floatPointNormals)
+    {
+    vtkIdType nr_normals = floatPointNormals->GetNumberOfTuples();
+    PM::Matrix descriptor(3,nr_normals);
+    for(vtkIdType i = 0; i < nr_normals; i++)
+      {
+      // This is weird, but "GetTuple" from vtkFloatArray has a double* as argument...
+      double pN[3];
+      floatPointNormals->GetTuple(i, pN);
+      descriptor.col(i).x() = (float)pN[0];
+      descriptor.col(i).y() = (float)pN[1];
+      descriptor.col(i).z() = (float)pN[2];
+      }
+      cloud->addDescriptor("normals", descriptor);
+    }
+    else if(doublePointNormals)
+    {
+    vtkIdType nr_normals = doublePointNormals->GetNumberOfTuples();
+    PM::Matrix descriptor(3,nr_normals);
+    for(vtkIdType i = 0; i < nr_normals; i++)
+      {
+      double pN[3];
+      doublePointNormals->GetTuple(i, pN);
+      descriptor.col(i).x() = (float)pN[0];
+      descriptor.col(i).y() = (float)pN[1];
+      descriptor.col(i).z() = (float)pN[2];
+      }
+      cloud->addDescriptor("normals", descriptor);
+    }
 
   return cloud;
 }
