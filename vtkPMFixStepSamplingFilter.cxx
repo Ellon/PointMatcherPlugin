@@ -63,12 +63,12 @@ int vtkPMFixStepSamplingFilter::RequestData(
   params["startStep"] = boost::lexical_cast<std::string>(this->StartStep);
   params["endStep"] = boost::lexical_cast<std::string>(this->EndStep);
   params["stepMult"] = boost::lexical_cast<std::string>(this->StepMult);
-  PM::DataPointsFilter* fixStepFilter = 
+  PM::DataPointsFilter* PM_filter = 
     PM::get().DataPointsFilterRegistrar.create(name, params);
 
   // perform fix step sampling
   boost::shared_ptr<PM::DataPoints> cloud = vtkPMConversions::DataPointsFromPolyData(input);
-  fixStepFilter->inPlaceFilter(*cloud);
+  PM_filter->inPlaceFilter(*cloud);
 
   // store output
   output->ShallowCopy(vtkPMConversions::PolyDataFromDataPoints(*cloud));
