@@ -135,10 +135,12 @@ vtkSmartPointer<vtkPolyData> vtkPMConversions::PolyDataFromDataPoints(const type
       vtkSmartPointer<vtkDataArray> dataArray = getVtkDataArrayFromDescriptor(cloud, "normals");
       polyData->GetPointData()->SetNormals(dataArray);
     }
-    // else if(it->text == "eigVectors")
-    // {
-    //   buildTensorStream(stream, "eigVectors", data);
-    // }
+    else if(it->text == "eigVectors")
+    {
+      vtkSmartPointer<vtkDataArray> dataArray = getVtkDataArrayFromDescriptor(cloud, "eigVectors");
+      polyData->GetPointData()->SetTensors(dataArray);
+
+    }
     // else if(it->text == "color")
     // {
     //   buildColorStream(stream, "color", data);
@@ -214,6 +216,15 @@ boost::shared_ptr<PM::DataPoints> vtkPMConversions::DataPointsFromPolyData(vtkPo
     if (descriptor.rows())
     {
       cloud->addDescriptor("normals", descriptor);
+    }
+  }
+
+  // check for eigen vectors
+  {
+    PM::Matrix descriptor = getDescriptorMatrixFromVtkDataArray(polyData->GetPointData()->GetTensors());
+    if (descriptor.rows())
+    {
+      cloud->addDescriptor("eigVectors", descriptor);
     }
   }
 
