@@ -129,39 +129,26 @@ vtkSmartPointer<vtkPolyData> vtkPMConversions::PolyDataFromDataPoints(const type
 
   for(BOOST_AUTO(it, cloud.descriptorLabels.begin()); it != cloud.descriptorLabels.end(); it++)
   {
-    // handle specific cases
+    // Convert descriptor and add it to vtk object
+    vtkSmartPointer<vtkDataArray> dataArray = getVtkDataArrayFromDescriptor(cloud, it->text);
+    polyData->GetPointData()->AddArray(dataArray);
+
+    // vtkPolyData has the ability to pick one of the arrays from the field as
+    // the currently active array for each attribute type. For example, one of
+    // the scalar arrays can be selected to be called "The Scalars", and can
+    // be recovered using "GetScalars()" method. Here we're interested to
+    // inform paraview which arrays should be pick as Normals and Tensors (for
+    // eigenvalues).
     if(it->text == "normals")
     {
-      vtkSmartPointer<vtkDataArray> dataArray = getVtkDataArrayFromDescriptor(cloud, "normals");
-      polyData->GetPointData()->SetNormals(dataArray);
+      polyData->GetPointData()->SetActiveNormals("normals");
     }
     else if(it->text == "eigVectors")
     {
-      vtkSmartPointer<vtkDataArray> dataArray = getVtkDataArrayFromDescriptor(cloud, "eigVectors");
-      polyData->GetPointData()->SetTensors(dataArray);
-
+      // FIXME not sure if we should set the eigen vectors as tensors.
+      polyData->GetPointData()->SetActiveTensors("eigVectors");
     }
-    // else if(it->text == "color")
-    // {
-    //   buildColorStream(stream, "color", data);
-    // }
-    // // handle generic cases
-    // else if(it->span == 1)
-    // {
-    //   buildScalarStream(stream, it->text, data);
-    // }
-    // else if(it->span == 3 || it->span == 2)
-    // {
-    //   buildVectorStream(stream, it->text, data);
-    // }
-    // else
-    // {
-    //   LOG_WARNING_STREAM("Could not save label named " << it->text << " (dim=" << it->span << ").");
-    // }
   }
-
-  // polyData->GetPointData()->Print(cout);
-  // cout << "polyData has normals? " << polyData->GetPointData()->HasArray("normals") << endl;
 
   return polyData;
 }
@@ -210,22 +197,13 @@ boost::shared_ptr<PM::DataPoints> vtkPMConversions::DataPointsFromPolyData(vtkPo
   cloud->addFeature("z", features.row(2));
   cloud->addFeature("pad", features.row(3));
 
-  // check for normals
+  // check for descriptors
+  vtkIdType numberOfPointArrays = polyData->GetPointData()->GetNumberOfArrays();
+  for(vtkIdType i = 0; i < numberOfPointArrays; i++)
   {
-    PM::Matrix descriptor = getDescriptorMatrixFromVtkDataArray(polyData->GetPointData()->GetNormals());
+    PM::Matrix descriptor = getDescriptorMatrixFromVtkDataArray(polyData->GetPointData()->GetArray(i));
     if (descriptor.rows())
-    {
-      cloud->addDescriptor("normals", descriptor);
-    }
-  }
-
-  // check for eigen vectors
-  {
-    PM::Matrix descriptor = getDescriptorMatrixFromVtkDataArray(polyData->GetPointData()->GetTensors());
-    if (descriptor.rows())
-    {
-      cloud->addDescriptor("eigVectors", descriptor);
-    }
+      cloud->addDescriptor(polyData->GetPointData()->GetArrayName(i), descriptor);
   }
 
   return cloud;
