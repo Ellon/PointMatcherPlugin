@@ -1,6 +1,6 @@
 <ServerManagerConfiguration>
   <ProxyGroup name="filters">
-    <SourceProxy name="PMSurfaceNormalFilter" class="vtkPMSurfaceNormalDataPointsFilter" label="PM Surface Normal Filter">
+    <SourceProxy name="PMSurfaceNormalFilter" class="vtkPMSurfaceNormalDataPointsFilter" label="PM Surface Normal Data Points Filter">
       <Documentation
          short_help="Extract normals for each point using its nearest neighbors"
          long_help="Normals. This filter extracts the normal to each point by taking the eigenvector corresponding to the smallest eigenvalue of its nearest neighbors.">

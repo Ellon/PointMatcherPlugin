@@ -1,7 +1,7 @@
 /*=========================================================================
 
   Program:   Lib Point Matcher Plugin for ParaView
-  Module:    vtkPMFixStepSamplingFilter.cxx
+  Module:    vtkPMMaxDistDataPointsFilter.cxx
 
   Copyright (c) Ellon Paiva Mendes
   All rights reserved.
@@ -12,7 +12,7 @@
      PURPOSE.  See the above copyright notice for more information.
 
 =========================================================================*/
-#include "vtkPMFixStepSamplingFilter.h"
+#include "vtkPMMaxDistDataPointsFilter.h"
 #include "vtkPMConversions.h"
 
 #include "vtkPolyData.h"
@@ -27,26 +27,25 @@
 typedef vtkPMConversions::PM PM;
 
 //----------------------------------------------------------------------------
-vtkStandardNewMacro(vtkPMFixStepSamplingFilter);
+vtkStandardNewMacro(vtkPMMaxDistDataPointsFilter);
 
 //----------------------------------------------------------------------------
-vtkPMFixStepSamplingFilter::vtkPMFixStepSamplingFilter()
+vtkPMMaxDistDataPointsFilter::vtkPMMaxDistDataPointsFilter()
 {
 
-  this->StartStep = 10;
-  this->EndStep = 10;
-  this->StepMult = 1;
+  this->Dim = -1;
+  this->MaxDist = 1;
   this->SetNumberOfInputPorts(1);
   this->SetNumberOfOutputPorts(1);
 }
 
 //----------------------------------------------------------------------------
-vtkPMFixStepSamplingFilter::~vtkPMFixStepSamplingFilter()
+vtkPMMaxDistDataPointsFilter::~vtkPMMaxDistDataPointsFilter()
 {
 }
 
 //----------------------------------------------------------------------------
-int vtkPMFixStepSamplingFilter::RequestData(
+int vtkPMMaxDistDataPointsFilter::RequestData(
   vtkInformation* vtkNotUsed(request),
   vtkInformationVector **inputVector,
   vtkInformationVector *outputVector)
@@ -59,10 +58,9 @@ int vtkPMFixStepSamplingFilter::RequestData(
 
   // configure the filter
   PointMatcherSupport::Parametrizable::Parameters params;
-  std::string name = "FixStepSamplingDataPointsFilter";
-  params["startStep"] = boost::lexical_cast<std::string>(this->StartStep);
-  params["endStep"] = boost::lexical_cast<std::string>(this->EndStep);
-  params["stepMult"] = boost::lexical_cast<std::string>(this->StepMult);
+  std::string name = "MaxDistDataPointsFilter";
+  params["dim"] = boost::lexical_cast<std::string>(this->Dim);
+  params["maxDist"] = boost::lexical_cast<std::string>(this->MaxDist);
   PM::DataPointsFilter* PM_filter = 
     PM::get().DataPointsFilterRegistrar.create(name, params);
 
@@ -77,7 +75,7 @@ int vtkPMFixStepSamplingFilter::RequestData(
 }
 
 //----------------------------------------------------------------------------
-void vtkPMFixStepSamplingFilter::PrintSelf(ostream& os, vtkIndent indent)
+void vtkPMMaxDistDataPointsFilter::PrintSelf(ostream& os, vtkIndent indent)
 {
   this->Superclass::PrintSelf(os,indent);
 }

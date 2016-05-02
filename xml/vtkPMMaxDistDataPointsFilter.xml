@@ -1,6 +1,6 @@
 <ServerManagerConfiguration>
   <ProxyGroup name="filters">
-    <SourceProxy name="PMMaxDistFilter" class="vtkPMMaxDistFilter" label="PM Max Dist Filter">
+    <SourceProxy name="PMMaxDistDataPointsFilter" class="vtkPMMaxDistDataPointsFilter" label="PM Max Dist Data Points Filter">
       <Documentation
          short_help="Keeps points beyond max distance"
          long_help="Subsampling. Filter points beyond a maximum distance measured on a specific axis. If dim is set to -1, points are filtered based on a maximum radius.">

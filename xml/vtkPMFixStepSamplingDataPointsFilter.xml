@@ -1,6 +1,6 @@
 <ServerManagerConfiguration>
   <ProxyGroup name="filters">
-    <SourceProxy name="PMFixStepSamplingFilter" class="vtkPMFixStepSamplingFilter" label="PM Fix Step Sampling Filter">
+    <SourceProxy name="PMFixStepSamplingDataPointsFilter" class="vtkPMFixStepSamplingDataPointsFilter" label="PM Fix Step Sampling Data Points Filter">
       <Documentation
          short_help="Keeps one point over step ones."
          long_help="Subsampling. This filter reduces the size of the point cloud by only keeping one point over step ones; with step varying in time from startStep to endStep, each iteration getting multiplied by stepMult. If use as prefilter (i.e. before the iterations), only startStep is used.">

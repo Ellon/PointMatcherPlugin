@@ -1,7 +1,7 @@
 /*=========================================================================
 
   Program:   Lib Point Matcher Plugin for ParaView
-  Module:    vtkPMFixStepSamplingFilter.h
+  Module:    vtkPMSurfaceNormalDataPointsFilter.h
 
   Copyright (c) Ellon Paiva Mendes
   All rights reserved.

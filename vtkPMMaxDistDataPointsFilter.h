@@ -1,7 +1,7 @@
 /*=========================================================================
 
   Program:   Lib Point Matcher Plugin for ParaView
-  Module:    vtkPMFixStepSamplingFilter.h
+  Module:    vtkPMMaxDistDataPointsFilter.h
 
   Copyright (c) Ellon Paiva Mendes
   All rights reserved.
@@ -12,50 +12,46 @@
      PURPOSE.  See the above copyright notice for more information.
 
 =========================================================================*/
-// .NAME vtkPMFixStepSamplingFilter -
+// .NAME vtkPMMaxDistDataPointsFilter -
 // .SECTION Description
 //
 
-#ifndef __vtkPMFixStepSamplingFilter_h
-#define __vtkPMFixStepSamplingFilter_h
+#ifndef __vtkPMMaxDistDataPointsFilter_h
+#define __vtkPMMaxDistDataPointsFilter_h
 
 #include <vtkPolyDataAlgorithm.h>
 #include <vtkPMFiltersModule.h>
 
 
-class  VTKPMFILTERS_EXPORT vtkPMFixStepSamplingFilter : public vtkPolyDataAlgorithm
+class  VTKPMFILTERS_EXPORT vtkPMMaxDistDataPointsFilter : public vtkPolyDataAlgorithm
 {
 public:
-  vtkTypeMacro(vtkPMFixStepSamplingFilter, vtkPolyDataAlgorithm);
+  vtkTypeMacro(vtkPMMaxDistDataPointsFilter, vtkPolyDataAlgorithm);
   void PrintSelf(ostream& os, vtkIndent indent);
 
-  static vtkPMFixStepSamplingFilter *New();
+  static vtkPMMaxDistDataPointsFilter *New();
 
-  vtkSetMacro(StartStep, unsigned);
-  vtkGetMacro(StartStep, unsigned);
+  vtkSetMacro(Dim, int);
+  vtkGetMacro(Dim, int);
 
-  vtkSetMacro(EndStep, unsigned);
-  vtkGetMacro(EndStep, unsigned);
-
-  vtkSetMacro(StepMult, double);
-  vtkGetMacro(StepMult, double);
+  vtkSetMacro(MaxDist, double);
+  vtkGetMacro(MaxDist, double);
 
 protected:
 
-  unsigned StartStep;
-  unsigned EndStep;
-  double StepMult;
+  int Dim;
+  double MaxDist;
 
   virtual int RequestData(vtkInformation *request,
                           vtkInformationVector **inputVector,
                           vtkInformationVector *outputVector);
 
-  vtkPMFixStepSamplingFilter();
-  virtual ~vtkPMFixStepSamplingFilter();
+  vtkPMMaxDistDataPointsFilter();
+  virtual ~vtkPMMaxDistDataPointsFilter();
 
 private:
-  vtkPMFixStepSamplingFilter(const vtkPMFixStepSamplingFilter&);  // Not implemented.
-  void operator=(const vtkPMFixStepSamplingFilter&);  // Not implemented.
+  vtkPMMaxDistDataPointsFilter(const vtkPMMaxDistDataPointsFilter&);  // Not implemented.
+  void operator=(const vtkPMMaxDistDataPointsFilter&);  // Not implemented.
 };
 
 #endif
