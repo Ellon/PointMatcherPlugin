@@ -44,8 +44,6 @@ public:
 
   void PrintSelf(ostream& os, vtkIndent indent);
 
-  // static vtkSmartPointer<vtkPolyData> PolyDataFromDataPointsFile(const std::string& filename);
-
   static vtkSmartPointer<vtkPolyData> PolyDataFromDataPoints(
     const PM::DataPoints &cloud);
 
@@ -53,12 +51,6 @@ public:
     vtkPolyData* polyData);
 
   static vtkSmartPointer<vtkCellArray> NewVertexCells(vtkIdType numberOfVerts);
-
-  // static vtkSmartPointer<vtkIntArray> NewLabelsArray(pcl::IndicesConstPtr indices, vtkIdType length);
-  // static vtkSmartPointer<vtkIntArray> NewLabelsArray(pcl::PointIndices::ConstPtr indices, vtkIdType length);
-  // static vtkSmartPointer<vtkIntArray> NewLabelsArray(const std::vector<pcl::PointIndices>& indices, vtkIdType length);
-
-  // static void PerformDataPointsConversionBenchmark(vtkPolyData* polyData);
 
 protected:
 

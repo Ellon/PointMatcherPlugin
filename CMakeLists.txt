@@ -23,73 +23,18 @@ set(servermanager_sources)
 set(servermanager_xml)
 set(server_deps)
 
-# # TODO: We really need to know if pcl was configured with openni
-# # not just whether it was found
-# option(USE_OPENNI "Build OpenNI features" OFF)
-
-# if(PARAVIEW_BUILD_QT_GUI AND USE_OPENNI)
-#   QT4_WRAP_CPP(moc_srcs pqPCLOpenNISource.h)
-#   ADD_PARAVIEW_OBJECT_PANEL(
-#     ifaces iface_srcs
-#     CLASS_NAME pqPCLOpenNISource
-#     XML_NAME PCLOpenNISource
-#     XML_GROUP sources)
-#   list(APPEND gui_interfaces ${ifaces})
-#   list(APPEND gui_sources ${iface_srcs} ${moc_srcs})
-# endif()
-
-
 list(APPEND servermanager_sources
-#   vtkAnnotateOBBs.cxx
   vtkPMConversions.cxx
-#   vtkPointMatcherEuclideanClusterExtraction.cxx
-#   vtkPointMatcherNDTRegistration.cxx
-#   vtkPointMatcherNormalEstimation.cxx
   vtkPMFixStepSamplingDataPointsFilter.cxx
   vtkPMSurfaceNormalDataPointsFilter.cxx
   vtkPMMaxDistDataPointsFilter.cxx
-#   vtkPCDReader.cxx
-#   vtkPointMatcherSACSegmentationCylinder.cxx
-#   vtkPointMatcherSACSegmentationPlane.cxx
-#   vtkPointMatcherVoxelGrid.cxx
   )
 
-# if(USE_OPENNI)
-# list(APPEND servermanager_sources
-#   vtkPCLOpenNISource.cxx
-#   )
-# endif()
-
 list(APPEND servermanager_xml
-#   xml/vtkAnnotateOBBs.xml
-#   xml/vtkPCLEuclideanClusterExtraction.xml
-#   xml/vtkPCLNDTRegistration.xml
-#   xml/vtkPCLNormalEstimation.xml
   xml/vtkPMFixStepSamplingDataPointsFilter.xml
   xml/vtkPMSurfaceNormalDataPointsFilter.xml
   xml/vtkPMMaxDistDataPointsFilter.xml
-#   xml/vtkPCDReader.xml
-#   xml/vtkPCLSACSegmentationCylinder.xml
-#   xml/vtkPCLSACSegmentationPlane.xml
-#   xml/vtkPCLVoxelGrid.xml
-#   xml/vtkThresholdPoints.xml
   )
-
-# if(USE_OPENNI)
-# list(APPEND servermanager_xml
-#   xml/vtkPCLOpenNISource.xml
-#   )
-# endif()
-
-# list(APPEND gui_xml
-#   xml/PointMatcherFiltersGUI.xml
-#   )
-
-# if(USE_OPENNI)
-# list(APPEND gui_xml
-#   xml/PCLSourcesGUI.xml
-#   )
-# endif()
 
 list(APPEND server_deps
   ${VTK_LIBRARIES}
@@ -110,6 +55,7 @@ generate_export_header(${library_name} EXPORT_FILE_NAME ${library_name}Module.h)
 
 
 target_link_libraries(${library_name} LINK_PUBLIC ${gui_deps} ${server_deps})
+
 
 # if(VTK_WRAP_PYTHON)
 #   include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/wrap-python.cmake)
