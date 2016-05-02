@@ -47,6 +47,7 @@ list(APPEND servermanager_sources
 #   vtkPointMatcherNormalEstimation.cxx
   vtkPMFixStepSamplingFilter.cxx
   vtkPMSurfaceNormalDataPointsFilter.cxx
+  vtkPMMaxDistFilter.cxx
 #   vtkPCDReader.cxx
 #   vtkPointMatcherSACSegmentationCylinder.cxx
 #   vtkPointMatcherSACSegmentationPlane.cxx
@@ -66,6 +67,7 @@ list(APPEND servermanager_xml
 #   xml/vtkPCLNormalEstimation.xml
   xml/vtkPMFixStepSamplingFilter.xml
   xml/vtkPMSurfaceNormalDataPointsFilter.xml
+  xml/vtkPMMaxDistFilter.xml
 #   xml/vtkPCDReader.xml
 #   xml/vtkPCLSACSegmentationCylinder.xml
 #   xml/vtkPCLSACSegmentationPlane.xml

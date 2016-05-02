@@ -1,0 +1,57 @@
+<ServerManagerConfiguration>
+  <ProxyGroup name="filters">
+    <SourceProxy name="PMMaxDistFilter" class="vtkPMMaxDistFilter" label="PM Max Dist Filter">
+      <Documentation
+         short_help="Keeps points beyond max distance"
+         long_help="Subsampling. Filter points beyond a maximum distance measured on a specific axis. If dim is set to -1, points are filtered based on a maximum radius.">
+      </Documentation>
+
+      <InputProperty
+         name="Input"
+         port_index="0"
+         command="SetInputConnection">
+        <ProxyGroupDomain name="groups">
+          <Group name="sources"/>
+          <Group name="filters"/>
+        </ProxyGroupDomain>
+        <DataTypeDomain name="input_type">
+          <DataType value="vtkPolyData"/>
+        </DataTypeDomain>
+        <Documentation>
+          Set the input poly data
+        </Documentation>
+      </InputProperty>
+
+    <IntVectorProperty
+      name="Dim"
+      command="SetDim"
+      number_of_elements="1"
+      default_values="-1">
+      <EnumerationDomain name="enum">
+        <Entry value="-1" text="Radius"/>
+        <Entry value="0" text="X"/>
+        <Entry value="1" text="Y"/>
+        <Entry value="2" text="Z"/>
+      </EnumerationDomain>
+      <Documentation>
+        This property indicates which dimension to apply the filter.
+      </Documentation>
+    </IntVectorProperty>
+
+    <DoubleVectorProperty
+      name="MaxDist"
+      command="SetMaxDist"
+      number_of_elements="1"
+      default_values="1.0">
+      <Documentation>
+        This property indicates the value to use as a threshold.
+      </Documentation>
+    </DoubleVectorProperty>
+
+    <Hints> 
+      <ShowInMenu category="Point Matcher" />
+    </Hints>
+
+   </SourceProxy>
+  </ProxyGroup>
+</ServerManagerConfiguration>
