@@ -28,12 +28,14 @@ list(APPEND servermanager_sources
   vtkPMFixStepSamplingDataPointsFilter.cxx
   vtkPMSurfaceNormalDataPointsFilter.cxx
   vtkPMMaxDistDataPointsFilter.cxx
+  vtkPMMaxDensityDataPointsFilter.cxx
   )
 
 list(APPEND servermanager_xml
   xml/vtkPMFixStepSamplingDataPointsFilter.xml
   xml/vtkPMSurfaceNormalDataPointsFilter.xml
   xml/vtkPMMaxDistDataPointsFilter.xml
+  xml/vtkPMMaxDensityDataPointsFilter.xml
   )
 
 list(APPEND server_deps

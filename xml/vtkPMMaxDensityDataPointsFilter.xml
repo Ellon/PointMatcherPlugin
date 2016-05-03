@@ -1,0 +1,42 @@
+<ServerManagerConfiguration>
+  <ProxyGroup name="filters">
+    <SourceProxy name="PMMaxDensityDataPointsFilter" class="vtkPMMaxDensityDataPointsFilter" label="PM Max Density Data Points Filter">
+      <Documentation
+         short_help="Randonly remove points with density higher than threshold"
+         long_help="Subsampling. Reduce the points number by randomly removing points with a density higher than a treshold.">
+      </Documentation>
+
+      <InputProperty
+         name="Input"
+         port_index="0"
+         command="SetInputConnection">
+        <ProxyGroupDomain name="groups">
+          <Group name="sources"/>
+          <Group name="filters"/>
+        </ProxyGroupDomain>
+        <DataTypeDomain name="input_type">
+          <DataType value="vtkPolyData"/>
+        </DataTypeDomain>
+        <Documentation>
+          Set the input poly data
+        </Documentation>
+      </InputProperty>
+
+    <DoubleVectorProperty
+      name="MaxDensity"
+      command="SetMaxDensity"
+      number_of_elements="1"
+      default_values="10.0">
+      <DoubleRangeDomain name="range" min="0.0000001"/>
+      <Documentation>
+        Number of points per m3.
+      </Documentation>
+    </DoubleVectorProperty>
+
+    <Hints> 
+      <ShowInMenu category="Point Matcher" />
+    </Hints>
+
+   </SourceProxy>
+  </ProxyGroup>
+</ServerManagerConfiguration>
