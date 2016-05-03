@@ -1,0 +1,38 @@
+<ServerManagerConfiguration>
+  <ProxyGroup name="filters">
+    <SourceProxy name="vtkPMOrientNormalsDataPointsFilter" class="vtkPMOrientNormalsDataPointsFilter" label="PM Orient Normals Data Points Filter">
+      <Documentation
+         short_help="Reorient normals wrt observation points."
+         long_help="Reorient normals so that they all point in the same direction, with respect to the observation points.">
+      </Documentation>
+
+      <InputProperty
+         name="Input"
+         port_index="0"
+         command="SetInputConnection">
+        <ProxyGroupDomain name="groups">
+          <Group name="sources"/>
+          <Group name="filters"/>
+        </ProxyGroupDomain>
+        <DataTypeDomain name="input_type">
+          <DataType value="vtkPolyData"/>
+        </DataTypeDomain>
+        <Documentation>
+          Set the input poly data
+        </Documentation>
+      </InputProperty>
+
+    <IntVectorProperty name="TowardCenter"
+                       command="SetTowardCenter"
+                       number_of_elements="1"
+                       default_values="1">
+      <BooleanDomain name="bool"/>
+    </IntVectorProperty>
+
+    <Hints> 
+      <ShowInMenu category="Point Matcher" />
+    </Hints>
+
+   </SourceProxy>
+  </ProxyGroup>
+</ServerManagerConfiguration>

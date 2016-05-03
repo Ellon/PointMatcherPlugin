@@ -30,6 +30,7 @@ list(APPEND servermanager_sources
   vtkPMMaxDistDataPointsFilter.cxx
   vtkPMMaxDensityDataPointsFilter.cxx
   vtkPMObservationDirectionDataPointsFilter.cxx
+  vtkPMOrientNormalsDataPointsFilter.cxx
   )
 
 list(APPEND servermanager_xml
@@ -38,6 +39,7 @@ list(APPEND servermanager_xml
   xml/vtkPMMaxDistDataPointsFilter.xml
   xml/vtkPMMaxDensityDataPointsFilter.xml
   xml/vtkPMObservationDirectionDataPointsFilter.xml
+  xml/vtkPMOrientNormalsDataPointsFilter.xml
   )
 
 list(APPEND server_deps
