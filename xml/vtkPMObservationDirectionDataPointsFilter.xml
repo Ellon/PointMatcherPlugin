@@ -1,0 +1,61 @@
+<ServerManagerConfiguration>
+  <ProxyGroup name="filters">
+    <SourceProxy name="PMObservationDirectionDataPointsFilter" class="vtkPMObservationDirectionDataPointsFilter" label="PM Observation Direction Data Points Filter">
+      <Documentation
+         short_help="Extract observation directions."
+         long_help="This filter extracts observation directions (vector from point to sensor), considering a sensor at position (x,y,z).">
+      </Documentation>
+
+      <InputProperty
+         name="Input"
+         port_index="0"
+         command="SetInputConnection">
+        <ProxyGroupDomain name="groups">
+          <Group name="sources"/>
+          <Group name="filters"/>
+        </ProxyGroupDomain>
+        <DataTypeDomain name="input_type">
+          <DataType value="vtkPolyData"/>
+        </DataTypeDomain>
+        <Documentation>
+          Set the input poly data
+        </Documentation>
+      </InputProperty>
+
+    <DoubleVectorProperty
+      name="X"
+      command="SetX"
+      number_of_elements="1"
+      default_values="0.0">
+      <Documentation>
+        x-coordinate of sensor
+      </Documentation>
+    </DoubleVectorProperty>
+
+    <DoubleVectorProperty
+      name="Y"
+      command="SetY"
+      number_of_elements="1"
+      default_values="0.0">
+      <Documentation>
+        y-coordinate of sensor
+      </Documentation>
+    </DoubleVectorProperty>
+
+    <DoubleVectorProperty
+      name="Z"
+      command="SetZ"
+      number_of_elements="1"
+      default_values="0.0">
+      <Documentation>
+        z-coordinate of sensor
+      </Documentation>
+    </DoubleVectorProperty>
+
+    <Hints> 
+      <ShowInMenu category="Point Matcher" />
+    </Hints>
+
+   </SourceProxy>
+  </ProxyGroup>
+</ServerManagerConfiguration>
