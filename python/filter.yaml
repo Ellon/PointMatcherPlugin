@@ -1,0 +1,36 @@
+# use:
+# <filterName>:
+#   - [<property1Name>, <property1Type>, <property1DefaultValue>]
+#   - [<property2Name>, <property2Type>, <property2DefaultValue>]
+#   - ...
+
+BoundingBoxDataPointsFilter:
+  - [xMin, double, -1]
+  - [xMax, double,  1]
+  - [yMin, double, -1]
+  - [yMax, double,  1]
+  - [zMin, double, -1]
+  - [zMax, double,  1]
+
+CutAtDescriptorThresholdDataPointsFilter:
+  - [descName,       string,  ""  ]
+  - [useLargerThan,  bool,    true]
+  - [threshold,      double,  0.0 ]
+
+ElipsoidsDataPointsFilter:
+  - [ratio, double, 0.5]
+  - [knn, unsigned, 7]
+  - [samplingMethod, bool, false]
+  - [maxBoxDim, double, inf]
+  - [averageExistingDescriptors, bool, true]
+  - [maxTimeWindow, double, inf]
+  - [minPlanarity, double, 0.0]
+  - [keepNormals, bool, true]
+  - [keepDensities, bool, false]
+  - [keepEigenValues, bool, false]
+  - [keepEigenVectors, bool, false]
+  - [keepMeans, bool, false]
+  - [keepCovariances, bool, false]
+  - [keepWeights, bool, false]
+  - [keepShapes, bool, false]
+  - [keepIndices, bool, false]

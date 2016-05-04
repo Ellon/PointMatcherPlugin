@@ -1,0 +1,99 @@
+/*=========================================================================
+
+  Program:   Lib Point Matcher Plugin for ParaView
+  Module:    vtkPM${filterName}.cxx
+
+  Copyright (c) Ellon Paiva Mendes
+  All rights reserved.
+  See LICENSE file for details.
+
+=========================================================================*/
+#include "vtkPM${filterName}.h"
+#include "vtkPMConversions.h"
+
+#include "vtkPolyData.h"
+#include "vtkPointData.h"
+#include "vtkInformation.h"
+#include "vtkInformationVector.h"
+#include "vtkObjectFactory.h"
+#include "vtkStreamingDemandDrivenPipeline.h"
+#include "vtkSmartPointer.h"
+#include "vtkNew.h"
+
+typedef vtkPMConversions::PM PM;
+
+//----------------------------------------------------------------------------
+vtkStandardNewMacro(vtkPM${filterName});
+
+//----------------------------------------------------------------------------
+vtkPM${filterName}::vtkPM${filterName}()
+{
+% for property in filterProperties:
+<%
+    propName, _, propDefaultValue = property
+    PropName = propName[0].upper() + propName[1:]
+%>\
+  this->${PropName} = ${parse_value(propDefaultValue)};
+% endfor
+  this->SetNumberOfInputPorts(1);
+  this->SetNumberOfOutputPorts(1);
+}
+
+//----------------------------------------------------------------------------
+vtkPM${filterName}::~vtkPM${filterName}()
+{
+}
+
+//----------------------------------------------------------------------------
+int vtkPM${filterName}::RequestData(
+  vtkInformation* vtkNotUsed(request),
+  vtkInformationVector **inputVector,
+  vtkInformationVector *outputVector)
+{
+  // get input and output data objects
+  vtkInformation *inInfo = inputVector[0]->GetInformationObject(0);
+  vtkPolyData *input = vtkPolyData::SafeDownCast(inInfo->Get(vtkDataObject::DATA_OBJECT()));
+  vtkInformation *outInfo = outputVector->GetInformationObject(0);
+  vtkPolyData *output = vtkPolyData::SafeDownCast(outInfo->Get(vtkDataObject::DATA_OBJECT()));
+
+  // configure the filter
+  PointMatcherSupport::Parametrizable::Parameters params;
+  std::string name = "vtkPM${filterName}";
+% for property in filterProperties:
+<%
+    propName, _, _ = property
+    PropName = propName[0].upper() + propName[1:]
+%>\
+  params["${propName}"] = boost::lexical_cast<std::string>(this->${PropName});
+% endfor
+  PM::DataPointsFilter* PM_filter = 
+    PM::get().DataPointsFilterRegistrar.create(name, params);
+
+  // perform fix step sampling
+  boost::shared_ptr<PM::DataPoints> cloud = vtkPMConversions::DataPointsFromPolyData(input);
+  PM_filter->inPlaceFilter(*cloud);
+
+  // store output
+  output->ShallowCopy(vtkPMConversions::PolyDataFromDataPoints(*cloud));
+
+  return 1;
+}
+
+//----------------------------------------------------------------------------
+void vtkPM${filterName}::PrintSelf(ostream& os, vtkIndent indent)
+{
+  this->Superclass::PrintSelf(os,indent);
+}
+<%def name="parse_value(value)">\
+% if value == '':
+""\
+% elif value == True:
+true\
+% elif value == False:
+false\
+% elif value == 'inf':
+std::numeric_limits<double>::infinity()\
+% else:
+${value}\
+% endif
+</%def>

@@ -1,0 +1,62 @@
+/*=========================================================================
+
+  Program:   Lib Point Matcher Plugin for ParaView
+  Module:    vtkPM${filterName}.h
+
+  Copyright (c) Ellon Paiva Mendes
+  All rights reserved.
+  See LICENSE file for details.
+
+=========================================================================*/
+// .NAME vtkPM${filterName} -
+// .SECTION Description
+//
+
+#ifndef __vtkPM${filterName}_h
+#define __vtkPM${filterName}_h
+
+#include <vtkPolyDataAlgorithm.h>
+#include <vtkPMFiltersModule.h>
+
+class  VTKPMFILTERS_EXPORT vtkPM${filterName} : public vtkPolyDataAlgorithm
+{
+public:
+  vtkTypeMacro(vtkPM${filterName}, vtkPolyDataAlgorithm);
+  void PrintSelf(ostream& os, vtkIndent indent);
+
+  static vtkPM${filterName} *New();
+
+% for property in filterProperties:
+<%
+    propName, propType, _ = property
+    PropName = propName[0].upper() + propName[1:]
+%>\
+  vtkSetMacro(${PropName}, ${propType});
+  vtkGetMacro(${PropName}, ${propType});
+
+% endfor
+protected:
+
+% for property in filterProperties:
+<%
+    propName, propType, _ = property
+    PropName = propName[0].upper() + propName[1:]
+%>\
+  ${propType} ${PropName};
+% endfor
+
+  virtual int RequestData(vtkInformation *request,
+                          vtkInformationVector **inputVector,
+                          vtkInformationVector *outputVector);
+
+  vtkPM${filterName}();
+  virtual ~vtkPM${filterName}();
+
+private:
+  vtkPM${filterName}(const vtkPM${filterName}&);  // Not implemented.
+  void operator=(const vtkPM${filterName}&);  // Not implemented.
+};
+
+#endif
+
+
