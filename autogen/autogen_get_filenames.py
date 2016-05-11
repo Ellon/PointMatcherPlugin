@@ -22,6 +22,7 @@ else:
 
 filenames = []
 for filterName in filter_dict:
-	filenames.append(os.path.join(base_dir,'vtkPM'+filterName+'.'+extension))
+	if (extension == 'xml' and 'xml_info' in filter_dict[filterName]) or extension != 'xml':
+		filenames.append(os.path.join(base_dir,'vtkPM'+filterName+'.'+extension))
 
 print(';'.join(filenames), end="")
