@@ -17,6 +17,9 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 option(AUTOGEN_SOURCES "If we should auto-generate for filters from a yaml file" OFF)
 if(AUTOGEN_SOURCES)
+  include(cmake/find_python_module.cmake)
+  find_python_module(yaml REQUIRED)
+  find_python_module(mako REQUIRED)
   set(AUTOGEN_SOURCES_YAML_FILE "${CMAKE_CURRENT_SOURCE_DIR}/autogen/filters.yaml" CACHE STRING "Filters definition file to be used by auto-generation")
   file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/autogen_files)
   # Get auto-generated filenames
