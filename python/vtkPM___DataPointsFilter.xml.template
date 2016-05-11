@@ -1,0 +1,106 @@
+<%
+    def isstring(s):
+        import sys
+        if (sys.version_info[0] == 3):
+            return isinstance(s, str)
+        return isinstance(s, basestring)
+%>\
+<ServerManagerConfiguration>
+  <ProxyGroup name="filters">
+    <SourceProxy name="PM${filterName}" class="vtkPM${filterName}" label="PM ${label_from_filter_name(filterName)}">
+      <Documentation
+         short_help="${filterXmlInfo['short_help']}"
+         long_help="${filterXmlInfo['long_help']}">
+      </Documentation>
+
+      <InputProperty
+         name="Input"
+         port_index="0"
+         command="SetInputConnection">
+        <ProxyGroupDomain name="groups">
+          <Group name="sources"/>
+          <Group name="filters"/>
+        </ProxyGroupDomain>
+        <DataTypeDomain name="input_type">
+          <DataType value="vtkPolyData"/>
+        </DataTypeDomain>
+        <Documentation>
+          Set the input poly data
+        </Documentation>
+      </InputProperty>
+
+% for property in filterProperties:
+<%
+    if len(property) == 3:
+        propName, propType, propDefaultValue = property
+    else:
+        propName, propType, propDefaultValue, propMinValue, propMaxValue = property
+    PropName = propName[0].upper() + propName[1:]
+%>
+% if propType == 'unsigned' or propType == 'int' or propType == 'bool':
+    <IntVectorProperty name="${PropName}"
+                       command="Set${PropName}"
+                       number_of_elements="1"
+                       default_values="${parse_value(propDefaultValue)}">
+% if propType == 'bool':
+      <BooleanDomain name="bool"/>
+% endif
+% if len(property) == 5 and (not isstring(propMinValue) or not isstring(propMaxValue)):
+      <IntRangeDomain name="range" \
+% if not isstring(propMinValue):
+min="${parse_value(propMinValue)}" \
+% endif
+% if not isstring(propMaxValue):
+max="${parse_value(propMaxValue)}" \
+% endif
+/>
+% endif
+    </IntVectorProperty>
+% elif propType == 'double':
+    <DoubleVectorProperty name="${PropName}"
+                          command="Set${PropName}"
+                          number_of_elements="1"
+                          default_values="${parse_value(propDefaultValue)}">
+% if len(property) == 5 and (not isstring(propMinValue) or not isstring(propMaxValue)):
+      <DoubleRangeDomain name="range" \
+% if not isstring(propMinValue):
+min="${parse_value(propMinValue)}" \
+% endif
+% if not isstring(propMaxValue):
+max="${parse_value(propMaxValue)}" \
+% endif
+/>
+% endif
+    </DoubleVectorProperty>
+% else:
+    ERROR TYPE "${propType}" NOT SUPPORTED
+% endif                   
+% endfor
+
+    <Hints> 
+      <ShowInMenu category="Point Matcher" />
+    </Hints>
+
+   </SourceProxy>
+  </ProxyGroup>
+</ServerManagerConfiguration>
+<%def name="parse_value(value)">\
+% if value == True:
+1\
+% elif value == False:
+0\
+% elif value == 'inf':
+2147483647\
+% elif value == '-inf':
+-2147483646\
+% else:
+${value}\
+% endif
+</%def>\
+<%def name="label_from_filter_name(filterName)">\
+<%
+    import re
+    labelName = re.sub(r"(\w)([A-Z])", r"\1 \2", filterName)
+%>\
+${labelName}\
+</%def>
