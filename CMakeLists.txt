@@ -15,25 +15,25 @@ include_directories(${VTK_PYTHON_INCLUDE_DIR})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
-option(AUTOGEN_SOURCES "If we should auto-generate for filters from a yaml file" OFF)
-if(AUTOGEN_SOURCES)
+option(ENABLE_AUTOGEN "If we should auto-generate for filters from a yaml file" OFF)
+if(ENABLE_AUTOGEN)
   include(cmake/find_python_module.cmake)
   find_python_module(yaml REQUIRED)
   find_python_module(mako REQUIRED)
-  set(AUTOGEN_SOURCES_YAML_FILE "${CMAKE_CURRENT_SOURCE_DIR}/autogen/filters.yaml" CACHE STRING "Filters definition file to be used by auto-generation")
+  set(AUTOGEN_YAML_FILE "${CMAKE_CURRENT_SOURCE_DIR}/autogen/filters.yaml" CACHE STRING "Filters definition file to be used by auto-generation")
   file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/autogen_files)
   # Get auto-generated filenames
-  execute_process( COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/autogen/autogen_get_filenames.py ${AUTOGEN_SOURCES_YAML_FILE} xml ${CMAKE_CURRENT_BINARY_DIR}/autogen_files
+  execute_process( COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/autogen/autogen_get_filenames.py ${AUTOGEN_YAML_FILE} xml ${CMAKE_CURRENT_BINARY_DIR}/autogen_files
                    OUTPUT_VARIABLE AUTOGEN_XML_FILES )
-  execute_process( COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/autogen/autogen_get_filenames.py ${AUTOGEN_SOURCES_YAML_FILE} h ${CMAKE_CURRENT_BINARY_DIR}/autogen_files
+  execute_process( COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/autogen/autogen_get_filenames.py ${AUTOGEN_YAML_FILE} h ${CMAKE_CURRENT_BINARY_DIR}/autogen_files
                    OUTPUT_VARIABLE AUTOGEN_HEADER_FILES )
-  execute_process( COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/autogen/autogen_get_filenames.py ${AUTOGEN_SOURCES_YAML_FILE} cxx ${CMAKE_CURRENT_BINARY_DIR}/autogen_files
+  execute_process( COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/autogen/autogen_get_filenames.py ${AUTOGEN_YAML_FILE} cxx ${CMAKE_CURRENT_BINARY_DIR}/autogen_files
                    OUTPUT_VARIABLE AUTOGEN_CXX_FILES )
   # Add command to auto generate files
   ADD_CUSTOM_COMMAND(
    OUTPUT ${AUTOGEN_XML_FILES} ${AUTOGEN_HEADER_FILES} ${AUTOGEN_CXX_FILES} 
-   COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/autogen/autogen_generate_files.py ${AUTOGEN_SOURCES_YAML_FILE} ${CMAKE_CURRENT_SOURCE_DIR}/autogen ${CMAKE_CURRENT_BINARY_DIR}/autogen_files 
-   DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/autogen/autogen_generate_files.py ${AUTOGEN_SOURCES_YAML_FILE} ${CMAKE_CURRENT_SOURCE_DIR}/autogen/vtkPM___DataPointsFilter.h.template ${CMAKE_CURRENT_SOURCE_DIR}/autogen/vtkPM___DataPointsFilter.cxx.template ${CMAKE_CURRENT_SOURCE_DIR}/autogen/vtkPM___DataPointsFilter.xml.template 
+   COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/autogen/autogen_generate_files.py ${AUTOGEN_YAML_FILE} ${CMAKE_CURRENT_SOURCE_DIR}/autogen ${CMAKE_CURRENT_BINARY_DIR}/autogen_files 
+   DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/autogen/autogen_generate_files.py ${AUTOGEN_YAML_FILE} ${CMAKE_CURRENT_SOURCE_DIR}/autogen/vtkPM___DataPointsFilter.h.template ${CMAKE_CURRENT_SOURCE_DIR}/autogen/vtkPM___DataPointsFilter.cxx.template ${CMAKE_CURRENT_SOURCE_DIR}/autogen/vtkPM___DataPointsFilter.xml.template 
    )
   # Add directory with generated headers as include directory
   include_directories(${CMAKE_CURRENT_BINARY_DIR}/autogen_files)
@@ -66,7 +66,7 @@ list(APPEND servermanager_xml
   xml/vtkPMOrientNormalsDataPointsFilter.xml
   )
 
-if(AUTOGEN_SOURCES)
+if(ENABLE_AUTOGEN)
   list(APPEND servermanager_sources ${AUTOGEN_CXX_FILES})
   list(APPEND servermanager_xml ${AUTOGEN_XML_FILES})
 endif()
