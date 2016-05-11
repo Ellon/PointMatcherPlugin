@@ -28,21 +28,27 @@ public:
 
 % for property in filterProperties:
 <%
-    propName, propType, _ = property
+    if len(property) == 3:
+        propName, propType, _ = property
+    else:
+        propName, propType, _, _, _ = property
     PropName = propName[0].upper() + propName[1:]
 %>\
-  vtkSetMacro(${PropName}, ${propType});
-  vtkGetMacro(${PropName}, ${propType});
+  vtkSetMacro(${PropName}, ${parse_type(propType)});
+  vtkGetMacro(${PropName}, ${parse_type(propType)});
 
 % endfor
 protected:
 
 % for property in filterProperties:
 <%
-    propName, propType, _ = property
+    if len(property) == 3:
+        propName, propType, _ = property
+    else:
+        propName, propType, _, _, _ = property
     PropName = propName[0].upper() + propName[1:]
 %>\
-  ${propType} ${PropName};
+  ${parse_type(propType)} ${PropName};
 % endfor
 
   virtual int RequestData(vtkInformation *request,
@@ -58,5 +64,10 @@ private:
 };
 
 #endif
-
-
+<%def name="parse_type(type)">\
+% if type == 'string':
+std::string\
+% else:
+${type}\
+% endif
+</%def>

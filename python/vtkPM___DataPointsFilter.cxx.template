@@ -30,7 +30,10 @@ vtkPM${filterName}::vtkPM${filterName}()
 {
 % for property in filterProperties:
 <%
-    propName, _, propDefaultValue = property
+    if len(property) == 3:
+        propName, _, propDefaultValue = property
+    else:
+        propName, _, propDefaultValue, _, _ = property
     PropName = propName[0].upper() + propName[1:]
 %>\
   this->${PropName} = ${parse_value(propDefaultValue)};
@@ -61,7 +64,7 @@ int vtkPM${filterName}::RequestData(
   std::string name = "vtkPM${filterName}";
 % for property in filterProperties:
 <%
-    propName, _, _ = property
+    propName = property[0]
     PropName = propName[0].upper() + propName[1:]
 %>\
   params["${propName}"] = boost::lexical_cast<std::string>(this->${PropName});
