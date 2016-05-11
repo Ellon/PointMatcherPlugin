@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# usage: ./generate_datafilters_source_files.py <filters.yaml> [template-dir] [output-dir] [1|0]
+# usage: ./autogen_generate_files.py <filters.yaml> [template-dir] [output-dir] [1|0]
 import sys
 import os
 import yaml
