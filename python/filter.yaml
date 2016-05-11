@@ -1,36 +1,57 @@
-# use:
+# To generate automatically a filter, you should define the filter properties
+# following the model below. If you want to create also the xml file, add the
+# xml_info as showed below. You can create several filter using the same yaml
+# file.
+# 
 # <filterName>:
-#   - [<property1Name>, <property1Type>, <property1DefaultValue>]
-#   - [<property2Name>, <property2Type>, <property2DefaultValue>]
-#   - ...
+#   properties:
+#     - [<property1Name>, <property1Type>, <property1DefaultValue>, <property1MinValue>, <property1MaxValue>]
+#     - [<property2Name>, <property2Type>, <property2DefaultValue>, <property2MinValue>, <property2MaxValue>]
+#     - ...
+#   xml_info:
+#     short_help: <short help text>
+#     long_help: <long help text>
+#
 
 BoundingBoxDataPointsFilter:
-  - [xMin, double, -1]
-  - [xMax, double,  1]
-  - [yMin, double, -1]
-  - [yMax, double,  1]
-  - [zMin, double, -1]
-  - [zMax, double,  1]
+  properties:
+    - [xMin, double, -1]
+    - [xMax, double,  1]
+    - [yMin, double, -1]
+    - [yMax, double,  1]
+    - [zMin, double, -1]
+    - [zMax, double,  1]
+  xml_info:
+    short_help: "Remove points laying in a box"
+    long_help: "Subsampling. Remove points laying in a bounding box which is axis aligned."
 
 CutAtDescriptorThresholdDataPointsFilter:
-  - [descName,       string,  ""  ]
-  - [useLargerThan,  bool,    true]
-  - [threshold,      double,  0.0 ]
+  properties:
+    - [descName,       string,  ""  ]
+    - [useLargerThan,  bool,    true]
+    - [threshold,      double,  0.0 ]
+  xml_info:
+    short_help: "a short help"
+    long_help: "a long help"
 
 ElipsoidsDataPointsFilter:
-  - [ratio, double, 0.5]
-  - [knn, unsigned, 7]
-  - [samplingMethod, bool, false]
-  - [maxBoxDim, double, inf]
-  - [averageExistingDescriptors, bool, true]
-  - [maxTimeWindow, double, inf]
-  - [minPlanarity, double, 0.0]
-  - [keepNormals, bool, true]
-  - [keepDensities, bool, false]
-  - [keepEigenValues, bool, false]
-  - [keepEigenVectors, bool, false]
-  - [keepMeans, bool, false]
-  - [keepCovariances, bool, false]
-  - [keepWeights, bool, false]
-  - [keepShapes, bool, false]
-  - [keepIndices, bool, false]
+  properties:
+    - [ratio,                      double,   0.5,  -inf, inf]
+    - [knn,                        unsigned, 7              ]
+    - [samplingMethod,             bool,     false          ]
+    - [maxBoxDim,                  double,   inf            ]
+    - [averageExistingDescriptors, bool,     true           ]
+    - [maxTimeWindow,              double,   inf            ]
+    - [minPlanarity,               double,   0.0            ]
+    - [keepNormals,                bool,     true           ]
+    - [keepDensities,              bool,     false          ]
+    - [keepEigenValues,            bool,     false          ]
+    - [keepEigenVectors,           bool,     false          ]
+    - [keepMeans,                  bool,     false          ]
+    - [keepCovariances,            bool,     false          ]
+    - [keepWeights,                bool,     false          ]
+    - [keepShapes,                 bool,     false          ]
+    - [keepIndices,                bool,     false          ]
+  xml_info:
+    short_help: "a short help"
+    long_help: "a long help"
