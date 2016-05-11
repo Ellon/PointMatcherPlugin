@@ -64,6 +64,7 @@ private:
 };
 
 #endif
+
 <%def name="parse_type(type)">\
 % if type == 'string':
 std::string\

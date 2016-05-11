@@ -87,6 +87,7 @@ void vtkPM${filterName}::PrintSelf(ostream& os, vtkIndent indent)
 {
   this->Superclass::PrintSelf(os,indent);
 }
+
 <%def name="parse_value(value)">\
 % if value == '':
 ""\

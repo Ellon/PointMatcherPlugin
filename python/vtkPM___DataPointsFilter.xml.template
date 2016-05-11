@@ -84,6 +84,7 @@ max="${parse_value(propMaxValue)}" \
    </SourceProxy>
   </ProxyGroup>
 </ServerManagerConfiguration>
+
 <%def name="parse_value(value)">\
 % if value == True:
 1\
