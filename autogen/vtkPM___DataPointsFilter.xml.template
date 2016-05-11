@@ -72,8 +72,16 @@ max="${parse_value(propMaxValue)}" \
 />
 % endif
     </DoubleVectorProperty>
+% elif propType == 'string':
+    <StringVectorProperty name="${PropName}"
+                        command="Set${PropName}"
+                        number_of_elements="1"
+                        default_values="1">
+    </StringVectorProperty>
 % else:
-    ERROR TYPE "${propType}" NOT SUPPORTED
+<%
+    raise RuntimeError('XML block for ' + propType + 'type is not implemented')
+%>
 % endif                   
 % endfor
 
