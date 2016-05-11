@@ -19,14 +19,20 @@ option(AUTOGEN_SOURCES "If we should auto-generate for filters from a yaml file"
 if(AUTOGEN_SOURCES)
   set(AUTOGEN_SOURCES_YAML_FILE "${CMAKE_CURRENT_SOURCE_DIR}/python/filters.yaml" CACHE STRING "Filters definition file to be used by auto-generation")
   file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/generated_files)
-  message(STATUS "-- Generating filter sources...")
-  EXECUTE_PROCESS( COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/python/generate_datafilters_source_files.py ${AUTOGEN_SOURCES_YAML_FILE} ${CMAKE_CURRENT_SOURCE_DIR}/python ${CMAKE_CURRENT_BINARY_DIR}/generated_files 
-                   RESULT_VARIABLE AUTOGEN_RESULT )
-  if(AUTOGEN_RESULT)
-    message(FATAL_ERROR "Error auto-generating source files! Please check if the the yaml filepath points to a valid filter definition file.")
-  else()
-    message(STATUS "   -- OK")
-  endif()
+  # Get auto-generated filenames
+  execute_process( COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/python/autogen_get_filenames.py ${AUTOGEN_SOURCES_YAML_FILE} xml ${CMAKE_CURRENT_BINARY_DIR}/generated_files
+                   OUTPUT_VARIABLE AUTOGEN_XML_FILES )
+  execute_process( COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/python/autogen_get_filenames.py ${AUTOGEN_SOURCES_YAML_FILE} h ${CMAKE_CURRENT_BINARY_DIR}/generated_files
+                   OUTPUT_VARIABLE AUTOGEN_HEADER_FILES )
+  execute_process( COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/python/autogen_get_filenames.py ${AUTOGEN_SOURCES_YAML_FILE} cxx ${CMAKE_CURRENT_BINARY_DIR}/generated_files
+                   OUTPUT_VARIABLE AUTOGEN_CXX_FILES )
+  # Add command to auto generate files
+  ADD_CUSTOM_COMMAND(
+   OUTPUT ${AUTOGEN_XML_FILES} ${AUTOGEN_HEADER_FILES} ${AUTOGEN_CXX_FILES} 
+   COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/python/generate_datafilters_source_files.py ${AUTOGEN_SOURCES_YAML_FILE} ${CMAKE_CURRENT_SOURCE_DIR}/python ${CMAKE_CURRENT_BINARY_DIR}/generated_files 
+   DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/python/generate_datafilters_source_files.py ${AUTOGEN_SOURCES_YAML_FILE} ${CMAKE_CURRENT_SOURCE_DIR}/python/vtkPM___DataPointsFilter.h.template ${CMAKE_CURRENT_SOURCE_DIR}/python/vtkPM___DataPointsFilter.cxx.template ${CMAKE_CURRENT_SOURCE_DIR}/python/vtkPM___DataPointsFilter.xml.template 
+   )
+  # Add directory with generated headers as include directory
   include_directories(${CMAKE_CURRENT_BINARY_DIR}/generated_files)
 endif()
 
@@ -48,11 +54,6 @@ list(APPEND servermanager_sources
   vtkPMOrientNormalsDataPointsFilter.cxx
   )
 
-if(AUTOGEN_SOURCES)
-  file(GLOB AUTOGEN_CXX_FILES ${CMAKE_CURRENT_BINARY_DIR}/generated_files/*.cxx )
-  list(APPEND servermanager_sources ${AUTOGEN_CXX_FILES})
-endif()
-
 list(APPEND servermanager_xml
   xml/vtkPMFixStepSamplingDataPointsFilter.xml
   xml/vtkPMSurfaceNormalDataPointsFilter.xml
@@ -63,7 +64,7 @@ list(APPEND servermanager_xml
   )
 
 if(AUTOGEN_SOURCES)
-  file(GLOB AUTOGEN_XML_FILES ${CMAKE_CURRENT_BINARY_DIR}/generated_files/*.xml )
+  list(APPEND servermanager_sources ${AUTOGEN_CXX_FILES})
   list(APPEND servermanager_xml ${AUTOGEN_XML_FILES})
 endif()
 
