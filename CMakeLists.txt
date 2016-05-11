@@ -15,6 +15,21 @@ include_directories(${VTK_PYTHON_INCLUDE_DIR})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
+option(AUTOGEN_SOURCES "If we should auto-generate for filters from a yaml file" OFF)
+if(AUTOGEN_SOURCES)
+  set(AUTOGEN_SOURCES_YAML_FILE "${CMAKE_CURRENT_SOURCE_DIR}/python/filters.yaml" CACHE STRING "Filters definition file to be used by auto-generation")
+  file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/generated_files)
+  message(STATUS "-- Generating filter sources...")
+  EXECUTE_PROCESS( COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/python/generate_datafilters_source_files.py ${AUTOGEN_SOURCES_YAML_FILE} ${CMAKE_CURRENT_SOURCE_DIR}/python ${CMAKE_CURRENT_BINARY_DIR}/generated_files 
+                   RESULT_VARIABLE AUTOGEN_RESULT )
+  if(AUTOGEN_RESULT)
+    message(FATAL_ERROR "Error auto-generating source files! Please check if the the yaml filepath points to a valid filter definition file.")
+  else()
+    message(STATUS "   -- OK")
+  endif()
+  include_directories(${CMAKE_CURRENT_BINARY_DIR}/generated_files)
+endif()
+
 set(gui_sources)
 set(gui_interfaces)
 set(gui_xml)
@@ -33,6 +48,11 @@ list(APPEND servermanager_sources
   vtkPMOrientNormalsDataPointsFilter.cxx
   )
 
+if(AUTOGEN_SOURCES)
+  file(GLOB AUTOGEN_CXX_FILES ${CMAKE_CURRENT_BINARY_DIR}/generated_files/*.cxx )
+  list(APPEND servermanager_sources ${AUTOGEN_CXX_FILES})
+endif()
+
 list(APPEND servermanager_xml
   xml/vtkPMFixStepSamplingDataPointsFilter.xml
   xml/vtkPMSurfaceNormalDataPointsFilter.xml
@@ -41,6 +61,11 @@ list(APPEND servermanager_xml
   xml/vtkPMObservationDirectionDataPointsFilter.xml
   xml/vtkPMOrientNormalsDataPointsFilter.xml
   )
+
+if(AUTOGEN_SOURCES)
+  file(GLOB AUTOGEN_XML_FILES ${CMAKE_CURRENT_BINARY_DIR}/generated_files/*.xml )
+  list(APPEND servermanager_xml ${AUTOGEN_XML_FILES})
+endif()
 
 list(APPEND server_deps
   ${VTK_LIBRARIES}
