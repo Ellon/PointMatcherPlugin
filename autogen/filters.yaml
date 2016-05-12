@@ -12,46 +12,218 @@
 #     short_help: <short help text>
 #     long_help: <long help text>
 #
-
 BoundingBoxDataPointsFilter:
   properties:
-    - [xMin, double, -1]
-    - [xMax, double,  1]
-    - [yMin, double, -1]
-    - [yMax, double,  1]
-    - [zMin, double, -1]
-    - [zMax, double,  1]
-  xml_info:
-    short_help: "Remove points laying in a box"
-    long_help: "Subsampling. Remove points laying in a bounding box which is axis aligned."
-
+  - [xMin, int, -1]
+  - [xMax, int, 1]
+  - [yMin, int, -1]
+  - [yMax, int, 1]
+  - [zMin, int, -1]
+  - [zMax, int, 1]
+  - [removeInside, bool, 1, 0, 1]
+  xml_info: {long_help: Subsampling. Remove points laying in a bounding box which
+      is axis aligned., short_help: Subsampling. Remove points laying in a bounding
+      box which is axis aligned.}
 CutAtDescriptorThresholdDataPointsFilter:
   properties:
-    - [descName,       string,  ""  ]
-    - [useLargerThan,  bool,    true]
-    - [threshold,      double,  0.0 ]
-  xml_info:
-    short_help: "a short help"
-    long_help: "a long help"
-
+  - [descName, string, none]
+  - [useLargerThan, bool, 1, 0, 1]
+  - [threshold, int, 0]
+  xml_info: {long_help: Subsampling. Cut points with value of a given descriptor above
+      or below a given threshold., short_help: Subsampling. Cut points with value
+      of a given descriptor above or below a given threshold.}
 ElipsoidsDataPointsFilter:
   properties:
-    - [ratio,                      double,   0.5,  -inf, inf]
-    - [knn,                        unsigned, 7              ]
-    - [samplingMethod,             bool,     false          ]
-    - [maxBoxDim,                  double,   inf            ]
-    - [averageExistingDescriptors, bool,     true           ]
-    - [maxTimeWindow,              double,   inf            ]
-    - [minPlanarity,               double,   0.0            ]
-    - [keepNormals,                bool,     true           ]
-    - [keepDensities,              bool,     false          ]
-    - [keepEigenValues,            bool,     false          ]
-    - [keepEigenVectors,           bool,     false          ]
-    - [keepMeans,                  bool,     false          ]
-    - [keepCovariances,            bool,     false          ]
-    - [keepWeights,                bool,     false          ]
-    - [keepShapes,                 bool,     false          ]
-    - [keepIndices,                bool,     false          ]
-  xml_info:
-    short_help: "a short help"
-    long_help: "a long help"
+  - [ratio, double, 0.5, 1.0e-07, 0.9999999]
+  - [knn, unsigned, 7, 3, 2147483647]
+  - [samplingMethod, bool, 0, 0, 1]
+  - [maxBoxDim, double, .inf]
+  - [averageExistingDescriptors, int, 1]
+  - [maxTimeWindow, double, .inf]
+  - [minPlanarity, int, 0]
+  - [keepNormals, int, 1]
+  - [keepDensities, int, 0]
+  - [keepEigenValues, int, 0]
+  - [keepEigenVectors, int, 0]
+  - [keepMeans, int, 0]
+  - [keepCovariances, int, 0]
+  - [keepWeights, int, 0]
+  - [keepShapes, int, 0]
+  - [keepIndices, int, 0]
+  xml_info: {long_help: 'Subsampling, Surfels (Elipsoids). This filter decomposes
+      the point-cloud space in boxes, by recursively splitting the cloud through axis-aligned
+      hyperplanes such as to maximize the evenness of the aspect ratio of the box.
+      When the number of points in a box reaches a value knn or lower, the filter
+      computes the center of mass of these points and its normal by taking the eigenvector
+      corresponding to the smallest eigenvalue of all points in the box.', short_help: 'Subsampling,
+      Surfels (Elipsoids). This filter decomposes the point-cloud space in boxes,
+      by recursively splitting the cloud through axis-aligned hyperplanes such as
+      to maximize the evenness of the aspect ratio of the box. When the number of
+      points in a box reaches a value knn or lower, the filter computes the center
+      of mass of these points and its normal by taking the eigenvector corresponding
+      to the smallest eigenvalue of all points in the box.'}
+FixStepSamplingDataPointsFilter:
+  properties:
+  - [startStep, unsigned, 10, 1, 2147483647]
+  - [endStep, unsigned, 10, 1, 2147483647]
+  - [stepMult, double, 1.0, 1.0e-07, .inf]
+  xml_info: {long_help: 'Subsampling. This filter reduces the size of the point cloud
+      by only keeping one point over step ones; with step varying in time from startStep
+      to endStep, each iteration getting multiplied by stepMult. If use as prefilter
+      (i.e. before the iterations), only startStep is used.', short_help: 'Subsampling.
+      This filter reduces the size of the point cloud by only keeping one point over
+      step ones; with step varying in time from startStep to endStep, each iteration
+      getting multiplied by stepMult. If use as prefilter (i.e. before the iterations),
+      only startStep is used.'}
+GestaltDataPointsFilter:
+  properties:
+  - [ratio, double, 0.1, 1.0e-07, 0.9999999]
+  - [radius, double, 5.0, 0.1, 2147483647.0]
+  - [knn, unsigned, 7, 3, 2147483647]
+  - [vSizeX, double, 1.0]
+  - [vSizeY, double, 1.0]
+  - [vSizeZ, double, 1.0]
+  - [keepMeans, int, 0]
+  - [maxBoxDim, double, .inf]
+  - [averageExistingDescriptors, int, 1]
+  - [maxTimeWindow, double, .inf]
+  - [keepNormals, int, 1]
+  - [keepEigenValues, int, 0]
+  - [keepEigenVectors, int, 0]
+  - [keepCovariances, int, 0]
+  - [keepGestaltFeatures, int, 1]
+  xml_info: {long_help: Gestalt descriptors filter., short_help: Gestalt descriptors
+      filter.}
+IdentityDataPointsFilter:
+  properties: []
+  xml_info: {long_help: Does nothing., short_help: Does nothing.}
+MaxDensityDataPointsFilter:
+  properties:
+  - [maxDensity, double, 10.0, 1.0e-07, .inf]
+  xml_info: {long_help: Subsampling. Reduce the points number by randomly removing
+      points with a density highler than a treshold., short_help: Subsampling. Reduce
+      the points number by randomly removing points with a density highler than a
+      treshold.}
+MaxDistDataPointsFilter:
+  properties:
+  - [dim, int, -1, -1, 2]
+  - [maxDist, int, 1]
+  xml_info: {long_help: 'Subsampling. Filter points beyond a maximum distance measured
+      on a specific axis. If dim is set to -1, points are filtered based on a maximum
+      radius.', short_help: 'Subsampling. Filter points beyond a maximum distance
+      measured on a specific axis. If dim is set to -1, points are filtered based
+      on a maximum radius.'}
+MaxPointCountDataPointsFilter:
+  properties:
+  - [seed, unsigned, 1, 0, 2147483647]
+  - [maxCount, unsigned, 1000, 0, 2147483647]
+  xml_info: {long_help: 'Conditional subsampling. This filter reduces the size of
+      the point cloud by randomly dropping points if their number is above maxCount.
+      Based on [1]', short_help: 'Conditional subsampling. This filter reduces the
+      size of the point cloud by randomly dropping points if their number is above
+      maxCount. Based on [1]'}
+MaxQuantileOnAxisDataPointsFilter:
+  properties:
+  - [dim, unsigned, 0, 0, 2]
+  - [ratio, double, 0.5, 1.0e-07, 0.9999999]
+  xml_info: {long_help: Subsampling. Filter points beyond a maximum quantile measured
+      on a specific axis., short_help: Subsampling. Filter points beyond a maximum
+      quantile measured on a specific axis.}
+MinDistDataPointsFilter:
+  properties:
+  - [dim, int, -1, -1, 2]
+  - [minDist, int, 1]
+  xml_info: {long_help: 'Subsampling. Filter points before a minimum distance measured
+      on a specific axis. If dim is set to -1, points are filtered based on a minimum
+      radius.', short_help: 'Subsampling. Filter points before a minimum distance
+      measured on a specific axis. If dim is set to -1, points are filtered based
+      on a minimum radius.'}
+ObservationDirectionDataPointsFilter:
+  properties:
+  - [x, int, 0]
+  - [y, int, 0]
+  - [z, int, 0]
+  xml_info: {long_help: 'Observation direction. This filter extracts observation directions
+      (vector from point to sensor), considering a sensor at position (x,y,z).', short_help: 'Observation
+      direction. This filter extracts observation directions (vector from point to
+      sensor), considering a sensor at position (x,y,z).'}
+OrientNormalsDataPointsFilter:
+  properties:
+  - [towardCenter, bool, 1, 0, 1]
+  xml_info: {long_help: 'Normals. Reorient normals so that they all point in the same
+      direction, with respect to the observation points.', short_help: 'Normals. Reorient
+      normals so that they all point in the same direction, with respect to the observation
+      points.'}
+RandomSamplingDataPointsFilter:
+  properties:
+  - [prob, double, 0.75, 0.0, 1.0]
+  xml_info: {long_help: 'Subsampling. This filter reduces the size of the point cloud
+      by randomly dropping points. Based on [1]', short_help: 'Subsampling. This filter
+      reduces the size of the point cloud by randomly dropping points. Based on [1]'}
+RemoveNaNDataPointsFilter:
+  properties: []
+  xml_info: {long_help: Remove points having NaN as coordinate., short_help: Remove
+      points having NaN as coordinate.}
+SamplingSurfaceNormalDataPointsFilter:
+  properties:
+  - [ratio, double, 0.5, 1.0e-07, 1.0]
+  - [knn, unsigned, 7, 3, 2147483647]
+  - [samplingMethod, bool, 0, 0, 1]
+  - [maxBoxDim, double, .inf]
+  - [averageExistingDescriptors, int, 1]
+  - [keepNormals, int, 1]
+  - [keepDensities, int, 0]
+  - [keepEigenValues, int, 0]
+  - [keepEigenVectors, int, 0]
+  xml_info: {long_help: 'Subsampling, Normals. This filter decomposes the point-cloud
+      space in boxes, by recursively splitting the cloud through axis-aligned hyperplanes
+      such as to maximize the evenness of the aspect ratio of the box. When the number
+      of points in a box reaches a value knn or lower, the filter computes the center
+      of mass of these points and its normal by taking the eigenvector corresponding
+      to the smallest eigenvalue of all points in the box.', short_help: 'Subsampling,
+      Normals. This filter decomposes the point-cloud space in boxes, by recursively
+      splitting the cloud through axis-aligned hyperplanes such as to maximize the
+      evenness of the aspect ratio of the box. When the number of points in a box
+      reaches a value knn or lower, the filter computes the center of mass of these
+      points and its normal by taking the eigenvector corresponding to the smallest
+      eigenvalue of all points in the box.'}
+ShadowDataPointsFilter:
+  properties:
+  - [eps, double, 0.1, 0.0, 3.1416]
+  xml_info: {long_help: Remove ghost points appearing on edge discontinuties. Assume
+      that the origine of the point cloud is close to where the laser center was.
+      Requires surface normal for every points, short_help: Remove ghost points appearing
+      on edge discontinuties. Assume that the origine of the point cloud is close
+      to where the laser center was. Requires surface normal for every points}
+SimpleSensorNoiseDataPointsFilter:
+  properties:
+  - [sensorType, unsigned, 0, 0, 2147483647]
+  - [gain, double, 1.0, 1.0, .inf]
+  xml_info: {long_help: 'Add a 1D descriptor named sensorNoise that would represent
+      the noise radius expressed in meter based on SICK LMS specifications [2].',
+    short_help: 'Add a 1D descriptor named sensorNoise that would represent the noise
+      radius expressed in meter based on SICK LMS specifications [2].'}
+SurfaceNormalDataPointsFilter:
+  properties:
+  - [knn, unsigned, 5, 3, 2147483647]
+  - [epsilon, double, 0.0, 0.0, .inf]
+  - [keepNormals, int, 1]
+  - [keepDensities, int, 0]
+  - [keepEigenValues, int, 0]
+  - [keepEigenVectors, int, 0]
+  - [keepMatchedIds, int, 0]
+  xml_info: {long_help: Normals. This filter extracts the normal to each point by
+      taking the eigenvector corresponding to the smallest eigenvalue of its nearest
+      neighbors., short_help: Normals. This filter extracts the normal to each point
+      by taking the eigenvector corresponding to the smallest eigenvalue of its nearest
+      neighbors.}
+VoxelGridDataPointsFilter:
+  properties:
+  - [vSizeX, double, 1.0]
+  - [vSizeY, double, 1.0]
+  - [vSizeZ, double, 1.0]
+  - [useCentroid, bool, 1, 0, 1]
+  - [averageExistingDescriptors, bool, 1, 0, 1]
+  xml_info: {long_help: Construct Voxel grid of the point cloud. Down-sample by taking
+      centroid or center of grid cells., short_help: Construct Voxel grid of the point
+      cloud. Down-sample by taking centroid or center of grid cells.}
