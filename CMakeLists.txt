@@ -26,20 +26,26 @@ if(ENABLE_AUTOGEN)
   if(ENABLE_AUTOGEN_YAML)
     set(AUTOGEN_YAML_FILE "${CMAKE_BINARY_DIR}/autogen_files/filters.yaml" CACHE STRING "Filters definition file to be auto-generated" FORCE)
     # Generate filters.yaml from pmicp -l
+    execute_process( COMMAND ${CMAKE_COMMAND} -E echo_append "-- AUTOGEN: Generating yaml with filter definitions..." )
     execute_process( COMMAND pmicp -l
                      COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/autogen/autogen_generate_yaml.py ${CMAKE_CURRENT_SOURCE_DIR}/xml ${AUTOGEN_YAML_FILE})
+    execute_process( COMMAND ${CMAKE_COMMAND} -E echo "done" )
   else()
     set(AUTOGEN_YAML_FILE "${CMAKE_CURRENT_SOURCE_DIR}/autogen/filters.yaml" CACHE STRING "Filters definition file to be used by auto-generation")
   endif()
   # Get auto-generated filenames
+  execute_process( COMMAND ${CMAKE_COMMAND} -E echo_append "-- AUTOGEN: Parsing generated filenames..." )
   execute_process( COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/autogen/autogen_get_filenames.py ${AUTOGEN_YAML_FILE} xml ${CMAKE_BINARY_DIR}/autogen_files
                    OUTPUT_VARIABLE AUTOGEN_XML_FILES )
   execute_process( COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/autogen/autogen_get_filenames.py ${AUTOGEN_YAML_FILE} h ${CMAKE_BINARY_DIR}/autogen_files
                    OUTPUT_VARIABLE AUTOGEN_HEADER_FILES )
   execute_process( COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/autogen/autogen_get_filenames.py ${AUTOGEN_YAML_FILE} cxx ${CMAKE_BINARY_DIR}/autogen_files
                    OUTPUT_VARIABLE AUTOGEN_CXX_FILES )
+  execute_process( COMMAND ${CMAKE_COMMAND} -E echo "done" )
   # auto generate files
+  execute_process( COMMAND ${CMAKE_COMMAND} -E echo_append "-- AUTOGEN: Generating files..." )
   execute_process( COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/autogen/autogen_generate_files.py ${AUTOGEN_YAML_FILE} ${CMAKE_CURRENT_SOURCE_DIR}/autogen ${CMAKE_BINARY_DIR}/autogen_files )
+  execute_process( COMMAND ${CMAKE_COMMAND} -E echo "done" )
   # Add directory with generated headers as include directory
   include_directories(${CMAKE_CURRENT_BINARY_DIR}/autogen_files)
 endif()
