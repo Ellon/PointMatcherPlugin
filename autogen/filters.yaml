@@ -67,14 +67,14 @@ FixStepSamplingDataPointsFilter:
   - [startStep, unsigned, 10, 1, 2147483647]
   - [endStep, unsigned, 10, 1, 2147483647]
   - [stepMult, double, 1.0, 1.0e-07, .inf]
-  xml_info: {long_help: 'Subsampling. This filter reduces the size of the point cloud
-      by only keeping one point over step ones; with step varying in time from startStep
-      to endStep, each iteration getting multiplied by stepMult. If use as prefilter
-      (i.e. before the iterations), only startStep is used.', short_help: 'Subsampling.
-      This filter reduces the size of the point cloud by only keeping one point over
-      step ones; with step varying in time from startStep to endStep, each iteration
-      getting multiplied by stepMult. If use as prefilter (i.e. before the iterations),
-      only startStep is used.'}
+  # xml_info: {long_help: 'Subsampling. This filter reduces the size of the point cloud
+  #     by only keeping one point over step ones; with step varying in time from startStep
+  #     to endStep, each iteration getting multiplied by stepMult. If use as prefilter
+  #     (i.e. before the iterations), only startStep is used.', short_help: 'Subsampling.
+  #     This filter reduces the size of the point cloud by only keeping one point over
+  #     step ones; with step varying in time from startStep to endStep, each iteration
+  #     getting multiplied by stepMult. If use as prefilter (i.e. before the iterations),
+  #     only startStep is used.'}
 GestaltDataPointsFilter:
   properties:
   - [ratio, double, 0.1, 1.0e-07, 0.9999999]
@@ -100,19 +100,19 @@ IdentityDataPointsFilter:
 MaxDensityDataPointsFilter:
   properties:
   - [maxDensity, double, 10.0, 1.0e-07, .inf]
-  xml_info: {long_help: Subsampling. Reduce the points number by randomly removing
-      points with a density highler than a treshold., short_help: Subsampling. Reduce
-      the points number by randomly removing points with a density highler than a
-      treshold.}
+  # xml_info: {long_help: Subsampling. Reduce the points number by randomly removing
+  #     points with a density highler than a treshold., short_help: Subsampling. Reduce
+  #     the points number by randomly removing points with a density highler than a
+  #     treshold.}
 MaxDistDataPointsFilter:
   properties:
   - [dim, int, -1, -1, 2]
   - [maxDist, int, 1]
-  xml_info: {long_help: 'Subsampling. Filter points beyond a maximum distance measured
-      on a specific axis. If dim is set to -1, points are filtered based on a maximum
-      radius.', short_help: 'Subsampling. Filter points beyond a maximum distance
-      measured on a specific axis. If dim is set to -1, points are filtered based
-      on a maximum radius.'}
+  # xml_info: {long_help: 'Subsampling. Filter points beyond a maximum distance measured
+  #     on a specific axis. If dim is set to -1, points are filtered based on a maximum
+  #     radius.', short_help: 'Subsampling. Filter points beyond a maximum distance
+  #     measured on a specific axis. If dim is set to -1, points are filtered based
+  #     on a maximum radius.'}
 MaxPointCountDataPointsFilter:
   properties:
   - [seed, unsigned, 1, 0, 2147483647]
@@ -143,17 +143,17 @@ ObservationDirectionDataPointsFilter:
   - [x, int, 0]
   - [y, int, 0]
   - [z, int, 0]
-  xml_info: {long_help: 'Observation direction. This filter extracts observation directions
-      (vector from point to sensor), considering a sensor at position (x,y,z).', short_help: 'Observation
-      direction. This filter extracts observation directions (vector from point to
-      sensor), considering a sensor at position (x,y,z).'}
+  # xml_info: {long_help: 'Observation direction. This filter extracts observation directions
+  #     (vector from point to sensor), considering a sensor at position (x,y,z).', short_help: 'Observation
+  #     direction. This filter extracts observation directions (vector from point to
+  #     sensor), considering a sensor at position (x,y,z).'}
 OrientNormalsDataPointsFilter:
   properties:
   - [towardCenter, bool, 1, 0, 1]
-  xml_info: {long_help: 'Normals. Reorient normals so that they all point in the same
-      direction, with respect to the observation points.', short_help: 'Normals. Reorient
-      normals so that they all point in the same direction, with respect to the observation
-      points.'}
+  # xml_info: {long_help: 'Normals. Reorient normals so that they all point in the same
+  #     direction, with respect to the observation points.', short_help: 'Normals. Reorient
+  #     normals so that they all point in the same direction, with respect to the observation
+  #     points.'}
 RandomSamplingDataPointsFilter:
   properties:
   - [prob, double, 0.75, 0.0, 1.0]
@@ -212,11 +212,11 @@ SurfaceNormalDataPointsFilter:
   - [keepEigenValues, int, 0]
   - [keepEigenVectors, int, 0]
   - [keepMatchedIds, int, 0]
-  xml_info: {long_help: Normals. This filter extracts the normal to each point by
-      taking the eigenvector corresponding to the smallest eigenvalue of its nearest
-      neighbors., short_help: Normals. This filter extracts the normal to each point
-      by taking the eigenvector corresponding to the smallest eigenvalue of its nearest
-      neighbors.}
+  # xml_info: {long_help: Normals. This filter extracts the normal to each point by
+  #     taking the eigenvector corresponding to the smallest eigenvalue of its nearest
+  #     neighbors., short_help: Normals. This filter extracts the normal to each point
+  #     by taking the eigenvector corresponding to the smallest eigenvalue of its nearest
+  #     neighbors.}
 VoxelGridDataPointsFilter:
   properties:
   - [vSizeX, double, 1.0]
