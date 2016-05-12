@@ -33,9 +33,13 @@
 <%
     if len(property) == 3:
         propName, propType, propDefaultValue = property
+        min_ok = max_ok = False
     else:
         propName, propType, propDefaultValue, propMinValue, propMaxValue = property
+        min_ok = (not isstring(propMinValue)) and (propMinValue not in ['inf','-inf',float('inf'),float('-inf')])
+        max_ok = (not isstring(propMaxValue)) and (propMaxValue not in ['inf','-inf',float('inf'),float('-inf')])
     PropName = propName[0].upper() + propName[1:]
+
 %>
 % if propType == 'unsigned' or propType == 'int' or propType == 'bool':
     <IntVectorProperty name="${PropName}"
@@ -45,12 +49,12 @@
 % if propType == 'bool':
       <BooleanDomain name="bool"/>
 % endif
-% if len(property) == 5 and (not isstring(propMinValue) or not isstring(propMaxValue)):
+% if min_ok or max_ok:
       <IntRangeDomain name="range" \
-% if not isstring(propMinValue):
+% if min_ok:
 min="${parse_value(propMinValue)}" \
 % endif
-% if not isstring(propMaxValue):
+% if max_ok:
 max="${parse_value(propMaxValue)}" \
 % endif
 />
@@ -61,12 +65,12 @@ max="${parse_value(propMaxValue)}" \
                           command="Set${PropName}"
                           number_of_elements="1"
                           default_values="${parse_value(propDefaultValue)}">
-% if len(property) == 5 and (not isstring(propMinValue) or not isstring(propMaxValue)):
+% if min_ok or max_ok:
       <DoubleRangeDomain name="range" \
-% if not isstring(propMinValue):
+% if min_ok:
 min="${parse_value(propMinValue)}" \
 % endif
-% if not isstring(propMaxValue):
+% if max_ok:
 max="${parse_value(propMaxValue)}" \
 % endif
 />
@@ -98,10 +102,15 @@ max="${parse_value(propMaxValue)}" \
 1\
 % elif value == False:
 0\
-% elif value == 'inf':
+% elif value == 'inf' or value == '.inf' or value == float('inf'):
 2147483647\
-% elif value == '-inf':
+% elif value == '-inf' or value == '-.inf' or value == float('-inf'):
 -2147483646\
+% elif type(value) == float:
+<%
+    value_str = '%.16f' % value
+%>\
+${value_str}\
 % else:
 ${value}\
 % endif
