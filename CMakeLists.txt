@@ -62,14 +62,14 @@ list(APPEND servermanager_sources
   vtkPMConversions.cxx
   )
 
-# list(APPEND servermanager_xml
-#   xml/vtkPMFixStepSamplingDataPointsFilter.xml
-#   xml/vtkPMSurfaceNormalDataPointsFilter.xml
-#   xml/vtkPMMaxDistDataPointsFilter.xml
-#   xml/vtkPMMaxDensityDataPointsFilter.xml
-#   xml/vtkPMObservationDirectionDataPointsFilter.xml
-#   xml/vtkPMOrientNormalsDataPointsFilter.xml
-#   )
+list(APPEND servermanager_xml
+  xml/vtkPMFixStepSamplingDataPointsFilter.xml
+  xml/vtkPMSurfaceNormalDataPointsFilter.xml
+  xml/vtkPMMaxDistDataPointsFilter.xml
+  xml/vtkPMMaxDensityDataPointsFilter.xml
+  xml/vtkPMObservationDirectionDataPointsFilter.xml
+  xml/vtkPMOrientNormalsDataPointsFilter.xml
+  )
 
 if(ENABLE_AUTOGEN)
   list(APPEND servermanager_sources ${AUTOGEN_CXX_FILES})
