@@ -1,21 +1,29 @@
 #!/usr/bin/env python
-# usage: ./autogen_generate_yaml [<output> [<list_from_pmicp>] ]
+# usage: ./autogen_generate_yaml [<handwritten_xmls_dir> [<output> [<list_from_pmicp>] ] ]
 # if the input/output parameter is not supplied the standard input/output is used instead.
 
 import sys
 import re
 import yaml
+import os
 
 # Parse arguments
 if len(sys.argv) < 2:
-	output_file = ''
+	xml_list = []
 else:
-	output_file = sys.argv[1]
+	xml_list = []
+	for xml in os.listdir(sys.argv[1]):
+		xml_list.append(xml[5:-4])
 
 if len(sys.argv) < 3:
+	output_file = ''
+else:
+	output_file = sys.argv[2]
+
+if len(sys.argv) < 4:
 	text = sys.stdin.read()
 else:
-	with open(sys.argv[2],'r') as f:
+	with open(sys.argv[3],'r') as f:
 		text = f.read()
 
 # Define RE's used 
@@ -36,9 +44,11 @@ for datafilter_text in datafilter_text_list:
 	datafilter_text = datafilter_text.splitlines()
 	filter_name = datafilter_text[0]
 	filter_help = datafilter_text[1]
-	filters_dict[filter_name] = {'properties': [], 'xml_info': {} }
-	filters_dict[filter_name]['xml_info']['short_help'] = re.sub('[<>]', '', filter_help)
-	filters_dict[filter_name]['xml_info']['long_help'] = re.sub('[<>]', '', filter_help)
+	filters_dict[filter_name] = {'properties': []}
+	if filter_name not in xml_list:
+		filters_dict[filter_name]['xml_info'] = {}
+		filters_dict[filter_name]['xml_info']['short_help'] = re.sub('[<>]', '', filter_help)
+		filters_dict[filter_name]['xml_info']['long_help'] = re.sub('[<>]', '', filter_help)
 
 	for property_text in datafilter_text[2:]:
 		m = prop_name_and_default.match(property_text)
