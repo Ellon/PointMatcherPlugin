@@ -61,7 +61,7 @@ int vtkPM${filterName}::RequestData(
 
   // configure the filter
   PointMatcherSupport::Parametrizable::Parameters params;
-  std::string name = "vtkPM${filterName}";
+  std::string name = "${filterName}";
 % for property in filterProperties:
 <%
     propName = property[0]
@@ -91,12 +91,16 @@ void vtkPM${filterName}::PrintSelf(ostream& os, vtkIndent indent)
 <%def name="parse_value(value)">\
 % if value == '':
 ""\
-% elif value == True:
+% elif type(value) == bool and value == True:
 true\
-% elif value == False:
+% elif type(value) == bool and value == False:
 false\
-% elif value == 'inf':
+% elif value == 'inf' or value == float('inf'):
 std::numeric_limits<double>::infinity()\
+% elif value == '-inf' or value == float('-inf'):
+-std::numeric_limits<double>::infinity()\
+% elif value == 'none': # special case for empty strings
+""\
 % else:
 ${value}\
 % endif
