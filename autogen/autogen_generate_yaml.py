@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python 
 # usage: ./autogen_generate_yaml [<handwritten_xmls_dir> [<output> [<list_from_pmicp>] ] ]
 # if the input/output parameter is not supplied the standard input/output is used instead.
 
@@ -61,13 +61,18 @@ for datafilter_text in datafilter_text_list:
 			prop_min, prop_max = m.groups()
 			prop_list.extend([prop_min,prop_max])
 		filters_dict[filter_name]['properties'].append(prop_list)
-		# We're trying to guess the good value here.
+		# We're trying to guess the good type here.
 		# prop_list = [prop_name, ??prop_type??, prop_default]
 		if len(prop_list) == 3:
 			try:
 				prop_default = int(prop_list[2])
 				# If we got here, the type is int, because the propert has no min/max
-				prop_list[1] = 'int'
+				# FIXME Some double properties on 'pmicp -l' have their
+				#       default value coded without the decimal part, and this
+				#       we coud arrive here for a double value. :( The
+				#       workaround is to define the type as double anyway.
+				# prop_list[1] = 'int'
+				prop_list[1] = 'double'
 				prop_list[2] = prop_default
 			except ValueError:
 				try:
@@ -87,12 +92,19 @@ for datafilter_text in datafilter_text_list:
 				prop_min = int(prop_list[3])
 				prop_max = int(prop_list[4])
 				# If we got here, the type is bool, int or insigned
+
+				# FIXME Same thing for the int case before: we cannot
+				#       guarantee we don't have a double here. Workaround is
+				#       to define the type as double.
 				if prop_min == 0 and prop_max == 1:
 					prop_list[1] = 'bool'
-				elif prop_min < 0 or prop_max < 0:
-					prop_list[1] = 'int'
+				# elif prop_min < 0 or prop_max < 0:
+				# 	prop_list[1] = 'int'
+				# else:
+				# 	prop_list[1] = 'unsigned'
 				else:
-					prop_list[1] = 'unsigned'
+					prop_list[1] = 'double'
+
 				prop_list[2] = prop_default
 				prop_list[3] = prop_min
 				prop_list[4] = prop_max
