@@ -36,10 +36,10 @@ if(ENABLE_AUTOGEN)
     # set dependency to reconfigure on file change
     configure_file(${CMAKE_SOURCE_DIR}/autogen/autogen_generate_yaml.py ${CMAKE_BINARY_DIR}/autogen_files/dummy COPYONLY)
     # Generate filters.yaml from pmicp -l
-    execute_process( COMMAND ${CMAKE_COMMAND} -E echo_append "-- AUTOGEN: Generating yaml with filter definitions..." )
+    message(STATUS "AUTOGEN: Generating yaml with filter definitions")
     execute_process( COMMAND pmicp -l
                      COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/autogen/autogen_generate_yaml.py ${CMAKE_CURRENT_SOURCE_DIR}/xml ${AUTOGEN_YAML_FILE})
-    execute_process( COMMAND ${CMAKE_COMMAND} -E echo "done" )
+    message(STATUS "AUTOGEN: Generating yaml with filter definitions - DONE")
   else()
     set(AUTOGEN_YAML_FILE "${CMAKE_CURRENT_SOURCE_DIR}/autogen/filters.yaml" CACHE STRING "Filters definition file to be used by auto-generation")
     # set dependency to reconfigure on file change
@@ -49,14 +49,14 @@ if(ENABLE_AUTOGEN)
   # set dependency to reconfigure on file change
   configure_file(${CMAKE_SOURCE_DIR}/autogen/autogen_get_filenames.py ${CMAKE_BINARY_DIR}/autogen_files/dummy COPYONLY)
   # get filenames
-  execute_process( COMMAND ${CMAKE_COMMAND} -E echo_append "-- AUTOGEN: Parsing generated filenames..." )
+  message(STATUS "AUTOGEN: Parsing generated filenames")
   execute_process( COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/autogen/autogen_get_filenames.py ${AUTOGEN_YAML_FILE} xml ${CMAKE_BINARY_DIR}/autogen_files
                    OUTPUT_VARIABLE AUTOGEN_XML_FILES )
   execute_process( COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/autogen/autogen_get_filenames.py ${AUTOGEN_YAML_FILE} h ${CMAKE_BINARY_DIR}/autogen_files
                    OUTPUT_VARIABLE AUTOGEN_HEADER_FILES )
   execute_process( COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/autogen/autogen_get_filenames.py ${AUTOGEN_YAML_FILE} cxx ${CMAKE_BINARY_DIR}/autogen_files
                    OUTPUT_VARIABLE AUTOGEN_CXX_FILES )
-  execute_process( COMMAND ${CMAKE_COMMAND} -E echo "done" )
+  message(STATUS "AUTOGEN: Parsing generated filenames - DONE")
   ### 3) auto generate files
   # set dependencies to reconfigure on file changes
   configure_file(${CMAKE_SOURCE_DIR}/autogen/autogen_generate_files.py ${CMAKE_BINARY_DIR}/autogen_files/dummy COPYONLY)
@@ -64,9 +64,9 @@ if(ENABLE_AUTOGEN)
   configure_file(${CMAKE_SOURCE_DIR}/autogen/vtkPM___DataPointsFilter.h.template ${CMAKE_BINARY_DIR}/autogen_files/dummy COPYONLY)
   configure_file(${CMAKE_SOURCE_DIR}/autogen/vtkPM___DataPointsFilter.xml.template ${CMAKE_BINARY_DIR}/autogen_files/dummy COPYONLY)
   # generate files
-  execute_process( COMMAND ${CMAKE_COMMAND} -E echo_append "-- AUTOGEN: Generating files..." )
+  message(STATUS "AUTOGEN: Generating files")
   execute_process( COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/autogen/autogen_generate_files.py ${AUTOGEN_YAML_FILE} ${CMAKE_CURRENT_SOURCE_DIR}/autogen ${CMAKE_BINARY_DIR}/autogen_files )
-  execute_process( COMMAND ${CMAKE_COMMAND} -E echo "done" )
+  message(STATUS "AUTOGEN: Generating files - DONE")
   # Add directory with generated headers as include directory
   include_directories(${CMAKE_CURRENT_BINARY_DIR}/autogen_files)
 endif()
