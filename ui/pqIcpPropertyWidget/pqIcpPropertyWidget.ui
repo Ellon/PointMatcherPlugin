@@ -1,0 +1,547 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>pqIcpPropertyWidget</class>
+ <widget class="QWidget" name="pqIcpPropertyWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>407</width>
+    <height>1164</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>pqIcpPropertyWidget</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_3">
+   <item>
+    <widget class="QGroupBox" name="matcherGroupBox">
+     <property name="title">
+      <string>Matcher Options</string>
+     </property>
+     <layout class="QFormLayout" name="formLayout">
+      <property name="fieldGrowthPolicy">
+       <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+      </property>
+      <item row="0" column="0">
+       <widget class="QLabel" name="matcherTypeLabel">
+        <property name="text">
+         <string>Matcher</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="matcherTypeComboBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <item>
+         <property name="text">
+          <string>K-D Tree</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>K-D Tree Var Dist</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Null</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="matcherKnnLabel">
+        <property name="text">
+         <string>Knn</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QSpinBox" name="matcherKnnSpinBox"/>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="matcherEpsilonLabel">
+        <property name="text">
+         <string>Epsilon</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QDoubleSpinBox" name="matcherEpsilonDoubleSpinBox"/>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="matcherSearchTypeLabel">
+        <property name="text">
+         <string>Search Type</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QComboBox" name="matcherSearchTypeComboBox"/>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="matcherMaxDistLabel">
+        <property name="text">
+         <string>Max Dist</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QDoubleSpinBox" name="matcherMaxDistDoubleSpinBox"/>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="matcherMaxDistFieldLabel">
+        <property name="text">
+         <string>Max Dist Field</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QComboBox" name="matcherMaxDistFieldComboBox"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="errorMinimizerGroupBox">
+     <property name="title">
+      <string>Error Minimizer Options</string>
+     </property>
+     <layout class="QFormLayout" name="formLayout_2">
+      <item row="0" column="0">
+       <widget class="QLabel" name="errorMinimizerTypeLabel">
+        <property name="text">
+         <string>Error Minimizer</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="errorMinimizerTypeComboBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <item>
+         <property name="text">
+          <string>Identity</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Point To Plane</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Point To Plane With Cov</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Point To Point</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Point To Point Similarity</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Point To Point With Cov</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QCheckBox" name="errorMinimizerForce2DCheckBox">
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
+        </property>
+        <property name="text">
+         <string>Force 2D</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="errorMinimizerSensorStdLabel">
+        <property name="text">
+         <string>Sensor Std</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QDoubleSpinBox" name="errorMinimizerSensorStdDoubleSpinBox"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="outlierFilterGroupBox">
+     <property name="title">
+      <string>Outlier Filter Option</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="0">
+         <widget class="QLabel" name="outlierFilterTypeLabel">
+          <property name="text">
+           <string>Filter</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QComboBox" name="outlierFilterTypeComboBox">
+          <item>
+           <property name="text">
+            <string>Generic Descriptor</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Max Dist</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Median Dist</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Min Dist</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Null</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Surface Normal</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Trimmed Dist</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Var Trimmed Dist</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QPushButton" name="outlierFilterAddPushButton">
+          <property name="text">
+           <string>Add</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" colspan="3">
+         <widget class="QListWidget" name="outlierFilterListWidget"/>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QStackedWidget" name="outlierFilterOptionStackedWidget">
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <widget class="QWidget" name="outlierFilterGenericDescriptorPage">
+         <layout class="QFormLayout" name="formLayout_4">
+          <item row="0" column="0">
+           <widget class="QLabel" name="outlierFilterGenericDescriptorSourceLabel">
+            <property name="text">
+             <string>Source</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="outlierFilterGenericDescriptorSourceComboBox"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="outlierFilterGenericDescriptorDescriptorLabel">
+            <property name="text">
+             <string>Descriptor</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="outlierFilterGenericDescriptorDescriptorLineEdit"/>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="outlierFilterGenericDescriptorThresholdLabel">
+            <property name="text">
+             <string>Threshold</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QDoubleSpinBox" name="outlierFilterGenericDescriptorThresholdDoubleSpinBox"/>
+          </item>
+          <item row="3" column="0" colspan="2">
+           <widget class="QCheckBox" name="outlierFilterGenericDescriptorSoftThresholdCheckBox">
+            <property name="text">
+             <string>Soft Threshold</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0" colspan="2">
+           <widget class="QCheckBox" name="outlierFilterGenericDescriptorLargerThanCheckBox">
+            <property name="text">
+             <string>Use Larger Than Threshold</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="outlierFilterMaxDistPage">
+         <layout class="QFormLayout" name="formLayout_10">
+          <item row="0" column="0">
+           <widget class="QLabel" name="outlierFilterMaxDistMaxDistLabel">
+            <property name="text">
+             <string>Max Dist</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QDoubleSpinBox" name="outlierFilterMaxDistMaxDistDoubleSpinBox"/>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="outlierFilterMedianDistPage">
+         <layout class="QFormLayout" name="formLayout_9">
+          <item row="0" column="0">
+           <widget class="QLabel" name="outlierFilterMedianDistFactorLabel">
+            <property name="text">
+             <string>Factor</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QDoubleSpinBox" name="outlierFilterMedianDistFactorDoubleSpinBox"/>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="outlierFilterMinDistPage">
+         <layout class="QFormLayout" name="formLayout_8">
+          <item row="0" column="0">
+           <widget class="QLabel" name="outlierFilterMinDistMinDistLabel">
+            <property name="text">
+             <string>Min Dist</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QDoubleSpinBox" name="outlierFilterMinDistMinDistDoubleSpinBox"/>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="outlierFilterNullPage"/>
+        <widget class="QWidget" name="outlierFilterSurfaceNormalPage">
+         <layout class="QFormLayout" name="formLayout_7">
+          <item row="0" column="0">
+           <widget class="QLabel" name="outlierFilterSurfaceNormalMaxAngleLabel">
+            <property name="text">
+             <string>Max Angle</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QDoubleSpinBox" name="outlierFilterSurfaceNormalMaxAngleDoubleSpinBox"/>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="outlierFilterTrimmedDistPage">
+         <layout class="QFormLayout" name="formLayout_6">
+          <item row="0" column="0">
+           <widget class="QLabel" name="outlierFilterTrimmedDistRatioLabel">
+            <property name="text">
+             <string>Ratio</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QDoubleSpinBox" name="outlierFilterTrimmedDistRatioDoubleSpinBox"/>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="outlierFilterVarTrimmedDistPage">
+         <layout class="QFormLayout" name="formLayout_5">
+          <item row="0" column="0">
+           <widget class="QLabel" name="outlierFilterVarTrimmedDistMinRatioLabel">
+            <property name="text">
+             <string>Min Ratio</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QDoubleSpinBox" name="outlierFilterVarTrimmedDistMinRatioDoubleSpinBox"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="outlierFilterVarTrimmedDistMaxRatioLabel">
+            <property name="text">
+             <string>Max Ratio</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QDoubleSpinBox" name="outlierFilterVarTrimmedDistMaxRatioDoubleSpinBox"/>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="outlierFilterVarTrimmedDistLambdaLabel">
+            <property name="text">
+             <string>Lambda</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QDoubleSpinBox" name="outlierFilterVarTrimmedDistLambdaDoubleSpinBox"/>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="transCheckerGroupBox">
+     <property name="title">
+      <string>Transformation Checker Options</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QListWidget" name="transCheckerListWidget">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>71</height>
+         </size>
+        </property>
+        <property name="dragDropMode">
+         <enum>QAbstractItemView::DragDrop</enum>
+        </property>
+        <property name="defaultDropAction">
+         <enum>Qt::MoveAction</enum>
+        </property>
+        <property name="movement">
+         <enum>QListView::Snap</enum>
+        </property>
+        <item>
+         <property name="text">
+          <string>Bound</string>
+         </property>
+         <property name="checkState">
+          <enum>Unchecked</enum>
+         </property>
+         <property name="flags">
+          <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Counter</string>
+         </property>
+         <property name="checkState">
+          <enum>Unchecked</enum>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Differential</string>
+         </property>
+         <property name="checkState">
+          <enum>Unchecked</enum>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="transCheckerOptionWidget" native="true">
+        <layout class="QFormLayout" name="formLayout_3">
+         <item row="0" column="0">
+          <widget class="QLabel" name="transCheckerMaxRotNormLabel">
+           <property name="text">
+            <string>Max Rotation Norm</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QDoubleSpinBox" name="transCheckerMaxRotNormDoubleSpinBox"/>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="transCheckerMaxTransNormLabel">
+           <property name="text">
+            <string>Max Translation Norm</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QDoubleSpinBox" name="transCheckerMaxTransNormDoubleSpinBox"/>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="transCheckerMaxIterCountLabel">
+           <property name="text">
+            <string>Max Iteration Count</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QSpinBox" name="transCheckerMaxIterCountSpinBox"/>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="transCheckerMinDiffRotErrorLabel">
+           <property name="text">
+            <string>Min Diff Rotation Error</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QDoubleSpinBox" name="transCheckerMinDiffRotErrorDoubleSpinBox"/>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="transCheckerMinDiffTransErrorLabel">
+           <property name="text">
+            <string>Min Diff Translation Error</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QDoubleSpinBox" name="transCheckerMinDiffTransErrorDoubleSpinBox"/>
+         </item>
+         <item row="5" column="0">
+          <widget class="QLabel" name="transCheckerSmoothLengthLabel">
+           <property name="text">
+            <string>Smooth Length</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="1">
+          <widget class="QSpinBox" name="transCheckerSmoothLengthSpinBox"/>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
