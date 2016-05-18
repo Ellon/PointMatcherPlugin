@@ -14,9 +14,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         pqIcpPropertyWidget.cxx \
-    impossibleoptionexception.cpp
+    impossibleoptionexception.cpp \
+    outlierfilteroptions.cpp
 
 HEADERS  += pqIcpPropertyWidget.h \
-    impossibleoptionexception.h
+    impossibleoptionexception.h \
+    outlierfilteroptions.h
 
 FORMS    += pqIcpPropertyWidget.ui

@@ -2,6 +2,7 @@
 #define PQICPPROPERTYWIDGET_H
 
 #include <QWidget>
+#include <outlierfilteroptions.h>
 
 namespace Ui {
 class pqIcpPropertyWidget;
@@ -38,8 +39,14 @@ private slots:
 
     void on_transCheckerDownPushButton_clicked();
 
+    void on_outlierFilterGenericDescriptorSourceComboBox_currentIndexChanged(int index);
+
 private:
     Ui::pqIcpPropertyWidget *ui;
+    typedef std::vector<OutlierFilterOptions> OutlierFilterOptionVector;
+    OutlierFilterOptionVector outlierFilterOptionVector;
+
+    void updateOutlierFilterOptionWidgets();
 };
 
 #endif // PQICPPROPERTYWIDGET_H

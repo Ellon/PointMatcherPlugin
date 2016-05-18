@@ -93,6 +93,8 @@ void pqIcpPropertyWidget::on_errorMinimizerTypeComboBox_currentIndexChanged(cons
 void pqIcpPropertyWidget::on_outlierFilterAddPushButton_clicked()
 {
     new QListWidgetItem(ui->outlierFilterTypeComboBox->currentText(), ui->outlierFilterListWidget);
+    outlierFilterOptionVector.push_back(OutlierFilterOptions());
+    cout << "outlierFilterOptionVector size is " << outlierFilterOptionVector.size() << endl;
 }
 
 void pqIcpPropertyWidget::on_outlierFilterRemovePushButton_clicked()
@@ -102,6 +104,11 @@ void pqIcpPropertyWidget::on_outlierFilterRemovePushButton_clicked()
     {
         QListWidgetItem* currentItem = ui->outlierFilterListWidget->takeItem(currentRow);
         delete currentItem;
+
+        OutlierFilterOptionVector::iterator it = outlierFilterOptionVector.begin();
+        it+= currentRow;
+        outlierFilterOptionVector.erase(it);
+        cout << "outlierFilterOptionVector size is " << outlierFilterOptionVector.size() << endl;
     }
 }
 
@@ -151,11 +158,43 @@ void pqIcpPropertyWidget::on_outlierFilterListWidget_itemSelectionChanged()
             // This should never happen...
             throw ImpossibleOptionException();
         }
+
+        updateOutlierFilterOptionWidgets();
     }
     else
     {
 //        ui->outlierFilterOptionStackedWidget->hide();
         ui->outlierFilterOptionStackedWidget->setCurrentWidget(ui->outlierFilterNullPage);
+    }
+}
+
+void pqIcpPropertyWidget::updateOutlierFilterOptionWidgets()
+{
+    int currentRow = ui->outlierFilterListWidget->currentRow();
+    cout << "updating outlier filter option widgets..." << endl;
+    if(currentRow >= 0)
+    {
+        OutlierFilterOptions &currentOptions = outlierFilterOptionVector[currentRow];
+        // GenericDescriptorOutlierFilter
+        ui->outlierFilterGenericDescriptorSourceComboBox->setCurrentIndex(currentOptions.source);
+        ui->outlierFilterGenericDescriptorDescriptorLineEdit->setText(QString(currentOptions.descName.c_str()));
+        ui->outlierFilterGenericDescriptorSoftThresholdCheckBox->setChecked(currentOptions.useSoftThreshold);
+        ui->outlierFilterGenericDescriptorLargerThanCheckBox->setChecked(currentOptions.useLargerThan);
+        ui->outlierFilterGenericDescriptorThresholdDoubleSpinBox->setValue(currentOptions.threshold);
+        // MaxDistOutlierFilter
+        ui->outlierFilterMaxDistMaxDistDoubleSpinBox->setValue(currentOptions.maxDist);
+        // MedianDistOutlierFilter
+        ui->outlierFilterMedianDistFactorDoubleSpinBox->setValue(currentOptions.factor);
+        // MinDistOutlierFilter
+        ui->outlierFilterMinDistMinDistDoubleSpinBox->setValue(currentOptions.minDist);
+        // SurfaceNormalOutlierFilter
+        ui->outlierFilterSurfaceNormalMaxAngleDoubleSpinBox->setValue(currentOptions.maxAngle);
+        // TrimmedDistOutlierFilter
+        ui->outlierFilterTrimmedDistRatioDoubleSpinBox->setValue(currentOptions.ratio);
+        // VarTrimmedDistOutlierFilter
+        ui->outlierFilterVarTrimmedDistMinRatioDoubleSpinBox->setValue(currentOptions.minRatio);
+        ui->outlierFilterVarTrimmedDistMaxRatioDoubleSpinBox->setValue(currentOptions.maxRatio);
+        ui->outlierFilterVarTrimmedDistLambdaDoubleSpinBox->setValue(currentOptions.lambda);
     }
 }
 
@@ -199,6 +238,10 @@ void pqIcpPropertyWidget::on_outlierFilterUpPushButton_clicked()
         QListWidgetItem* currentItem = ui->outlierFilterListWidget->takeItem(currentRow);
         ui->outlierFilterListWidget->insertItem(currentRow-1,currentItem);
         ui->outlierFilterListWidget->setCurrentItem(currentItem);
+
+        std::swap(outlierFilterOptionVector[currentRow-1],outlierFilterOptionVector[currentRow]);
+
+        updateOutlierFilterOptionWidgets();
     }
 }
 
@@ -206,11 +249,15 @@ void pqIcpPropertyWidget::on_outlierFilterDownPushButton_clicked()
 {
     int currentRow = ui->outlierFilterListWidget->currentRow();
     int numItems = ui->outlierFilterListWidget->count();
-    if(currentRow > 0 && currentRow < numItems-1)
+    if(currentRow >= 0 && currentRow < numItems-1)
     {
         QListWidgetItem* currentItem = ui->outlierFilterListWidget->takeItem(currentRow);
         ui->outlierFilterListWidget->insertItem(currentRow+1,currentItem);
         ui->outlierFilterListWidget->setCurrentItem(currentItem);
+
+        std::swap(outlierFilterOptionVector[currentRow+1],outlierFilterOptionVector[currentRow]);
+
+        updateOutlierFilterOptionWidgets();
     }
 }
 
@@ -229,10 +276,22 @@ void pqIcpPropertyWidget::on_transCheckerDownPushButton_clicked()
 {
     int currentRow = ui->transCheckerListWidget->currentRow();
     int numItems = ui->transCheckerListWidget->count();
-    if(currentRow > 0 && currentRow < numItems-1)
+    if(currentRow >= 0 && currentRow < numItems-1)
     {
         QListWidgetItem* currentItem = ui->transCheckerListWidget->takeItem(currentRow);
         ui->transCheckerListWidget->insertItem(currentRow+1,currentItem);
         ui->transCheckerListWidget->setCurrentItem(currentItem);
     }
 }
+
+void pqIcpPropertyWidget::on_outlierFilterGenericDescriptorSourceComboBox_currentIndexChanged(int index)
+{
+    int currentRow = ui->outlierFilterListWidget->currentRow();
+    if(currentRow >= 0)
+    {
+        Q_ASSERT(currentRow < (int)outlierFilterOptionVector.size());
+        outlierFilterOptionVector[currentRow].source = index;
+    }
+}
+
+// TODO connect signals from other outlier filter widgets
