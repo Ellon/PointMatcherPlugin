@@ -13,8 +13,10 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        pqIcpPropertyWidget.cxx
+        pqIcpPropertyWidget.cxx \
+    impossibleoptionexception.cpp
 
-HEADERS  += pqIcpPropertyWidget.h
+HEADERS  += pqIcpPropertyWidget.h \
+    impossibleoptionexception.h
 
 FORMS    += pqIcpPropertyWidget.ui
