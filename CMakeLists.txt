@@ -36,7 +36,7 @@ list(APPEND servermanager_xml
   xml/vtkPMOrientNormalsDataPointsFilter.xml
   )
 
-option(ENABLE_AUTOGEN "If we should auto-generate for filters from a yaml file" OFF)
+option(ENABLE_AUTOGEN "If we should auto-generate for filters from a yaml file" ON)
 if(ENABLE_AUTOGEN)
   # include file to perform autogen
   include(cmake/vtkPMAutoGen.cmake)
