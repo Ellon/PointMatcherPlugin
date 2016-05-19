@@ -19,25 +19,22 @@ public:
     ~pqIcpPropertyWidget();
 
 private slots:
+    // Matcher
     void on_matcherTypeComboBox_currentIndexChanged(const QString &arg1);
 
+    // Error Minimizer
     void on_errorMinimizerTypeComboBox_currentIndexChanged(const QString &arg1);
 
+    // Outlier Filter
     void on_outlierFilterAddPushButton_clicked();
 
     void on_outlierFilterRemovePushButton_clicked();
 
     void on_outlierFilterListWidget_itemSelectionChanged();
 
-    void on_transCheckerListWidget_itemChanged(QListWidgetItem *item);
-
     void on_outlierFilterUpPushButton_clicked();
 
     void on_outlierFilterDownPushButton_clicked();
-
-    void on_transCheckerUpPushButton_clicked();
-
-    void on_transCheckerDownPushButton_clicked();
 
     void on_outlierFilterGenericDescriptorSourceComboBox_currentIndexChanged(int index);
 
@@ -64,6 +61,13 @@ private slots:
     void on_outlierFilterVarTrimmedDistMaxRatioDoubleSpinBox_valueChanged(double arg1);
 
     void on_outlierFilterVarTrimmedDistLambdaDoubleSpinBox_valueChanged(double arg1);
+
+    // Transformation Checker
+    void on_transCheckerListWidget_itemChanged(QListWidgetItem *item);
+
+    void on_transCheckerUpPushButton_clicked();
+
+    void on_transCheckerDownPushButton_clicked();
 
 private:
     Ui::pqIcpPropertyWidget *ui;

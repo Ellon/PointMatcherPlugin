@@ -23,6 +23,8 @@ pqIcpPropertyWidget::~pqIcpPropertyWidget()
     delete ui;
 }
 
+// ############# MATCHER ################
+
 void pqIcpPropertyWidget::on_matcherTypeComboBox_currentIndexChanged(const QString &arg1)
 {
     if(arg1 == "KDTreeMatcher")
@@ -71,6 +73,8 @@ void pqIcpPropertyWidget::on_matcherTypeComboBox_currentIndexChanged(const QStri
     }
 }
 
+// ############# ERROR MINIMIZER ################
+
 void pqIcpPropertyWidget::on_errorMinimizerTypeComboBox_currentIndexChanged(const QString &arg1)
 {
     if(arg1 == "PointToPlaneErrorMinimizer" || arg1 == "PointToPlaneWithCovErrorMinimizer")
@@ -87,6 +91,37 @@ void pqIcpPropertyWidget::on_errorMinimizerTypeComboBox_currentIndexChanged(cons
     {
         ui->errorMinimizerSensorStdDoubleSpinBox->setVisible(false);
         ui->errorMinimizerSensorStdLabel->setVisible(false);
+    }
+}
+
+// ############# OUTLIER FILTER ################
+
+void pqIcpPropertyWidget::updateOutlierFilterOptionWidgets()
+{
+    int currentRow = ui->outlierFilterListWidget->currentRow();
+    if(currentRow >= 0)
+    {
+        OutlierFilterOptions &currentOptions = outlierFilterOptionVector[currentRow];
+        // GenericDescriptorOutlierFilter
+        ui->outlierFilterGenericDescriptorSourceComboBox->setCurrentIndex(currentOptions.source);
+        ui->outlierFilterGenericDescriptorDescriptorLineEdit->setText(QString(currentOptions.descName.c_str()));
+        ui->outlierFilterGenericDescriptorSoftThresholdCheckBox->setChecked(currentOptions.useSoftThreshold);
+        ui->outlierFilterGenericDescriptorLargerThanCheckBox->setChecked(currentOptions.useLargerThan);
+        ui->outlierFilterGenericDescriptorThresholdDoubleSpinBox->setValue(currentOptions.threshold);
+        // MaxDistOutlierFilter
+        ui->outlierFilterMaxDistMaxDistDoubleSpinBox->setValue(currentOptions.maxDist);
+        // MedianDistOutlierFilter
+        ui->outlierFilterMedianDistFactorDoubleSpinBox->setValue(currentOptions.factor);
+        // MinDistOutlierFilter
+        ui->outlierFilterMinDistMinDistDoubleSpinBox->setValue(currentOptions.minDist);
+        // SurfaceNormalOutlierFilter
+        ui->outlierFilterSurfaceNormalMaxAngleDoubleSpinBox->setValue(currentOptions.maxAngle);
+        // TrimmedDistOutlierFilter
+        ui->outlierFilterTrimmedDistRatioDoubleSpinBox->setValue(currentOptions.ratio);
+        // VarTrimmedDistOutlierFilter
+        ui->outlierFilterVarTrimmedDistMinRatioDoubleSpinBox->setValue(currentOptions.minRatio);
+        ui->outlierFilterVarTrimmedDistMaxRatioDoubleSpinBox->setValue(currentOptions.maxRatio);
+        ui->outlierFilterVarTrimmedDistLambdaDoubleSpinBox->setValue(currentOptions.lambda);
     }
 }
 
@@ -166,67 +201,6 @@ void pqIcpPropertyWidget::on_outlierFilterListWidget_itemSelectionChanged()
     }
 }
 
-void pqIcpPropertyWidget::updateOutlierFilterOptionWidgets()
-{
-    int currentRow = ui->outlierFilterListWidget->currentRow();
-    if(currentRow >= 0)
-    {
-        OutlierFilterOptions &currentOptions = outlierFilterOptionVector[currentRow];
-        // GenericDescriptorOutlierFilter
-        ui->outlierFilterGenericDescriptorSourceComboBox->setCurrentIndex(currentOptions.source);
-        ui->outlierFilterGenericDescriptorDescriptorLineEdit->setText(QString(currentOptions.descName.c_str()));
-        ui->outlierFilterGenericDescriptorSoftThresholdCheckBox->setChecked(currentOptions.useSoftThreshold);
-        ui->outlierFilterGenericDescriptorLargerThanCheckBox->setChecked(currentOptions.useLargerThan);
-        ui->outlierFilterGenericDescriptorThresholdDoubleSpinBox->setValue(currentOptions.threshold);
-        // MaxDistOutlierFilter
-        ui->outlierFilterMaxDistMaxDistDoubleSpinBox->setValue(currentOptions.maxDist);
-        // MedianDistOutlierFilter
-        ui->outlierFilterMedianDistFactorDoubleSpinBox->setValue(currentOptions.factor);
-        // MinDistOutlierFilter
-        ui->outlierFilterMinDistMinDistDoubleSpinBox->setValue(currentOptions.minDist);
-        // SurfaceNormalOutlierFilter
-        ui->outlierFilterSurfaceNormalMaxAngleDoubleSpinBox->setValue(currentOptions.maxAngle);
-        // TrimmedDistOutlierFilter
-        ui->outlierFilterTrimmedDistRatioDoubleSpinBox->setValue(currentOptions.ratio);
-        // VarTrimmedDistOutlierFilter
-        ui->outlierFilterVarTrimmedDistMinRatioDoubleSpinBox->setValue(currentOptions.minRatio);
-        ui->outlierFilterVarTrimmedDistMaxRatioDoubleSpinBox->setValue(currentOptions.maxRatio);
-        ui->outlierFilterVarTrimmedDistLambdaDoubleSpinBox->setValue(currentOptions.lambda);
-    }
-}
-
-void pqIcpPropertyWidget::on_transCheckerListWidget_itemChanged(QListWidgetItem *item)
-{
-    bool enabled = item->checkState() == Qt::Checked;
-    QString itemName = item->text();
-    if(itemName == "BoundTransformationChecker")
-    {
-        ui->transCheckerMaxRotNormLabel->setEnabled(enabled);
-        ui->transCheckerMaxRotNormDoubleSpinBox->setEnabled(enabled);
-        ui->transCheckerMaxTransNormLabel->setEnabled(enabled);
-        ui->transCheckerMaxTransNormDoubleSpinBox->setEnabled(enabled);
-    }
-    else if(itemName == "CounterTransformationChecker")
-    {
-        ui->transCheckerMaxIterCountLabel->setEnabled(enabled);
-        ui->transCheckerMaxIterCountSpinBox->setEnabled(enabled);
-    }
-    else if(itemName == "DifferentialTransformationChecker")
-    {
-        ui->transCheckerMinDiffRotErrorLabel->setEnabled(enabled);
-        ui->transCheckerMinDiffRotErrorDoubleSpinBox->setEnabled(enabled);
-        ui->transCheckerMinDiffTransErrorLabel->setEnabled(enabled);
-        ui->transCheckerMinDiffTransErrorDoubleSpinBox->setEnabled(enabled);
-        ui->transCheckerSmoothLengthLabel->setEnabled(enabled);
-        ui->transCheckerSmoothLengthSpinBox->setEnabled(enabled);
-    }
-    else
-    {
-        // This should never happen...
-        throw ImpossibleOptionException();
-    }
-}
-
 void pqIcpPropertyWidget::on_outlierFilterUpPushButton_clicked()
 {
     int currentRow = ui->outlierFilterListWidget->currentRow();
@@ -255,29 +229,6 @@ void pqIcpPropertyWidget::on_outlierFilterDownPushButton_clicked()
         std::swap(outlierFilterOptionVector[currentRow+1],outlierFilterOptionVector[currentRow]);
 
         updateOutlierFilterOptionWidgets();
-    }
-}
-
-void pqIcpPropertyWidget::on_transCheckerUpPushButton_clicked()
-{
-    int currentRow = ui->transCheckerListWidget->currentRow();
-    if(currentRow > 0)
-    {
-        QListWidgetItem* currentItem = ui->transCheckerListWidget->takeItem(currentRow);
-        ui->transCheckerListWidget->insertItem(currentRow-1,currentItem);
-        ui->transCheckerListWidget->setCurrentItem(currentItem);
-    }
-}
-
-void pqIcpPropertyWidget::on_transCheckerDownPushButton_clicked()
-{
-    int currentRow = ui->transCheckerListWidget->currentRow();
-    int numItems = ui->transCheckerListWidget->count();
-    if(currentRow >= 0 && currentRow < numItems-1)
-    {
-        QListWidgetItem* currentItem = ui->transCheckerListWidget->takeItem(currentRow);
-        ui->transCheckerListWidget->insertItem(currentRow+1,currentItem);
-        ui->transCheckerListWidget->setCurrentItem(currentItem);
     }
 }
 
@@ -408,5 +359,62 @@ void pqIcpPropertyWidget::on_outlierFilterVarTrimmedDistLambdaDoubleSpinBox_valu
     {
         Q_ASSERT(currentRow < (int)outlierFilterOptionVector.size());
         outlierFilterOptionVector[currentRow].lambda = arg1;
+    }
+}
+
+// ############# TRANSFORMATION CHECKER ################
+
+void pqIcpPropertyWidget::on_transCheckerListWidget_itemChanged(QListWidgetItem *item)
+{
+    bool enabled = item->checkState() == Qt::Checked;
+    QString itemName = item->text();
+    if(itemName == "BoundTransformationChecker")
+    {
+        ui->transCheckerMaxRotNormLabel->setEnabled(enabled);
+        ui->transCheckerMaxRotNormDoubleSpinBox->setEnabled(enabled);
+        ui->transCheckerMaxTransNormLabel->setEnabled(enabled);
+        ui->transCheckerMaxTransNormDoubleSpinBox->setEnabled(enabled);
+    }
+    else if(itemName == "CounterTransformationChecker")
+    {
+        ui->transCheckerMaxIterCountLabel->setEnabled(enabled);
+        ui->transCheckerMaxIterCountSpinBox->setEnabled(enabled);
+    }
+    else if(itemName == "DifferentialTransformationChecker")
+    {
+        ui->transCheckerMinDiffRotErrorLabel->setEnabled(enabled);
+        ui->transCheckerMinDiffRotErrorDoubleSpinBox->setEnabled(enabled);
+        ui->transCheckerMinDiffTransErrorLabel->setEnabled(enabled);
+        ui->transCheckerMinDiffTransErrorDoubleSpinBox->setEnabled(enabled);
+        ui->transCheckerSmoothLengthLabel->setEnabled(enabled);
+        ui->transCheckerSmoothLengthSpinBox->setEnabled(enabled);
+    }
+    else
+    {
+        // This should never happen...
+        throw ImpossibleOptionException();
+    }
+}
+
+void pqIcpPropertyWidget::on_transCheckerUpPushButton_clicked()
+{
+    int currentRow = ui->transCheckerListWidget->currentRow();
+    if(currentRow > 0)
+    {
+        QListWidgetItem* currentItem = ui->transCheckerListWidget->takeItem(currentRow);
+        ui->transCheckerListWidget->insertItem(currentRow-1,currentItem);
+        ui->transCheckerListWidget->setCurrentItem(currentItem);
+    }
+}
+
+void pqIcpPropertyWidget::on_transCheckerDownPushButton_clicked()
+{
+    int currentRow = ui->transCheckerListWidget->currentRow();
+    int numItems = ui->transCheckerListWidget->count();
+    if(currentRow >= 0 && currentRow < numItems-1)
+    {
+        QListWidgetItem* currentItem = ui->transCheckerListWidget->takeItem(currentRow);
+        ui->transCheckerListWidget->insertItem(currentRow+1,currentItem);
+        ui->transCheckerListWidget->setCurrentItem(currentItem);
     }
 }
