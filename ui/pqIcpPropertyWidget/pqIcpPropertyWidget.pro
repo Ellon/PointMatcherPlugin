@@ -22,3 +22,5 @@ HEADERS  += pqIcpPropertyWidget.h \
     outlierfilteroptions.h
 
 FORMS    += pqIcpPropertyWidget.ui
+
+DEFINES += BUILD_FROM_QT_CREATOR

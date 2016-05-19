@@ -1,0 +1,42 @@
+<ServerManagerConfiguration>
+  <ProxyGroup name="filters">
+    <SourceProxy name="PMIcpFilter" class="vtkPMIcpFilter" label="PM Icp Filter">
+      <Documentation
+         short_help="Performs ICP."
+         long_help="Performs ICP.">
+      </Documentation>
+
+      <InputProperty
+         name="Input"
+         port_index="0"
+         command="SetInputConnection">
+        <ProxyGroupDomain name="groups">
+          <Group name="sources"/>
+          <Group name="filters"/>
+        </ProxyGroupDomain>
+        <DataTypeDomain name="input_type">
+          <DataType value="vtkPolyData"/>
+        </DataTypeDomain>
+        <Documentation>
+          Set the input poly data
+        </Documentation>
+      </InputProperty>
+
+    <IntVectorProperty name="IcpPropertyWidget"
+                       number_of_elements="1"
+                       default_values="0"
+                       panel_widget="pqIcpPropertyWidget">
+      <Documentation>
+        This property's widget is a custom widget.
+      </Documentation>
+      <!-- <BooleanDomain name="bool"/> -->
+    </IntVectorProperty>
+
+    <Hints> 
+      <ShowInMenu category="Point Matcher" />
+    </Hints>
+
+   </SourceProxy>
+  </ProxyGroup>
+</ServerManagerConfiguration>
+

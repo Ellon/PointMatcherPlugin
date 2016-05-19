@@ -1,15 +1,28 @@
 #include "pqIcpPropertyWidget.h"
 #include "ui_pqIcpPropertyWidget.h"
+
+#ifdef BUILD_FROM_QT_CREATOR
 #include "impossibleoptionexception.h"
+#endif // BUILD_FROM_QT_CREATOR
 
 #include <iostream>
 
 using namespace std;
 
+#ifdef BUILD_FROM_QT_CREATOR
 pqIcpPropertyWidget::pqIcpPropertyWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::pqIcpPropertyWidget)
+#else
+pqIcpPropertyWidget::pqIcpPropertyWidget(
+    vtkSMProxy *smproxy, vtkSMProperty *smproperty, QWidget *parentObject)
+    : Superclass(smproxy, parentObject),
+#endif // BUILD_FROM_QT_CREATOR
+      ui(new Ui::pqIcpPropertyWidget)
 {
+#ifndef BUILD_FROM_QT_CREATOR
+    this->setShowLabel(false);
+#endif // BUILD_FROM_QT_CREATOR
+
     ui->setupUi(this);
 
     // Setup initial conditions
@@ -66,11 +79,13 @@ void pqIcpPropertyWidget::on_matcherTypeComboBox_currentIndexChanged(const QStri
         ui->matcherMaxDistFieldLabel->setVisible(false);
         ui->matcherMaxDistFieldComboBox->setVisible(false);
     }
+#ifdef BUILD_FROM_QT_CREATOR
     else
     {
         // This should never happen...
         throw ImpossibleOptionException();
     }
+#endif // BUILD_FROM_QT_CREATOR
 }
 
 // ############# ERROR MINIMIZER ################
@@ -129,6 +144,9 @@ void pqIcpPropertyWidget::on_outlierFilterAddPushButton_clicked()
 {
     new QListWidgetItem(ui->outlierFilterTypeComboBox->currentText(), ui->outlierFilterListWidget);
     outlierFilterOptionVector.push_back(OutlierFilterOptions());
+#ifndef BUILD_FROM_QT_CREATOR
+    emit this->changeFinished();
+#endif // BUILD_FROM_QT_CREATOR
 }
 
 void pqIcpPropertyWidget::on_outlierFilterRemovePushButton_clicked()
@@ -186,11 +204,13 @@ void pqIcpPropertyWidget::on_outlierFilterListWidget_itemSelectionChanged()
         {
             ui->outlierFilterOptionStackedWidget->setCurrentWidget(ui->outlierFilterVarTrimmedDistPage);
         }
+#ifdef BUILD_FROM_QT_CREATOR
         else
         {
             // This should never happen...
             throw ImpossibleOptionException();
         }
+#endif // BUILD_FROM_QT_CREATOR
 
         updateOutlierFilterOptionWidgets();
     }
@@ -389,11 +409,13 @@ void pqIcpPropertyWidget::on_transCheckerListWidget_itemChanged(QListWidgetItem 
         ui->transCheckerSmoothLengthLabel->setEnabled(enabled);
         ui->transCheckerSmoothLengthSpinBox->setEnabled(enabled);
     }
+#ifdef BUILD_FROM_QT_CREATOR
     else
     {
         // This should never happen...
         throw ImpossibleOptionException();
     }
+#endif // BUILD_FROM_QT_CREATOR
 }
 
 void pqIcpPropertyWidget::on_transCheckerUpPushButton_clicked()

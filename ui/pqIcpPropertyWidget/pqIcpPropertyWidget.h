@@ -1,7 +1,13 @@
 #ifndef PQICPPROPERTYWIDGET_H
 #define PQICPPROPERTYWIDGET_H
 
+// Set this flag to allow building the widget from Qt Creator
+#ifdef BUILD_FROM_QT_CREATOR
 #include <QWidget>
+#else
+#include "pqPropertyWidget.h"
+#endif // BUILD_FROM_QT_CREATOR
+
 #include <outlierfilteroptions.h>
 
 namespace Ui {
@@ -10,13 +16,24 @@ class pqIcpPropertyWidget;
 
 class QListWidgetItem;
 
+#ifdef BUILD_FROM_QT_CREATOR
 class pqIcpPropertyWidget : public QWidget
+#else
+class pqIcpPropertyWidget : public pqPropertyWidget
+#endif // BUILD_FROM_QT_CREATOR
 {
     Q_OBJECT
-
+#ifdef BUILD_FROM_QT_CREATOR
 public:
     explicit pqIcpPropertyWidget(QWidget *parent = 0);
     ~pqIcpPropertyWidget();
+#else
+    typedef pqPropertyWidget Superclass;
+public:
+    pqIcpPropertyWidget(
+        vtkSMProxy *smproxy, vtkSMProperty *smproperty, QWidget *parentObject=0);
+    virtual ~pqIcpPropertyWidget();
+#endif // BUILD_FROM_QT_CREATOR
 
 private slots:
     // Matcher
@@ -75,6 +92,10 @@ private:
     OutlierFilterOptionVector outlierFilterOptionVector;
 
     void updateOutlierFilterOptionWidgets();
+#ifndef BUILD_FROM_QT_CREATOR
+private:
+  Q_DISABLE_COPY(pqIcpPropertyWidget);
+#endif // BUILD_FROM_QT_CREATOR
 };
 
 #endif // PQICPPROPERTYWIDGET_H

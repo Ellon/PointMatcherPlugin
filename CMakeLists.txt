@@ -25,6 +25,7 @@ set(server_deps)
 
 list(APPEND servermanager_sources
   vtkPMConversions.cxx
+  vtkPMIcpFilter.cxx
   )
 
 list(APPEND servermanager_xml
@@ -34,6 +35,7 @@ list(APPEND servermanager_xml
   xml/vtkPMMaxDensityDataPointsFilter.xml
   xml/vtkPMObservationDirectionDataPointsFilter.xml
   xml/vtkPMOrientNormalsDataPointsFilter.xml
+  xml/vtkPMIcpFilter.xml
   )
 
 option(ENABLE_AUTOGEN "If we should auto-generate for filters from a yaml file" ON)
@@ -50,6 +52,41 @@ list(APPEND server_deps
 set(library_name vtkPMFilters)
 include(GenerateExportHeader)
 
+# Custom property widget for IcpFilter
+if (PARAVIEW_QT_VERSION VERSION_GREATER "4")
+  qt5_wrap_cpp(widget_moc_srcs
+    ui/pqIcpPropertyWidget/pqIcpPropertyWidget.h
+    # ui/pqIcpPropertyWidget/impossibleoptionexception.h
+    ui/pqIcpPropertyWidget/outlierfilteroptions.h)
+  qt5_wrap_ui(widget_form_headers
+    ui/pqIcpPropertyWidget/pqIcpPropertyWidget.ui)
+else ()
+  qt4_wrap_cpp(widget_moc_srcs
+    ui/pqIcpPropertyWidget/pqIcpPropertyWidget.h
+    # ui/pqIcpPropertyWidget/impossibleoptionexception.h
+    ui/pqIcpPropertyWidget/outlierfilteroptions.h)
+  qt4_wrap_ui(widget_form_headers
+    ui/pqIcpPropertyWidget/pqIcpPropertyWidget.ui)
+endif ()
+
+set (widget_interfaces)
+set (widget_sources)
+add_paraview_property_widget(widget_interfaces widget_sources
+  TYPE "pqIcpPropertyWidget"
+  CLASS_NAME pqIcpPropertyWidget)
+
+list(APPEND gui_interfaces ${widget_interfaces})
+list(APPEND gui_sources
+  ${widget_sources}
+  ${widget_moc_srcs}
+  ${widget_form_headers}
+  ui/pqIcpPropertyWidget/pqIcpPropertyWidget.cxx
+  # ui/pqIcpPropertyWidget/impossibleoptionexception.cpp
+  ui/pqIcpPropertyWidget/outlierfilteroptions.cpp
+  )
+include_directories(ui/pqIcpPropertyWidget)
+
+# Create the plugin
 add_paraview_plugin(${library_name} "1.0"
   GUI_INTERFACES ${gui_interfaces}
   # GUI_RESOURCE_FILES ${gui_xml}
