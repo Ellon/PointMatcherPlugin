@@ -94,7 +94,6 @@ void pqIcpPropertyWidget::on_outlierFilterAddPushButton_clicked()
 {
     new QListWidgetItem(ui->outlierFilterTypeComboBox->currentText(), ui->outlierFilterListWidget);
     outlierFilterOptionVector.push_back(OutlierFilterOptions());
-    cout << "outlierFilterOptionVector size is " << outlierFilterOptionVector.size() << endl;
 }
 
 void pqIcpPropertyWidget::on_outlierFilterRemovePushButton_clicked()
@@ -108,7 +107,6 @@ void pqIcpPropertyWidget::on_outlierFilterRemovePushButton_clicked()
         OutlierFilterOptionVector::iterator it = outlierFilterOptionVector.begin();
         it+= currentRow;
         outlierFilterOptionVector.erase(it);
-        cout << "outlierFilterOptionVector size is " << outlierFilterOptionVector.size() << endl;
     }
 }
 
@@ -171,7 +169,6 @@ void pqIcpPropertyWidget::on_outlierFilterListWidget_itemSelectionChanged()
 void pqIcpPropertyWidget::updateOutlierFilterOptionWidgets()
 {
     int currentRow = ui->outlierFilterListWidget->currentRow();
-    cout << "updating outlier filter option widgets..." << endl;
     if(currentRow >= 0)
     {
         OutlierFilterOptions &currentOptions = outlierFilterOptionVector[currentRow];
@@ -294,4 +291,122 @@ void pqIcpPropertyWidget::on_outlierFilterGenericDescriptorSourceComboBox_curren
     }
 }
 
-// TODO connect signals from other outlier filter widgets
+void pqIcpPropertyWidget::on_outlierFilterGenericDescriptorDescriptorLineEdit_textChanged(const QString &arg1)
+{
+    int currentRow = ui->outlierFilterListWidget->currentRow();
+    if(currentRow >= 0)
+    {
+        Q_ASSERT(currentRow < (int)outlierFilterOptionVector.size());
+        outlierFilterOptionVector[currentRow].descName = arg1.toStdString();
+    }
+}
+
+void pqIcpPropertyWidget::on_outlierFilterGenericDescriptorThresholdDoubleSpinBox_valueChanged(double arg1)
+{
+    int currentRow = ui->outlierFilterListWidget->currentRow();
+    if(currentRow >= 0)
+    {
+        Q_ASSERT(currentRow < (int)outlierFilterOptionVector.size());
+        outlierFilterOptionVector[currentRow].threshold = arg1;
+    }
+}
+
+void pqIcpPropertyWidget::on_outlierFilterGenericDescriptorSoftThresholdCheckBox_clicked(bool checked)
+{
+    int currentRow = ui->outlierFilterListWidget->currentRow();
+    if(currentRow >= 0)
+    {
+        Q_ASSERT(currentRow < (int)outlierFilterOptionVector.size());
+        outlierFilterOptionVector[currentRow].useSoftThreshold = checked;
+    }
+}
+
+void pqIcpPropertyWidget::on_outlierFilterGenericDescriptorLargerThanCheckBox_clicked(bool checked)
+{
+    int currentRow = ui->outlierFilterListWidget->currentRow();
+    if(currentRow >= 0)
+    {
+        Q_ASSERT(currentRow < (int)outlierFilterOptionVector.size());
+        outlierFilterOptionVector[currentRow].useLargerThan = checked;
+    }
+}
+
+void pqIcpPropertyWidget::on_outlierFilterMaxDistMaxDistDoubleSpinBox_valueChanged(double arg1)
+{
+    int currentRow = ui->outlierFilterListWidget->currentRow();
+    if(currentRow >= 0)
+    {
+        Q_ASSERT(currentRow < (int)outlierFilterOptionVector.size());
+        outlierFilterOptionVector[currentRow].maxDist = arg1;
+    }
+}
+
+void pqIcpPropertyWidget::on_outlierFilterMedianDistFactorDoubleSpinBox_valueChanged(double arg1)
+{
+    int currentRow = ui->outlierFilterListWidget->currentRow();
+    if(currentRow >= 0)
+    {
+        Q_ASSERT(currentRow < (int)outlierFilterOptionVector.size());
+        outlierFilterOptionVector[currentRow].factor = arg1;
+    }
+}
+
+void pqIcpPropertyWidget::on_outlierFilterMinDistMinDistDoubleSpinBox_valueChanged(double arg1)
+{
+    int currentRow = ui->outlierFilterListWidget->currentRow();
+    if(currentRow >= 0)
+    {
+        Q_ASSERT(currentRow < (int)outlierFilterOptionVector.size());
+        outlierFilterOptionVector[currentRow].minDist = arg1;
+    }
+}
+
+void pqIcpPropertyWidget::on_outlierFilterSurfaceNormalMaxAngleDoubleSpinBox_valueChanged(double arg1)
+{
+    int currentRow = ui->outlierFilterListWidget->currentRow();
+    if(currentRow >= 0)
+    {
+        Q_ASSERT(currentRow < (int)outlierFilterOptionVector.size());
+        outlierFilterOptionVector[currentRow].maxAngle = arg1;
+    }
+}
+
+void pqIcpPropertyWidget::on_outlierFilterTrimmedDistRatioDoubleSpinBox_valueChanged(double arg1)
+{
+    int currentRow = ui->outlierFilterListWidget->currentRow();
+    if(currentRow >= 0)
+    {
+        Q_ASSERT(currentRow < (int)outlierFilterOptionVector.size());
+        outlierFilterOptionVector[currentRow].ratio = arg1;
+    }
+}
+
+void pqIcpPropertyWidget::on_outlierFilterVarTrimmedDistMinRatioDoubleSpinBox_valueChanged(double arg1)
+{
+    int currentRow = ui->outlierFilterListWidget->currentRow();
+    if(currentRow >= 0)
+    {
+        Q_ASSERT(currentRow < (int)outlierFilterOptionVector.size());
+        outlierFilterOptionVector[currentRow].minRatio = arg1;
+    }
+}
+
+void pqIcpPropertyWidget::on_outlierFilterVarTrimmedDistMaxRatioDoubleSpinBox_valueChanged(double arg1)
+{
+    int currentRow = ui->outlierFilterListWidget->currentRow();
+    if(currentRow >= 0)
+    {
+        Q_ASSERT(currentRow < (int)outlierFilterOptionVector.size());
+        outlierFilterOptionVector[currentRow].maxRatio = arg1;
+    }
+}
+
+void pqIcpPropertyWidget::on_outlierFilterVarTrimmedDistLambdaDoubleSpinBox_valueChanged(double arg1)
+{
+    int currentRow = ui->outlierFilterListWidget->currentRow();
+    if(currentRow >= 0)
+    {
+        Q_ASSERT(currentRow < (int)outlierFilterOptionVector.size());
+        outlierFilterOptionVector[currentRow].lambda = arg1;
+    }
+}

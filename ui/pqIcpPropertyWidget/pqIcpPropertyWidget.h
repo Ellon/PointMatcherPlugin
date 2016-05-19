@@ -41,6 +41,30 @@ private slots:
 
     void on_outlierFilterGenericDescriptorSourceComboBox_currentIndexChanged(int index);
 
+    void on_outlierFilterGenericDescriptorDescriptorLineEdit_textChanged(const QString &arg1);
+
+    void on_outlierFilterGenericDescriptorThresholdDoubleSpinBox_valueChanged(double arg1);
+
+    void on_outlierFilterGenericDescriptorSoftThresholdCheckBox_clicked(bool checked);
+
+    void on_outlierFilterGenericDescriptorLargerThanCheckBox_clicked(bool checked);
+
+    void on_outlierFilterMaxDistMaxDistDoubleSpinBox_valueChanged(double arg1);
+
+    void on_outlierFilterMedianDistFactorDoubleSpinBox_valueChanged(double arg1);
+
+    void on_outlierFilterMinDistMinDistDoubleSpinBox_valueChanged(double arg1);
+
+    void on_outlierFilterSurfaceNormalMaxAngleDoubleSpinBox_valueChanged(double arg1);
+
+    void on_outlierFilterTrimmedDistRatioDoubleSpinBox_valueChanged(double arg1);
+
+    void on_outlierFilterVarTrimmedDistMinRatioDoubleSpinBox_valueChanged(double arg1);
+
+    void on_outlierFilterVarTrimmedDistMaxRatioDoubleSpinBox_valueChanged(double arg1);
+
+    void on_outlierFilterVarTrimmedDistLambdaDoubleSpinBox_valueChanged(double arg1);
+
 private:
     Ui::pqIcpPropertyWidget *ui;
     typedef std::vector<OutlierFilterOptions> OutlierFilterOptionVector;
