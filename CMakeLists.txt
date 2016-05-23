@@ -59,13 +59,15 @@ include(GenerateExportHeader)
 if (PARAVIEW_QT_VERSION VERSION_GREATER "4")
   qt5_wrap_cpp(widget_moc_srcs
     ui/pqOutlierFilterListWidget/pqOutlierFilterListWidget.h
-    pqShowIfStringAttributeIsWidgetDecorator.h)
+    pqShowIfStringAttributeIsWidgetDecorator.h
+    pqShowIfBooleanIsWidgetDecorator.h)
   qt5_wrap_ui(widget_form_headers
     ui/pqOutlierFilterListWidget/pqOutlierFilterListWidget.ui)
 else ()
   qt4_wrap_cpp(widget_moc_srcs
     ui/pqOutlierFilterListWidget/pqOutlierFilterListWidget.h
-    pqShowIfStringAttributeIsWidgetDecorator.h)
+    pqShowIfStringAttributeIsWidgetDecorator.h
+    pqShowIfBooleanIsWidgetDecorator.h)
   qt4_wrap_ui(widget_form_headers
     ui/pqOutlierFilterListWidget/pqOutlierFilterListWidget.ui)
 endif ()
@@ -76,24 +78,33 @@ add_paraview_property_widget(widget_interfaces widget_sources
   TYPE "outlier_filter_list"
   CLASS_NAME pqOutlierFilterListWidget)
 
-set (decorator_interfaces)
-set (decorator_sources)
-add_paraview_property_widget_decorator(decorator_interfaces decorator_sources
+set (decorator_interfaces0)
+set (decorator_sources0)
+add_paraview_property_widget_decorator(decorator_interfaces0 decorator_sources0
   TYPE "show_if_string_attribute_is"
   CLASS_NAME pqShowIfStringAttributeIsWidgetDecorator)
 
+set (decorator_interfaces1)
+set (decorator_sources1)
+add_paraview_property_widget_decorator(decorator_interfaces1 decorator_sources1
+  TYPE "show_if_boolean_is"
+  CLASS_NAME pqShowIfBooleanIsWidgetDecorator)
+
 list(APPEND gui_interfaces 
   ${widget_interfaces}
-  ${decorator_interfaces}
+  ${decorator_interfaces0}
+  ${decorator_interfaces1}
   )
 
 list(APPEND gui_sources
   ${widget_sources}
   ${widget_moc_srcs}
   ${widget_form_headers}
-  ${decorator_sources}
+  ${decorator_sources0}
+  ${decorator_sources1}
   ui/pqOutlierFilterListWidget/pqOutlierFilterListWidget.cpp
   pqShowIfStringAttributeIsWidgetDecorator.cxx
+  pqShowIfBooleanIsWidgetDecorator.cxx
   )
 include_directories(ui/pqOutlierFilterListWidget)
 

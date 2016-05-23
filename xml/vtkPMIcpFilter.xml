@@ -299,8 +299,7 @@
         </Hints>
       </IntVectorProperty>
 
-      <!-- command="SetCellArrayStatus"  -->
-      <StringVectorProperty label="Transformation Checkers" 
+<!--       <StringVectorProperty label="Transformation Checkers" 
                             element_types="2 0" 
                             name="TransformationCheckerList" 
                             number_of_elements="0" 
@@ -313,6 +312,15 @@
           <Entry value="2" text="DifferentialTransformationChecker"/>
         </ArrayListDomain>
       </StringVectorProperty>
+ -->
+
+      <!-- command="SetTransformMode" -->
+      <IntVectorProperty
+        name="UseBoundTransformationChecker"
+        number_of_elements="1"
+        default_values="0">
+        <BooleanDomain name="bool"/>
+      </IntVectorProperty>
 
       <!-- command="SetYourDoubleVariable" -->
       <DoubleVectorProperty 
@@ -320,6 +328,9 @@
         number_of_elements="1"
         default_values="1.0">
         <DoubleRangeDomain name="range" min="0.0"/>
+        <Hints>
+          <PropertyWidgetDecorator type="show_if_boolean_is" name="UseBoundTransformationChecker" value="true"/>
+        </Hints>
       </DoubleVectorProperty>
 
       <!-- command="SetYourDoubleVariable" -->
@@ -328,7 +339,18 @@
         number_of_elements="1"
         default_values="1.0">
         <DoubleRangeDomain name="range" min="0.0"/>
+        <Hints>
+          <PropertyWidgetDecorator type="show_if_boolean_is" name="UseBoundTransformationChecker" value="true"/>
+        </Hints>
       </DoubleVectorProperty>
+
+      <!-- command="SetTransformMode" -->
+      <IntVectorProperty
+        name="UseCounterTransformationChecker"
+        number_of_elements="1"
+        default_values="0">
+        <BooleanDomain name="bool"/>
+      </IntVectorProperty>
 
       <!-- command="SetYourDoubleVariable" -->
       <IntVectorProperty 
@@ -336,6 +358,17 @@
         number_of_elements="1"
         default_values="40">
         <IntRangeDomain name="range" min="0"/>
+        <Hints>
+          <PropertyWidgetDecorator type="show_if_boolean_is" name="UseCounterTransformationChecker" value="true"/>
+        </Hints>
+      </IntVectorProperty>
+
+      <!-- command="SetTransformMode" -->
+      <IntVectorProperty
+        name="UseDifferentialTransformationChecker"
+        number_of_elements="1"
+        default_values="0">
+        <BooleanDomain name="bool"/>
       </IntVectorProperty>
 
       <!-- command="SetYourDoubleVariable" -->
@@ -344,6 +377,9 @@
         number_of_elements="1"
         default_values="0.001">
         <DoubleRangeDomain name="range" min="0.0" max="6.2831854"/>
+        <Hints>
+          <PropertyWidgetDecorator type="show_if_boolean_is" name="UseDifferentialTransformationChecker" value="true"/>
+        </Hints>
       </DoubleVectorProperty>
       
       <!-- command="SetYourDoubleVariable" -->
@@ -352,6 +388,9 @@
         number_of_elements="1"
         default_values="0.001">
         <DoubleRangeDomain name="range" min="0.0" />
+        <Hints>
+          <PropertyWidgetDecorator type="show_if_boolean_is" name="UseDifferentialTransformationChecker" value="true"/>
+        </Hints>
       </DoubleVectorProperty>
 
       <!-- command="SetYourDoubleVariable" -->
@@ -360,6 +399,9 @@
         number_of_elements="1"
         default_values="3">
         <IntRangeDomain name="range" min="0"/>
+        <Hints>
+          <PropertyWidgetDecorator type="show_if_boolean_is" name="UseDifferentialTransformationChecker" value="true"/>
+        </Hints>
       </IntVectorProperty>
 
       <PropertyGroup label="Matcher">
@@ -395,10 +437,13 @@
       </PropertyGroup>
 
       <PropertyGroup label="Transformation Checkers">
-        <Property name="TransformationCheckerList" />
+        <!-- <Property name="TransformationCheckerList" /> -->
+        <Property name="UseBoundTransformationChecker"/>
         <Property name="MaxRotationNorm" />
         <Property name="MaxTranslationNorm" />
+        <Property name="UseCounterTransformationChecker"/>
         <Property name="MaxIterationCount" />
+        <Property name="UseDifferentialTransformationChecker"/>
         <Property name="MinDiffRotationError" />
         <Property name="MinDiffTranslationError" />
         <Property name="SmoothLength" />
