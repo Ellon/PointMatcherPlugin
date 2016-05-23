@@ -114,47 +114,6 @@
       </StringVectorProperty>
 
       <!-- command="SetTransformMode" -->
-      <IntVectorProperty
-        name="ErrorMinimizer"
-        number_of_elements="1"
-        default_values="1">
-        <EnumerationDomain name="enum">
-          <Entry value="0" text="IdentityErrorMinimizer"/>
-          <Entry value="1" text="PointToPlaneErrorMinimizer"/>
-          <Entry value="2" text="PointToPlaneWithCovErrorMinimizer"/>
-          <Entry value="3" text="PointToPointErrorMinimizer"/>
-          <Entry value="4" text="PointToPointSimilarityErrorMinimizer"/>
-          <Entry value="5" text="PointToPointWithCovErrorMinimizer"/>
-        </EnumerationDomain>
-        <Documentation>
-          Specify the error minimizer used.
-        </Documentation>
-      </IntVectorProperty>
-
-      <!-- command="SetYourDoubleVariable" -->
-      <DoubleVectorProperty 
-        name="SensorStd"
-        number_of_elements="1"
-        default_values="0.0">
-        <DoubleRangeDomain name="range" min="0.0"/>
-        <Hints>
-          <PropertyWidgetDecorator type="show_if_string_attribute_is" property="ErrorMinimizer" values="PointToPlaneWithCovErrorMinimizer PointToPointWithCovErrorMinimizer"/>
-        </Hints>
-      </DoubleVectorProperty>
-
-      <!-- command="SetTransformMode" -->
-      <IntVectorProperty
-        name="Force2D"
-        label="Force 2D"
-        number_of_elements="1"
-        default_values="0">
-        <BooleanDomain name="bool"/>
-        <Hints>
-          <PropertyWidgetDecorator type="show_if_string_attribute_is" property="ErrorMinimizer" values="PointToPlaneErrorMinimizer PointToPlaneWithCovErrorMinimizer"/>
-        </Hints>
-      </IntVectorProperty>
-
-      <!-- command="SetTransformMode" -->
       <StringVectorProperty name="OutlierFilterList"
                             number_of_elements="5"
                             element_types="0 0 0 0 2"
@@ -299,6 +258,47 @@
         <DoubleRangeDomain name="range" min="0.0000001" max="1.0"/>
       </DoubleVectorProperty>
 
+      <!-- command="SetTransformMode" -->
+      <IntVectorProperty
+        name="ErrorMinimizer"
+        number_of_elements="1"
+        default_values="1">
+        <EnumerationDomain name="enum">
+          <Entry value="0" text="IdentityErrorMinimizer"/>
+          <Entry value="1" text="PointToPlaneErrorMinimizer"/>
+          <Entry value="2" text="PointToPlaneWithCovErrorMinimizer"/>
+          <Entry value="3" text="PointToPointErrorMinimizer"/>
+          <Entry value="4" text="PointToPointSimilarityErrorMinimizer"/>
+          <Entry value="5" text="PointToPointWithCovErrorMinimizer"/>
+        </EnumerationDomain>
+        <Documentation>
+          Specify the error minimizer used.
+        </Documentation>
+      </IntVectorProperty>
+
+      <!-- command="SetYourDoubleVariable" -->
+      <DoubleVectorProperty 
+        name="SensorStd"
+        number_of_elements="1"
+        default_values="0.0">
+        <DoubleRangeDomain name="range" min="0.0"/>
+        <Hints>
+          <PropertyWidgetDecorator type="show_if_string_attribute_is" property="ErrorMinimizer" values="PointToPlaneWithCovErrorMinimizer PointToPointWithCovErrorMinimizer"/>
+        </Hints>
+      </DoubleVectorProperty>
+
+      <!-- command="SetTransformMode" -->
+      <IntVectorProperty
+        name="Force2D"
+        label="Force 2D"
+        number_of_elements="1"
+        default_values="0">
+        <BooleanDomain name="bool"/>
+        <Hints>
+          <PropertyWidgetDecorator type="show_if_string_attribute_is" property="ErrorMinimizer" values="PointToPlaneErrorMinimizer PointToPlaneWithCovErrorMinimizer"/>
+        </Hints>
+      </IntVectorProperty>
+
       <!-- command="SetCellArrayStatus"  -->
       <StringVectorProperty label="Transformation Checkers" 
                             element_types="2 0" 
@@ -371,12 +371,6 @@
         <Property name="MaxDistField" />
       </PropertyGroup>
 
-      <PropertyGroup label="Error Minimizer">
-        <Property name="ErrorMinimizer" />
-        <Property name="SensorStd" />
-        <Property name="Force2D" />
-      </PropertyGroup>
-
       <PropertyGroup label="Outlier Filters">
         <Property name="OutlierFilterList" />
         <Property name="of_Source" />
@@ -392,6 +386,12 @@
         <Property name="of_MinRatio" />
         <Property name="of_MaxRatio" />
         <Property name="of_Lambda" />
+      </PropertyGroup>
+
+      <PropertyGroup label="Error Minimizer">
+        <Property name="ErrorMinimizer" />
+        <Property name="SensorStd" />
+        <Property name="Force2D" />
       </PropertyGroup>
 
       <PropertyGroup label="Transformation Checkers">
