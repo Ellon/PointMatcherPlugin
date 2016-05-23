@@ -28,6 +28,9 @@ void pqOutlierFilterListWidget::on_outlierFilterAddPushButton_clicked()
 {
     QString itemName = ui->outlierFilterTypeComboBox->currentText();
     new QListWidgetItem(itemName, ui->outlierFilterListWidget);
+#ifndef BUILD_FROM_QT_CREATOR
+    pqPropertyWidget::changeAvailable();
+#endif
     emit this->itemAdded(itemName);
 }
 
@@ -38,6 +41,9 @@ void pqOutlierFilterListWidget::on_outlierFilterRemovePushButton_clicked()
     {
         QListWidgetItem* currentItem = ui->outlierFilterListWidget->takeItem(currentRow);
         delete currentItem;
+#ifndef BUILD_FROM_QT_CREATOR
+    pqPropertyWidget::changeAvailable();
+#endif
         emit this->itemRemoved(currentRow);
     }
 }
@@ -50,6 +56,9 @@ void pqOutlierFilterListWidget::on_outlierFilterUpPushButton_clicked()
         QListWidgetItem* currentItem = ui->outlierFilterListWidget->takeItem(currentRow);
         ui->outlierFilterListWidget->insertItem(currentRow-1,currentItem);
         ui->outlierFilterListWidget->setCurrentItem(currentItem);
+#ifndef BUILD_FROM_QT_CREATOR
+    pqPropertyWidget::changeAvailable();
+#endif
         emit this->itemMovedUp(currentRow);
     }
 }
@@ -63,6 +72,9 @@ void pqOutlierFilterListWidget::on_outlierFilterDownPushButton_clicked()
         QListWidgetItem* currentItem = ui->outlierFilterListWidget->takeItem(currentRow);
         ui->outlierFilterListWidget->insertItem(currentRow+1,currentItem);
         ui->outlierFilterListWidget->setCurrentItem(currentItem);
+#ifndef BUILD_FROM_QT_CREATOR
+    pqPropertyWidget::changeAvailable();
+#endif
         emit this->itemMovedDown(currentRow);
     }
 }
