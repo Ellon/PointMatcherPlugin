@@ -1,0 +1,393 @@
+<ServerManagerConfiguration>
+  <ProxyGroup name="filters">
+    <SourceProxy name="PMIcpFilter" class="vtkPMIcpFilter" label="PM Icp Filter">
+      <Documentation
+         short_help="Performs ICP."
+         long_help="Performs ICP.">
+      </Documentation>
+
+      <InputProperty
+         name="Input"
+         port_index="0"
+         command="SetInputConnection">
+        <ProxyGroupDomain name="groups">
+          <Group name="sources"/>
+          <Group name="filters"/>
+        </ProxyGroupDomain>
+        <DataTypeDomain name="input_type">
+          <DataType value="vtkPolyData"/>
+        </DataTypeDomain>
+        <Documentation>
+          Set the input poly data
+        </Documentation>
+      </InputProperty>
+
+      <!-- command="SetTransformMode" -->
+      <IntVectorProperty
+        name="Matcher"
+        number_of_elements="1"
+        default_values="0">
+        <EnumerationDomain name="enum">
+          <Entry value="0" text="KDTreeMatcher"/>
+          <Entry value="1" text="KDTreeVarDistMatcher"/>
+          <Entry value="2" text="NullMatcher"/>
+        </EnumerationDomain>
+        <Documentation>
+          Specify the matcher used.
+        </Documentation>
+      </IntVectorProperty>
+
+        <!-- command="SetYourDoubleVariable" -->
+      <IntVectorProperty 
+        name="Knn"
+        number_of_elements="1"
+        default_values="1">
+        <IntRangeDomain name="range" min="1"/>
+      </IntVectorProperty>
+
+      <!-- command="SetYourDoubleVariable" -->
+      <DoubleVectorProperty 
+        name="Epsilon"
+        number_of_elements="1"
+        default_values="0.0">
+        <DoubleRangeDomain name="range" min="0.0"/>
+      </DoubleVectorProperty>
+
+      <!-- command="SetTransformMode" -->
+      <IntVectorProperty
+        name="SearchType"
+        number_of_elements="1"
+        default_values="1">
+        <EnumerationDomain name="enum">
+          <Entry value="0" text="Brute Force"/>
+          <Entry value="1" text="KD-Tree With Linear Heap"/>
+          <Entry value="2" text="KD-Tree With Tree Heap"/>
+        </EnumerationDomain>
+        <Documentation>
+          Specify the matcher used.
+        </Documentation>
+      </IntVectorProperty>
+
+      <!-- command="SetYourDoubleVariable" -->
+      <DoubleVectorProperty 
+        name="MaxDist"
+        number_of_elements="1"
+        default_values="99999.99999">
+        <DoubleRangeDomain name="range" min="0.0"/>
+      </DoubleVectorProperty>
+
+      <StringVectorProperty 
+        name="MaxDistField"
+        label="Max Dist Field"
+        command="SetInputArrayToProcess"
+        number_of_elements="5"
+        element_types="0 0 0 0 2"
+        animateable="0">
+        <ArrayListDomain 
+          name="array_list"
+          attribute_type="Scalars"
+          input_domain_name="inputs_array">
+          <RequiredProperties>
+            <Property name="Input" function="Input" />
+          </RequiredProperties>
+        </ArrayListDomain>
+        <FieldDataDomain name="field_list">
+          <RequiredProperties>
+            <Property name="Input" function="Input" />
+          </RequiredProperties>
+        </FieldDataDomain>
+      </StringVectorProperty>
+
+      <!-- command="SetTransformMode" -->
+      <IntVectorProperty
+        name="ErrorMinimizer"
+        number_of_elements="1"
+        default_values="1">
+        <EnumerationDomain name="enum">
+          <Entry value="0" text="IdentityErrorMinimizer"/>
+          <Entry value="1" text="PointToPlaneErrorMinimizer"/>
+          <Entry value="2" text="PointToPlaneWithCovErrorMinimizer"/>
+          <Entry value="3" text="PointToPointErrorMinimizer"/>
+          <Entry value="4" text="PointToPointSimilarityErrorMinimizer"/>
+          <Entry value="5" text="PointToPointWithCovErrorMinimizer"/>
+        </EnumerationDomain>
+        <Documentation>
+          Specify the error minimizer used.
+        </Documentation>
+      </IntVectorProperty>
+
+      <!-- command="SetYourDoubleVariable" -->
+      <DoubleVectorProperty 
+        name="SensorStd"
+        number_of_elements="1"
+        default_values="0.0">
+        <DoubleRangeDomain name="range" min="0.0"/>
+      </DoubleVectorProperty>
+
+      <!-- command="SetTransformMode" -->
+      <IntVectorProperty
+        name="Force2D"
+        label="Force 2D"
+        number_of_elements="1"
+        default_values="0">
+        <BooleanDomain name="bool"/>
+      </IntVectorProperty>
+
+      <!-- command="SetTransformMode" -->
+      <StringVectorProperty name="OutlierFilterList"
+                            number_of_elements="5"
+                            element_types="0 0 0 0 2"
+                            panel_widget="outlier_filter_list">
+        <Documentation>
+          Define which outlier filters to use and in which order.
+        </Documentation>
+      </StringVectorProperty>
+
+      <IntVectorProperty
+        name="of_Source"
+        label="Source"
+        number_of_elements="1"
+        default_values="0">
+        <EnumerationDomain name="enum">
+          <Entry value="0" text="Reference"/>
+          <Entry value="1" text="Reading"/>
+        </EnumerationDomain>
+        <Documentation>
+          Source to apply the GenericDescriptorOutlierFilter.
+        </Documentation>
+      </IntVectorProperty>
+
+      <StringVectorProperty 
+        name="of_Descriptor"
+        label="Descriptor"
+        command="SetInputArrayToProcess"
+        number_of_elements="5"
+        element_types="0 0 0 0 2"
+        animateable="0">
+        <ArrayListDomain 
+          name="array_list"
+          attribute_type="Scalars"
+          input_domain_name="inputs_array">
+          <RequiredProperties>
+            <Property name="Input" function="Input" />
+          </RequiredProperties>
+        </ArrayListDomain>
+        <FieldDataDomain name="field_list">
+          <RequiredProperties>
+            <Property name="Input" function="Input" />
+          </RequiredProperties>
+        </FieldDataDomain>
+      </StringVectorProperty>
+
+      <!-- command="SetYourDoubleVariable" -->
+      <DoubleVectorProperty 
+        name="of_Threshold"
+        label="Threshold"
+        number_of_elements="1"
+        default_values="0.1">
+        <DoubleRangeDomain name="range" min="0.0000001"/>
+      </DoubleVectorProperty>
+
+      <!-- command="SetTransformMode" -->
+      <IntVectorProperty
+        name="of_SoftThreshold"
+        label="Soft Threshold"
+        number_of_elements="1"
+        default_values="0">
+        <BooleanDomain name="bool"/>
+      </IntVectorProperty>
+
+      <!-- command="SetTransformMode" -->
+      <IntVectorProperty
+        name="of_UseLargerThanThreshold"
+        label="Use Larger Than Threshold"
+        number_of_elements="1"
+        default_values="1">
+        <BooleanDomain name="bool"/>
+      </IntVectorProperty>
+
+      <!-- command="SetYourDoubleVariable" -->
+      <DoubleVectorProperty 
+        name="of_MaxDist"
+        label="Max Dist"
+        number_of_elements="1"
+        default_values="1.0">
+        <DoubleRangeDomain name="range" min="0.0000001"/>
+      </DoubleVectorProperty>
+
+      <!-- command="SetYourDoubleVariable" -->
+      <DoubleVectorProperty 
+        name="of_Factor"
+        label="Factor"
+        number_of_elements="1"
+        default_values="3.0">
+        <DoubleRangeDomain name="range" min="0.0000001"/>
+      </DoubleVectorProperty>
+
+      <!-- command="SetYourDoubleVariable" -->
+      <DoubleVectorProperty 
+        name="of_MinDist"
+        label="Min Dist"
+        number_of_elements="1"
+        default_values="1.0">
+        <DoubleRangeDomain name="range" min="0.0000001"/>
+      </DoubleVectorProperty>
+
+      <!-- command="SetYourDoubleVariable" -->
+      <DoubleVectorProperty 
+        name="of_MaxAngle"
+        label="Max Angle"
+        number_of_elements="1"
+        default_values="1.57">
+        <DoubleRangeDomain name="range" min="0.0" max="3.1416"/>
+      </DoubleVectorProperty>
+
+      <!-- command="SetYourDoubleVariable" -->
+      <DoubleVectorProperty 
+        name="of_Ratio"
+        label="Ratio"
+        number_of_elements="1"
+        default_values="0.85">
+        <DoubleRangeDomain name="range" min="0.0000001" max="1.0"/>
+      </DoubleVectorProperty>
+
+      <!-- command="SetYourDoubleVariable" -->
+      <DoubleVectorProperty 
+        name="of_MinRatio"
+        label="Min Ratio"
+        number_of_elements="1"
+        default_values="0.05">
+        <DoubleRangeDomain name="range" min="0.0000001" max="1.0"/>
+      </DoubleVectorProperty>
+
+      <!-- command="SetYourDoubleVariable" -->
+      <DoubleVectorProperty 
+        name="of_MaxRatio"
+        label="Max Ratio"
+        number_of_elements="1"
+        default_values="0.99">
+        <DoubleRangeDomain name="range" min="0.0000001" max="1.0"/>
+      </DoubleVectorProperty>
+
+      <!-- command="SetYourDoubleVariable" -->
+      <DoubleVectorProperty 
+        name="of_Lambda"
+        label="Lambda"
+        number_of_elements="1"
+        default_values="0.95">
+        <DoubleRangeDomain name="range" min="0.0000001" max="1.0"/>
+      </DoubleVectorProperty>
+
+      <!-- command="SetCellArrayStatus"  -->
+      <StringVectorProperty label="Transformation Checkers" 
+                            element_types="2 0" 
+                            name="TransformationCheckerList" 
+                            number_of_elements="0" 
+                            number_of_elements_per_command="2" 
+                            repeat_command="1"> 
+        <ArrayListDomain name="array_list"
+                         attribute_type="Scalars">
+          <Entry value="0" text="BoundTransformationChecker"/>
+          <Entry value="1" text="CounterTransformationChecker"/>
+          <Entry value="2" text="DifferentialTransformationChecker"/>
+        </ArrayListDomain>
+      </StringVectorProperty>
+
+      <!-- command="SetYourDoubleVariable" -->
+      <DoubleVectorProperty 
+        name="MaxRotationNorm"
+        number_of_elements="1"
+        default_values="1.0">
+        <DoubleRangeDomain name="range" min="0.0"/>
+      </DoubleVectorProperty>
+
+      <!-- command="SetYourDoubleVariable" -->
+      <DoubleVectorProperty 
+        name="MaxTranslationNorm"
+        number_of_elements="1"
+        default_values="1.0">
+        <DoubleRangeDomain name="range" min="0.0"/>
+      </DoubleVectorProperty>
+
+      <!-- command="SetYourDoubleVariable" -->
+      <IntVectorProperty 
+        name="MaxIterationCount"
+        number_of_elements="1"
+        default_values="40">
+        <IntRangeDomain name="range" min="0"/>
+      </IntVectorProperty>
+
+      <!-- command="SetYourDoubleVariable" -->
+      <DoubleVectorProperty 
+        name="MinDiffRotationError"
+        number_of_elements="1"
+        default_values="0.001">
+        <DoubleRangeDomain name="range" min="0.0" max="6.2831854"/>
+      </DoubleVectorProperty>
+      
+      <!-- command="SetYourDoubleVariable" -->
+      <DoubleVectorProperty 
+        name="MinDiffTranslationError"
+        number_of_elements="1"
+        default_values="0.001">
+        <DoubleRangeDomain name="range" min="0.0" />
+      </DoubleVectorProperty>
+
+      <!-- command="SetYourDoubleVariable" -->
+      <IntVectorProperty 
+        name="SmoothLength"
+        number_of_elements="1"
+        default_values="3">
+        <IntRangeDomain name="range" min="0"/>
+      </IntVectorProperty>
+
+      <PropertyGroup label="Matcher">
+        <Property name="Matcher" />
+        <Property name="Knn" />
+        <Property name="Epsilon" />
+        <Property name="SearchType" />
+        <Property name="MaxDist" />
+        <Property name="MaxDistField" />
+      </PropertyGroup>
+
+      <PropertyGroup label="Error Minimizer">
+        <Property name="ErrorMinimizer" />
+        <Property name="SensorStd" />
+        <Property name="Force2D" />
+      </PropertyGroup>
+
+      <PropertyGroup label="Outlier Filters">
+        <Property name="OutlierFilterList" />
+        <Property name="of_Source" />
+        <Property name="of_Descriptor" />
+        <Property name="of_Threshold" />
+        <Property name="of_SoftThreshold" />
+        <Property name="of_UseLargerThanThreshold" />
+        <Property name="of_MaxDist" />
+        <Property name="of_Factor" />
+        <Property name="of_MinDist" />
+        <Property name="of_MaxAngle" />
+        <Property name="of_Ratio" />
+        <Property name="of_MinRatio" />
+        <Property name="of_MaxRatio" />
+        <Property name="of_Lambda" />
+      </PropertyGroup>
+
+      <PropertyGroup label="Transformation Checkers">
+        <Property name="TransformationCheckerList" />
+        <Property name="MaxRotationNorm" />
+        <Property name="MaxTranslationNorm" />
+        <Property name="MaxIterationCount" />
+        <Property name="MinDiffRotationError" />
+        <Property name="MinDiffTranslationError" />
+        <Property name="SmoothLength" />
+      </PropertyGroup>
+
+      <Hints> 
+        <ShowInMenu category="Point Matcher" />
+      </Hints>
+
+    </SourceProxy>
+  </ProxyGroup>
+</ServerManagerConfiguration>
+

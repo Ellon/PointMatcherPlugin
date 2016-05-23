@@ -25,6 +25,7 @@ set(server_deps)
 
 list(APPEND servermanager_sources
   vtkPMConversions.cxx
+  vtkPMIcpFilter.cxx
   )
 
 list(APPEND servermanager_xml
@@ -34,6 +35,7 @@ list(APPEND servermanager_xml
   xml/vtkPMMaxDensityDataPointsFilter.xml
   xml/vtkPMObservationDirectionDataPointsFilter.xml
   xml/vtkPMOrientNormalsDataPointsFilter.xml
+  xml/vtkPMIcpFilter.xml
   )
 
 option(ENABLE_AUTOGEN "If we should auto-generate for filters from a yaml file" ON)
@@ -49,6 +51,33 @@ list(APPEND server_deps
 
 set(library_name vtkPMFilters)
 include(GenerateExportHeader)
+
+# Custom property widget for IcpFilter
+if (PARAVIEW_QT_VERSION VERSION_GREATER "4")
+  qt5_wrap_cpp(widget_moc_srcs
+    ui/pqOutlierFilterListWidget/pqOutlierFilterListWidget.h)
+  qt5_wrap_ui(widget_form_headers
+    ui/pqOutlierFilterListWidget/pqOutlierFilterListWidget.ui)
+else ()
+  qt4_wrap_cpp(widget_moc_srcs
+    ui/pqOutlierFilterListWidget/pqOutlierFilterListWidget.h)
+  qt4_wrap_ui(widget_form_headers
+    ui/pqOutlierFilterListWidget/pqOutlierFilterListWidget.ui)
+endif ()
+
+set (widget_interfaces)
+set (widget_sources)
+add_paraview_property_widget(widget_interfaces widget_sources
+  TYPE "outlier_filter_list"
+  CLASS_NAME pqOutlierFilterListWidget)
+
+list(APPEND gui_interfaces ${widget_interfaces})
+list(APPEND gui_sources
+  ${widget_sources}
+  ${widget_moc_srcs}
+  ${widget_form_headers}
+  ui/pqOutlierFilterListWidget/pqOutlierFilterListWidget.cpp)
+include_directories(ui/pqOutlierFilterListWidget)
 
 add_paraview_plugin(${library_name} "1.0"
   GUI_INTERFACES ${gui_interfaces}

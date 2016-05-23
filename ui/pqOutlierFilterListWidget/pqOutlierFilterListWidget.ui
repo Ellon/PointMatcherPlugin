@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>pqOutlierFilterListWidget</class>
+ <widget class="QWidget" name="pqOutlierFilterListWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>435</width>
+    <height>172</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>QOutlierFilterListWidget</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="outlierFilterTypeLabel">
+       <property name="text">
+        <string>Filter</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="outlierFilterTypeComboBox">
+       <item>
+        <property name="text">
+         <string>GenericDescriptorOutlierFilter</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>MaxDistOutlierFilter</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>MedianDistOutlierFilter</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>MinDistOutlierFilter</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>NullOutlierFilter</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>SurfaceNormalOutlierFilter</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>TrimmedDistOutlierFilter</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>VarTrimmedDistOutlierFilter</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="outlierFilterAddPushButton">
+       <property name="maximumSize">
+        <size>
+         <width>85</width>
+         <height>29</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Add</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QListWidget" name="outlierFilterListWidget"/>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QPushButton" name="outlierFilterUpPushButton">
+         <property name="maximumSize">
+          <size>
+           <width>85</width>
+           <height>29</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Up</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="outlierFilterDownPushButton">
+         <property name="maximumSize">
+          <size>
+           <width>85</width>
+           <height>29</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Down</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="outlierFilterRemovePushButton">
+         <property name="maximumSize">
+          <size>
+           <width>85</width>
+           <height>29</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Remove</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
