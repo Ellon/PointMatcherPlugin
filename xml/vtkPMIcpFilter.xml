@@ -43,6 +43,9 @@
         number_of_elements="1"
         default_values="1">
         <IntRangeDomain name="range" min="1"/>
+        <Hints>
+          <PropertyWidgetDecorator type="show_if_string_attribute_is" property="Matcher" values="KDTreeMatcher KDTreeVarDistMatcher"/>
+        </Hints>
       </IntVectorProperty>
 
       <!-- command="SetYourDoubleVariable" -->
@@ -51,6 +54,9 @@
         number_of_elements="1"
         default_values="0.0">
         <DoubleRangeDomain name="range" min="0.0"/>
+        <Hints>
+          <PropertyWidgetDecorator type="show_if_string_attribute_is" property="Matcher" values="KDTreeMatcher KDTreeVarDistMatcher"/> 
+        </Hints>
       </DoubleVectorProperty>
 
       <!-- command="SetTransformMode" -->
@@ -66,6 +72,9 @@
         <Documentation>
           Specify the matcher used.
         </Documentation>
+        <Hints>
+          <PropertyWidgetDecorator type="show_if_string_attribute_is" property="Matcher" values="KDTreeMatcher KDTreeVarDistMatcher"/>
+        </Hints>
       </IntVectorProperty>
 
       <!-- command="SetYourDoubleVariable" -->
@@ -74,6 +83,9 @@
         number_of_elements="1"
         default_values="99999.99999">
         <DoubleRangeDomain name="range" min="0.0"/>
+        <Hints>
+          <PropertyWidgetDecorator type="show_if_string_attribute_is" property="Matcher" value="KDTreeMatcher"/>
+        </Hints>
       </DoubleVectorProperty>
 
       <StringVectorProperty 
@@ -96,6 +108,9 @@
             <Property name="Input" function="Input" />
           </RequiredProperties>
         </FieldDataDomain>
+        <Hints>
+          <PropertyWidgetDecorator type="show_if_string_attribute_is" property="Matcher" value="KDTreeVarDistMatcher"/>
+        </Hints>
       </StringVectorProperty>
 
       <!-- command="SetTransformMode" -->
@@ -122,6 +137,9 @@
         number_of_elements="1"
         default_values="0.0">
         <DoubleRangeDomain name="range" min="0.0"/>
+        <Hints>
+          <PropertyWidgetDecorator type="show_if_string_attribute_is" property="ErrorMinimizer" values="PointToPlaneWithCovErrorMinimizer PointToPointWithCovErrorMinimizer"/>
+        </Hints>
       </DoubleVectorProperty>
 
       <!-- command="SetTransformMode" -->
@@ -131,6 +149,9 @@
         number_of_elements="1"
         default_values="0">
         <BooleanDomain name="bool"/>
+        <Hints>
+          <PropertyWidgetDecorator type="show_if_string_attribute_is" property="ErrorMinimizer" values="PointToPlaneErrorMinimizer PointToPlaneWithCovErrorMinimizer"/>
+        </Hints>
       </IntVectorProperty>
 
       <!-- command="SetTransformMode" -->

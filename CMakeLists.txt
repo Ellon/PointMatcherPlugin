@@ -6,6 +6,9 @@ if(NOT ParaView_SOURCE_DIR)
   find_package(PythonLibs REQUIRED)
 endif()
 
+# set c++11 to use lambda functions
+add_compile_options(-std=c++11)
+
 find_package(libpointmatcher 1.2.3 REQUIRED)
 include_directories("${libpointmatcher_INCLUDE_DIRS}")
 message(STATUS "Using libpointmatcher version ${libpointmatcher_VERSION}")
@@ -55,12 +58,14 @@ include(GenerateExportHeader)
 # Custom property widget for IcpFilter
 if (PARAVIEW_QT_VERSION VERSION_GREATER "4")
   qt5_wrap_cpp(widget_moc_srcs
-    ui/pqOutlierFilterListWidget/pqOutlierFilterListWidget.h)
+    ui/pqOutlierFilterListWidget/pqOutlierFilterListWidget.h
+    pqShowIfStringAttributeIsWidgetDecorator.h)
   qt5_wrap_ui(widget_form_headers
     ui/pqOutlierFilterListWidget/pqOutlierFilterListWidget.ui)
 else ()
   qt4_wrap_cpp(widget_moc_srcs
-    ui/pqOutlierFilterListWidget/pqOutlierFilterListWidget.h)
+    ui/pqOutlierFilterListWidget/pqOutlierFilterListWidget.h
+    pqShowIfStringAttributeIsWidgetDecorator.h)
   qt4_wrap_ui(widget_form_headers
     ui/pqOutlierFilterListWidget/pqOutlierFilterListWidget.ui)
 endif ()
@@ -71,12 +76,25 @@ add_paraview_property_widget(widget_interfaces widget_sources
   TYPE "outlier_filter_list"
   CLASS_NAME pqOutlierFilterListWidget)
 
-list(APPEND gui_interfaces ${widget_interfaces})
+set (decorator_interfaces)
+set (decorator_sources)
+add_paraview_property_widget_decorator(decorator_interfaces decorator_sources
+  TYPE "show_if_string_attribute_is"
+  CLASS_NAME pqShowIfStringAttributeIsWidgetDecorator)
+
+list(APPEND gui_interfaces 
+  ${widget_interfaces}
+  ${decorator_interfaces}
+  )
+
 list(APPEND gui_sources
   ${widget_sources}
   ${widget_moc_srcs}
   ${widget_form_headers}
-  ui/pqOutlierFilterListWidget/pqOutlierFilterListWidget.cpp)
+  ${decorator_sources}
+  ui/pqOutlierFilterListWidget/pqOutlierFilterListWidget.cpp
+  pqShowIfStringAttributeIsWidgetDecorator.cxx
+  )
 include_directories(ui/pqOutlierFilterListWidget)
 
 add_paraview_plugin(${library_name} "1.0"
