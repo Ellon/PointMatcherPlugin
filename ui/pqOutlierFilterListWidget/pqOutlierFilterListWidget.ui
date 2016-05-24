@@ -6,16 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>435</width>
-    <height>172</height>
+    <width>437</width>
+    <height>381</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>QOutlierFilterListWidget</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2">
+  <layout class="QVBoxLayout" name="verticalLayout_6">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
      <item>
       <widget class="QLabel" name="outlierFilterTypeLabel">
        <property name="text">
@@ -83,12 +83,12 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <layout class="QHBoxLayout" name="horizontalLayout_6">
      <item>
       <widget class="QListWidget" name="outlierFilterListWidget"/>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout">
+      <layout class="QVBoxLayout" name="verticalLayout_5">
        <item>
         <widget class="QPushButton" name="outlierFilterUpPushButton">
          <property name="maximumSize">
@@ -131,6 +131,319 @@
       </layout>
      </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QStackedWidget" name="outlierFilterOptionStackedWidget">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="currentIndex">
+      <number>4</number>
+     </property>
+     <widget class="QWidget" name="outlierFilterGenericDescriptorPage">
+      <layout class="QFormLayout" name="formLayout_18">
+       <item row="0" column="0">
+        <widget class="QLabel" name="outlierFilterGenericDescriptorSourceLabel">
+         <property name="text">
+          <string>Source</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="outlierFilterGenericDescriptorSourceComboBox">
+         <item>
+          <property name="text">
+           <string>reference</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>reading</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="outlierFilterGenericDescriptorDescriptorLabel">
+         <property name="text">
+          <string>Descriptor</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="outlierFilterGenericDescriptorDescriptorLineEdit"/>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="outlierFilterGenericDescriptorThresholdLabel">
+         <property name="text">
+          <string>Threshold</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QDoubleSpinBox" name="outlierFilterGenericDescriptorThresholdDoubleSpinBox">
+         <property name="decimals">
+          <number>6</number>
+         </property>
+         <property name="minimum">
+          <double>0.000001000000000</double>
+         </property>
+         <property name="maximum">
+          <double>999999999.999999046325684</double>
+         </property>
+         <property name="value">
+          <double>0.100000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0" colspan="2">
+        <widget class="QCheckBox" name="outlierFilterGenericDescriptorSoftThresholdCheckBox">
+         <property name="text">
+          <string>Soft Threshold</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0" colspan="2">
+        <widget class="QCheckBox" name="outlierFilterGenericDescriptorLargerThanCheckBox">
+         <property name="text">
+          <string>Use Larger Than Threshold</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="outlierFilterMaxDistPage">
+      <layout class="QFormLayout" name="formLayout_19">
+       <item row="0" column="0">
+        <widget class="QLabel" name="outlierFilterMaxDistMaxDistLabel">
+         <property name="text">
+          <string>Max Dist</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QDoubleSpinBox" name="outlierFilterMaxDistMaxDistDoubleSpinBox">
+         <property name="decimals">
+          <number>6</number>
+         </property>
+         <property name="minimum">
+          <double>0.000001000000000</double>
+         </property>
+         <property name="maximum">
+          <double>999999999.999999046325684</double>
+         </property>
+         <property name="value">
+          <double>1.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="outlierFilterMedianDistPage">
+      <layout class="QFormLayout" name="formLayout_20">
+       <item row="0" column="0">
+        <widget class="QLabel" name="outlierFilterMedianDistFactorLabel">
+         <property name="text">
+          <string>Factor</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QDoubleSpinBox" name="outlierFilterMedianDistFactorDoubleSpinBox">
+         <property name="decimals">
+          <number>6</number>
+         </property>
+         <property name="minimum">
+          <double>0.000001000000000</double>
+         </property>
+         <property name="maximum">
+          <double>999999999.999999046325684</double>
+         </property>
+         <property name="value">
+          <double>3.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="outlierFilterMinDistPage">
+      <layout class="QFormLayout" name="formLayout_21">
+       <item row="0" column="0">
+        <widget class="QLabel" name="outlierFilterMinDistMinDistLabel">
+         <property name="text">
+          <string>Min Dist</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QDoubleSpinBox" name="outlierFilterMinDistMinDistDoubleSpinBox">
+         <property name="decimals">
+          <number>6</number>
+         </property>
+         <property name="minimum">
+          <double>0.000001000000000</double>
+         </property>
+         <property name="maximum">
+          <double>999999999.999999046325684</double>
+         </property>
+         <property name="value">
+          <double>1.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="outlierFilterNullPage">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
+     <widget class="QWidget" name="outlierFilterSurfaceNormalPage">
+      <layout class="QFormLayout" name="formLayout_22">
+       <item row="0" column="0">
+        <widget class="QLabel" name="outlierFilterSurfaceNormalMaxAngleLabel">
+         <property name="text">
+          <string>Max Angle</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QDoubleSpinBox" name="outlierFilterSurfaceNormalMaxAngleDoubleSpinBox">
+         <property name="decimals">
+          <number>6</number>
+         </property>
+         <property name="maximum">
+          <double>3.141600000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.100000000000000</double>
+         </property>
+         <property name="value">
+          <double>1.570000000000000</double>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="outlierFilterTrimmedDistPage">
+      <layout class="QFormLayout" name="formLayout_23">
+       <item row="0" column="0">
+        <widget class="QLabel" name="outlierFilterTrimmedDistRatioLabel">
+         <property name="text">
+          <string>Ratio</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QDoubleSpinBox" name="outlierFilterTrimmedDistRatioDoubleSpinBox">
+         <property name="decimals">
+          <number>6</number>
+         </property>
+         <property name="minimum">
+          <double>0.000001000000000</double>
+         </property>
+         <property name="maximum">
+          <double>1.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.100000000000000</double>
+         </property>
+         <property name="value">
+          <double>0.850000000000000</double>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="outlierFilterVarTrimmedDistPage">
+      <layout class="QFormLayout" name="formLayout_24">
+       <item row="0" column="0">
+        <widget class="QLabel" name="outlierFilterVarTrimmedDistMinRatioLabel">
+         <property name="text">
+          <string>Min Ratio</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QDoubleSpinBox" name="outlierFilterVarTrimmedDistMinRatioDoubleSpinBox">
+         <property name="decimals">
+          <number>6</number>
+         </property>
+         <property name="minimum">
+          <double>0.000001000000000</double>
+         </property>
+         <property name="maximum">
+          <double>1.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.010000000000000</double>
+         </property>
+         <property name="value">
+          <double>0.050000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="outlierFilterVarTrimmedDistMaxRatioLabel">
+         <property name="text">
+          <string>Max Ratio</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QDoubleSpinBox" name="outlierFilterVarTrimmedDistMaxRatioDoubleSpinBox">
+         <property name="decimals">
+          <number>6</number>
+         </property>
+         <property name="minimum">
+          <double>0.000001000000000</double>
+         </property>
+         <property name="maximum">
+          <double>1.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.010000000000000</double>
+         </property>
+         <property name="value">
+          <double>0.990000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="outlierFilterVarTrimmedDistLambdaLabel">
+         <property name="text">
+          <string>Lambda</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QDoubleSpinBox" name="outlierFilterVarTrimmedDistLambdaDoubleSpinBox">
+         <property name="decimals">
+          <number>6</number>
+         </property>
+         <property name="minimum">
+          <double>0.000000000000000</double>
+         </property>
+         <property name="maximum">
+          <double>999999999.999999046325684</double>
+         </property>
+         <property name="value">
+          <double>0.950000000000000</double>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
    </item>
   </layout>
  </widget>

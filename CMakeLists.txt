@@ -6,7 +6,7 @@ if(NOT ParaView_SOURCE_DIR)
   find_package(PythonLibs REQUIRED)
 endif()
 
-# set c++11 to use lambda functions
+# set c++11 to use lambda functions and std::all_of
 add_compile_options(-std=c++11)
 
 find_package(libpointmatcher 1.2.3 REQUIRED)
@@ -74,7 +74,7 @@ endif ()
 
 set (widget_interfaces)
 set (widget_sources)
-add_paraview_property_widget(widget_interfaces widget_sources
+add_paraview_property_group_widget(widget_interfaces widget_sources
   TYPE "outlier_filter_list"
   CLASS_NAME pqOutlierFilterListWidget)
 
@@ -117,7 +117,9 @@ add_paraview_plugin(${library_name} "1.0"
   )
 generate_export_header(${library_name} EXPORT_FILE_NAME ${library_name}Module.h)
 
-target_link_libraries(${library_name} LINK_PUBLIC ${gui_deps} ${server_deps})
+add_library(outlierFilterOptions outlierFilterOptions.cxx)
+
+target_link_libraries(${library_name} LINK_PUBLIC ${gui_deps} ${server_deps} outlierFilterOptions)
 
 
 # if(VTK_WRAP_PYTHON)
