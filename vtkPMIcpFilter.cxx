@@ -45,7 +45,7 @@ vtkPMIcpFilter::vtkPMIcpFilter() :
   MinDiffTranslationError(0.001),
   SmoothLength(3)
 {
-  this->SetNumberOfInputPorts(1);
+  this->SetNumberOfInputPorts(2);
   this->SetNumberOfOutputPorts(1);
 }
 
