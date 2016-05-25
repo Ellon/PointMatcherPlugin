@@ -49,6 +49,8 @@ int vtkPMIcpFilter::RequestData(
   vtkInformation *outInfo = outputVector->GetInformationObject(0);
   vtkPolyData *output = vtkPolyData::SafeDownCast(outInfo->Get(vtkDataObject::DATA_OBJECT()));
 
+  std::cout << "Calling RequestData!" << std::endl;
+
   // TODO How to access the values set in the widgets from here?
   std::for_each(outlierFilterOptionVector.begin(), outlierFilterOptionVector.end(), [](const OutlierFilterOptions& opt)
   {
@@ -98,7 +100,7 @@ void vtkPMIcpFilter::AddOutlierFilter(
     double lambda)
 {
 
-  outlierFilterOptionVector.push_back(OutlierFilterOptions());
+  this->outlierFilterOptionVector.push_back(OutlierFilterOptions());
   OutlierFilterOptions &outlierFilterOptions = outlierFilterOptionVector.back();
   outlierFilterOptions.filterName = filterName;
   outlierFilterOptions.source = source;
@@ -114,9 +116,12 @@ void vtkPMIcpFilter::AddOutlierFilter(
   outlierFilterOptions.minRatio = minRatio;
   outlierFilterOptions.maxRatio = maxRatio;
   outlierFilterOptions.lambda = lambda;
+
+  this->Modified();
 }
 
 void vtkPMIcpFilter::CleanOutlierFilters()
 {
-  outlierFilterOptionVector.clear();
+  this->outlierFilterOptionVector.clear();
+  this->Modified();
 }
