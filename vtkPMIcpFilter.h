@@ -96,6 +96,34 @@ public:
   vtkSetMacro(Force2D, int);
   vtkGetMacro(Force2D, int);
 
+  // Transformation Checkers get/set methods
+  vtkSetMacro(UseBoundTransformationChecker, int);
+  vtkGetMacro(UseBoundTransformationChecker, int);
+
+  vtkSetMacro(UseCounterTransformationChecker, int);
+  vtkGetMacro(UseCounterTransformationChecker, int);
+
+  vtkSetMacro(UseDifferentialTransformationChecker, int);
+  vtkGetMacro(UseDifferentialTransformationChecker, int);
+
+  vtkSetMacro(MaxRotationNorm, double);
+  vtkGetMacro(MaxRotationNorm, double);
+
+  vtkSetMacro(MaxTranslationNorm, double);
+  vtkGetMacro(MaxTranslationNorm, double);
+
+  vtkSetMacro(MaxIterationCount, double);
+  vtkGetMacro(MaxIterationCount, double);
+
+  vtkSetMacro(MinDiffRotationError, double);
+  vtkGetMacro(MinDiffRotationError, double);
+
+  vtkSetMacro(MinDiffTranslationError, double);
+  vtkGetMacro(MinDiffTranslationError, double);
+
+  vtkSetMacro(SmoothLength, int);
+  vtkGetMacro(SmoothLength, int);
+
 protected:
   // Matcher
   int Matcher;
@@ -111,7 +139,16 @@ protected:
   int ErrorMinimizer;
   double SensorStd;
   int Force2D;
-
+  // Transformation Checkers
+  int UseBoundTransformationChecker;
+  int UseCounterTransformationChecker;
+  int UseDifferentialTransformationChecker;
+  double MaxRotationNorm;
+  double MaxTranslationNorm;
+  double MaxIterationCount;
+  double MinDiffRotationError;
+  double MinDiffTranslationError;
+  int SmoothLength;
 
   virtual int RequestData(vtkInformation *request,
                           vtkInformationVector **inputVector,

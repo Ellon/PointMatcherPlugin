@@ -181,17 +181,17 @@
       </StringVectorProperty>
  -->
 
-      <!-- command="SetTransformMode" -->
       <IntVectorProperty
         name="UseBoundTransformationChecker"
+        command="SetUseBoundTransformationChecker"
         number_of_elements="1"
         default_values="0">
         <BooleanDomain name="bool"/>
       </IntVectorProperty>
 
-      <!-- command="SetYourDoubleVariable" -->
       <DoubleVectorProperty 
         name="MaxRotationNorm"
+        command="SetMaxRotationNorm"
         number_of_elements="1"
         default_values="1.0">
         <DoubleRangeDomain name="range" min="0.0"/>
@@ -200,9 +200,9 @@
         </Hints>
       </DoubleVectorProperty>
 
-      <!-- command="SetYourDoubleVariable" -->
       <DoubleVectorProperty 
         name="MaxTranslationNorm"
+        command="SetMaxTranslationNorm"
         number_of_elements="1"
         default_values="1.0">
         <DoubleRangeDomain name="range" min="0.0"/>
@@ -211,17 +211,17 @@
         </Hints>
       </DoubleVectorProperty>
 
-      <!-- command="SetTransformMode" -->
       <IntVectorProperty
         name="UseCounterTransformationChecker"
+        command="SetUseCounterTransformationChecker"
         number_of_elements="1"
         default_values="0">
         <BooleanDomain name="bool"/>
       </IntVectorProperty>
 
-      <!-- command="SetYourDoubleVariable" -->
       <IntVectorProperty 
         name="MaxIterationCount"
+        command="SetMaxIterationCount"
         number_of_elements="1"
         default_values="40">
         <IntRangeDomain name="range" min="0"/>
@@ -230,17 +230,17 @@
         </Hints>
       </IntVectorProperty>
 
-      <!-- command="SetTransformMode" -->
       <IntVectorProperty
         name="UseDifferentialTransformationChecker"
+        command="SetUseDifferentialTransformationChecker"
         number_of_elements="1"
         default_values="0">
         <BooleanDomain name="bool"/>
       </IntVectorProperty>
 
-      <!-- command="SetYourDoubleVariable" -->
       <DoubleVectorProperty 
         name="MinDiffRotationError"
+        command="SetMinDiffRotationError"
         number_of_elements="1"
         default_values="0.001">
         <DoubleRangeDomain name="range" min="0.0" max="6.2831854"/>
@@ -249,9 +249,9 @@
         </Hints>
       </DoubleVectorProperty>
       
-      <!-- command="SetYourDoubleVariable" -->
       <DoubleVectorProperty 
         name="MinDiffTranslationError"
+        command="SetMinDiffTranslationError"
         number_of_elements="1"
         default_values="0.001">
         <DoubleRangeDomain name="range" min="0.0" />
@@ -260,9 +260,9 @@
         </Hints>
       </DoubleVectorProperty>
 
-      <!-- command="SetYourDoubleVariable" -->
       <IntVectorProperty 
         name="SmoothLength"
+        command="SetSmoothLength"
         number_of_elements="1"
         default_values="3">
         <IntRangeDomain name="range" min="0"/>
