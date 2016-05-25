@@ -37,6 +37,15 @@ public:
     kNullMatcher
   };
 
+  enum ErrorMinimizerType {
+    kIdentityErrorMinimizer=0,
+    kPointToPlaneErrorMinimizer,
+    kPointToPlaneWithCovErrorMinimizer,
+    kPointToPointErrorMinimizer,
+    kPointToPointSimilarityErrorMinimizer,
+    kPointToPointWithCovErrorMinimizer
+  };
+
   // Matcher get/set methods
   vtkSetMacro(Matcher, int);
   vtkGetMacro(Matcher, int);
@@ -57,6 +66,7 @@ public:
   ///       Somehow paraview calls with the extra arguments when the name comes from input arrays.
   virtual void SetMaxDistField(int idx, int port, int connection, int fieldAssociation, const char *name);
   vtkGetStringMacro(MaxDistField);
+
   // Outlier Filter get/clean methods
   void AddOutlierFilter(
     const char* filterName, 
@@ -73,7 +83,18 @@ public:
     double minRatio, 
     double maxRatio, 
     double lambda);
+
   void CleanOutlierFilters();
+
+  // Error Minimizer get/set methods
+  vtkSetMacro(ErrorMinimizer, int);
+  vtkGetMacro(ErrorMinimizer, int);
+
+  vtkSetMacro(SensorStd, double);
+  vtkGetMacro(SensorStd, double);
+
+  vtkSetMacro(Force2D, int);
+  vtkGetMacro(Force2D, int);
 
 protected:
   // Matcher
@@ -86,7 +107,10 @@ protected:
   // Outlier Filter
   typedef std::vector<OutlierFilterOptions> OutlierFilterOptionVector;
   OutlierFilterOptionVector outlierFilterOptionVector;
-  
+  // Error Minimizer
+  int ErrorMinimizer;
+  double SensorStd;
+  int Force2D;
 
 
   virtual int RequestData(vtkInformation *request,

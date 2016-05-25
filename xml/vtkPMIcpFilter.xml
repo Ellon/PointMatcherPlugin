@@ -125,9 +125,9 @@
         </Documentation>
       </StringVectorProperty>
 
-      <!-- command="SetTransformMode" -->
       <IntVectorProperty
         name="ErrorMinimizer"
+        command="SetErrorMinimizer"
         number_of_elements="1"
         default_values="1">
         <EnumerationDomain name="enum">
@@ -143,9 +143,9 @@
         </Documentation>
       </IntVectorProperty>
 
-      <!-- command="SetYourDoubleVariable" -->
       <DoubleVectorProperty 
         name="SensorStd"
+        command="SetSensorStd"
         number_of_elements="1"
         default_values="0.0">
         <DoubleRangeDomain name="range" min="0.0"/>
@@ -154,9 +154,9 @@
         </Hints>
       </DoubleVectorProperty>
 
-      <!-- command="SetTransformMode" -->
       <IntVectorProperty
         name="Force2D"
+        command="SetForce2D"
         label="Force 2D"
         number_of_elements="1"
         default_values="0">
