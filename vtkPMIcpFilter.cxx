@@ -27,7 +27,23 @@ vtkStandardNewMacro(vtkPMIcpFilter);
 
 //----------------------------------------------------------------------------
 vtkPMIcpFilter::vtkPMIcpFilter() :
-  MaxDistField(NULL)
+  Matcher(0),
+  Knn(1),
+  Epsilon(0),
+  SearchType(1),
+  MaxDist(std::numeric_limits<double>::infinity()),
+  MaxDistField(NULL),
+  SensorStd(0.01),
+  Force2D(0),
+  UseBoundTransformationChecker(0),
+  UseCounterTransformationChecker(0),
+  UseDifferentialTransformationChecker(0),
+  MaxRotationNorm(1),
+  MaxTranslationNorm(1),
+  MaxIterationCount(40),
+  MinDiffRotationError(0.001),
+  MinDiffTranslationError(0.001),
+  SmoothLength(3)
 {
   this->SetNumberOfInputPorts(1);
   this->SetNumberOfOutputPorts(1);
