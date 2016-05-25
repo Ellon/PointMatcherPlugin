@@ -90,8 +90,8 @@ public:
   vtkSetMacro(ErrorMinimizer, int);
   vtkGetMacro(ErrorMinimizer, int);
 
-  vtkSetMacro(SensorStd, double);
-  vtkGetMacro(SensorStd, double);
+  vtkSetMacro(SensorStdDev, double);
+  vtkGetMacro(SensorStdDev, double);
 
   vtkSetMacro(Force2D, int);
   vtkGetMacro(Force2D, int);
@@ -137,7 +137,7 @@ protected:
   OutlierFilterOptionVector outlierFilterOptionVector;
   // Error Minimizer
   int ErrorMinimizer;
-  double SensorStd;
+  double SensorStdDev;
   int Force2D;
   // Transformation Checkers
   int UseBoundTransformationChecker;

@@ -33,7 +33,7 @@ vtkPMIcpFilter::vtkPMIcpFilter() :
   SearchType(1),
   MaxDist(std::numeric_limits<double>::infinity()),
   MaxDistField(NULL),
-  SensorStd(0.01),
+  SensorStdDev(0.01),
   Force2D(0),
   UseBoundTransformationChecker(0),
   UseCounterTransformationChecker(0),
