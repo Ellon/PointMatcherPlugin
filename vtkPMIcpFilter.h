@@ -31,6 +31,33 @@ public:
 
   static vtkPMIcpFilter *New();
 
+  enum MatcherType {
+    kKDTreeMatcher=0,
+    kKDTreeVarDistMatcher,
+    kNullMatcher
+  };
+
+  // Matcher get/set methods
+  vtkSetMacro(Matcher, int);
+  vtkGetMacro(Matcher, int);
+
+  vtkSetMacro(Knn, int);
+  vtkGetMacro(Knn, int);
+
+  vtkSetMacro(Epsilon, double);
+  vtkGetMacro(Epsilon, double);
+
+  vtkSetMacro(SearchType, int);
+  vtkGetMacro(SearchType, int);
+
+  vtkSetMacro(MaxDist, double);
+  vtkGetMacro(MaxDist, double);
+
+  /// FIXME make this function receive only 'name' parameter.
+  ///       Somehow paraview calls with the extra arguments when the name comes from input arrays.
+  virtual void SetMaxDistField(int idx, int port, int connection, int fieldAssociation, const char *name);
+  vtkGetStringMacro(MaxDistField);
+  // Outlier Filter get/clean methods
   void AddOutlierFilter(
     const char* filterName, 
     const char* source, 
@@ -49,9 +76,18 @@ public:
   void CleanOutlierFilters();
 
 protected:
-
+  // Matcher
+  int Matcher;
+  int Knn;
+  double Epsilon;
+  int SearchType;
+  double MaxDist;
+  char* MaxDistField;
+  // Outlier Filter
   typedef std::vector<OutlierFilterOptions> OutlierFilterOptionVector;
   OutlierFilterOptionVector outlierFilterOptionVector;
+  
+
 
   virtual int RequestData(vtkInformation *request,
                           vtkInformationVector **inputVector,

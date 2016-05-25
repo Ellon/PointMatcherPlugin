@@ -26,7 +26,8 @@ typedef vtkPMConversions::PM PM;
 vtkStandardNewMacro(vtkPMIcpFilter);
 
 //----------------------------------------------------------------------------
-vtkPMIcpFilter::vtkPMIcpFilter()
+vtkPMIcpFilter::vtkPMIcpFilter() :
+  MaxDistField(NULL)
 {
   this->SetNumberOfInputPorts(1);
   this->SetNumberOfOutputPorts(1);
@@ -123,5 +124,22 @@ void vtkPMIcpFilter::AddOutlierFilter(
 void vtkPMIcpFilter::CleanOutlierFilters()
 {
   this->outlierFilterOptionVector.clear();
+  this->Modified();
+}
+
+void vtkPMIcpFilter::SetMaxDistField(int, int, int, int, const char *name)
+{
+  vtkDebugMacro( << this->GetClassName() << " (" << this << "): setting " << "MaxDistField" << " to " << name );
+  if ( this->MaxDistField && name && (!strcmp(this->MaxDistField, name))) { return;}
+  if (this->MaxDistField) { delete [] this->MaxDistField; }
+  if (name)
+  {
+    this->MaxDistField = new char[strlen(name) + 1];
+    strcpy(this->MaxDistField, name);
+  }
+  else
+  {
+    this->MaxDistField = NULL;
+  }
   this->Modified();
 }
