@@ -383,17 +383,17 @@ QStringList pqOutlierFilterListWidget::outlierFilters()
         stringList.push_back( QString(opt.filterName.c_str())       );
         stringList.push_back( QString(opt.source.c_str())           );
         stringList.push_back( QString(opt.descriptor.c_str())       );
-        stringList.push_back( QString::number(opt.threshold)        );
+        stringList.push_back( QString::number(opt.threshold,'g',12) );
         stringList.push_back( QString::number(opt.useSoftThreshold) );
         stringList.push_back( QString::number(opt.useLargerThan)    );
-        stringList.push_back( QString::number(opt.maxDist)          );
-        stringList.push_back( QString::number(opt.factor)           );
-        stringList.push_back( QString::number(opt.minDist)          );
-        stringList.push_back( QString::number(opt.maxAngle)         );
-        stringList.push_back( QString::number(opt.ratio)            );
-        stringList.push_back( QString::number(opt.minRatio)         );
-        stringList.push_back( QString::number(opt.maxRatio)         );
-        stringList.push_back( QString::number(opt.lambda)           );
+        stringList.push_back( QString::number(opt.maxDist,'g',12)   );
+        stringList.push_back( QString::number(opt.factor,'g',12)    );
+        stringList.push_back( QString::number(opt.minDist,'g',12)   );
+        stringList.push_back( QString::number(opt.maxAngle,'g',12)  );
+        stringList.push_back( QString::number(opt.ratio,'g',12)     );
+        stringList.push_back( QString::number(opt.minRatio,'g',12)  );
+        stringList.push_back( QString::number(opt.maxRatio,'g',12)  );
+        stringList.push_back( QString::number(opt.lambda,'g',12)    );
     }
 
     return stringList;
